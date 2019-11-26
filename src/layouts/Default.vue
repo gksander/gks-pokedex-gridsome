@@ -20,7 +20,7 @@
         <v-list-item
           v-for="edge in filteredPokemon"
           :key="edge.node.id"
-          :to="`/pokemon/${edge.node.id}`"
+          :to="`/pokemon/${edge.node.slug}`"
         >
           <v-list-item-avatar>
             <g-image :src="edge.node.sprite_front"></g-image>
@@ -40,6 +40,10 @@
         @click="sideNavVisible = !sideNavVisible"
       ></v-app-bar-nav-icon>
       <v-toolbar-title>PokeDex</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon to="/">
+        <v-icon>home</v-icon>
+      </v-btn>
     </v-app-bar>
     <!-- Content body -->
     <v-content>
@@ -70,6 +74,9 @@ export default {
       );
     },
   },
+  mounted() {
+    console.log(this.$static);
+  },
 };
 </script>
 
@@ -83,6 +90,7 @@ query {
       node {
         id,
         name,
+        slug,
         sprite_front(width: 40, height: 40, background: "contain"),
         types
       }
@@ -90,3 +98,9 @@ query {
   }
 }
 </static-query>
+
+<style>
+.container {
+  max-width: 560px;
+}
+</style>

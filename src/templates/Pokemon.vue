@@ -1,33 +1,39 @@
 <template>
   <Layout>
-    <div class="flex flex-row flex-wrap -mx-2">
-      <!-- Left col -->
-      <div class="w-full sm:w-1/2 p-2">
-        <g-image
-          :src="$page.pokemon.sprite_front"
-          class="w-full bg-gray-200 rounded-lg"
-        ></g-image>
-        <div class="text-5xl leading-tight leading-snug mt-2 font-thin">
-          {{ $page.pokemon.name }}
-        </div>
-        <div class="flex flex-row mt-1">
-          <poke-type-badge
-            v-for="(type, i) in $page.pokemon.types"
-            :key="i"
-            :type="type"
-            :is-large="true"
-          ></poke-type-badge>
-        </div>
-      </div>
-      <div class="w-full sm:w-1/2 p-2">
-        <div class="p-4 rounded bg-blue-300 mb-3">
-          Details
-        </div>
-        <div class="p-4 rounded bg-gray-600">
-          Stats
-        </div>
-      </div>
-    </div>
+    <div class="display-3">{{ $page.pokemon.name }}</div>
+    <div>Type badges...</div>
+    <!-- Cols for display -->
+    <v-row>
+      <!-- Sprites -->
+      <v-col cols="6">
+        <v-card>
+          <g-image
+            :src="$page.pokemon.sprite_front"
+            style="width: 100%"
+          ></g-image>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <g-image
+            :src="$page.pokemon.sprite_back"
+            style="width: 100%"
+          ></g-image>
+        </v-card>
+      </v-col>
+      <!-- Details -->
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>Details</v-card-title>
+        </v-card>
+      </v-col>
+      <!-- Stats -->
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>Stats</v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
   </Layout>
 </template>
 
@@ -35,6 +41,12 @@
 import PokeTypeBadge from "~/components/PokeTypeBadge";
 export default {
   components: { PokeTypeBadge },
+
+  metaInfo() {
+    return {
+      title: this.$page.pokemon.name,
+    };
+  },
 };
 </script>
 
@@ -44,6 +56,7 @@ export default {
       id,
       name,
       sprite_front(width: 96, height: 96, background: "contain"),
+      sprite_back(width: 96, height: 96, background: "contain"),
       types
     }
   }

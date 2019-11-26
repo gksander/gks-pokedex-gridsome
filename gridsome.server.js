@@ -42,6 +42,7 @@ module.exports = function(api) {
       const node = {
         id: pokemon.id,
         name: capitalize(pokemon.name),
+        slug: pokemon.name.toLowerCase().replace(/ /g, "-"),
         height: pokemon.height,
         weight: pokemon.weight,
         order: pokemon.order,

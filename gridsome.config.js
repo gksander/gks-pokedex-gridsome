@@ -4,23 +4,16 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-// const tailwindcss = require("tailwindcss");
-// const purgecss = require("@fullhuman/postcss-purgecss");
-
 module.exports = {
   siteName: "Gridsome",
   plugins: [],
   templates: {
-    Pokemon: "/pokemon/:id",
+    Pokemon: [
+      {
+        path: node => {
+          return `/pokemon/${node.slug}`;
+        },
+      },
+    ],
   },
-  // css: {
-  //   loaderOptions: {
-  //     postcss: {
-  //       plugins: [
-  //         tailwindcss,
-  //         ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
-  //       ],
-  //     },
-  //   },
-  // },
 };
