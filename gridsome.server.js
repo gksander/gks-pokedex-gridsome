@@ -12,8 +12,10 @@ const API_BASE = "http://localhost:6080/api/v2";
 
 module.exports = function(api) {
   api.loadSource(async ({ addCollection }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-    const { data } = await axios.get(`${API_BASE}/pokemon?limit=151`);
+    /**
+     * Pokemon
+     */
+    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=151`);
 
     // Create pokemon collection
     const pokemonCollection = addCollection({
@@ -21,7 +23,7 @@ module.exports = function(api) {
     });
 
     // Loop through each pokemon, fetch its data - and add a node
-    for (let pokeDetail of data.results) {
+    for (let pokeDetail of pokemon.results) {
       const { data: pokemon } = await axios.get(pokeDetail.url);
 
       const node = {
@@ -41,6 +43,16 @@ module.exports = function(api) {
 
       // Add the pokemon
       pokemonCollection.addNode(node);
+    }
+
+    /**
+     * Types
+     */
+    const { data: types } = await axios.get(`${API_BASE}/type`);
+    const typesCollection = addCollection({ typeName: "Type" });
+
+    for (let type of types.results) {
+      typesCollection.addNode(type);
     }
   });
 
