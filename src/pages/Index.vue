@@ -4,7 +4,7 @@
       <div
         v-for="edge in $page.allPokemon.edges"
         :key="edge.node.id"
-        class="p-2 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6"
+        class="px-2 pb-8 w-1/2 sm:w-1/3 lg:w-1/4"
       >
         <poke-list-card :pokemon="edge.node"></poke-list-card>
       </div>

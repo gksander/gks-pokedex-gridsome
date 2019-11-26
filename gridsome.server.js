@@ -15,7 +15,7 @@ module.exports = function(api) {
     /**
      * Pokemon
      */
-    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=151`);
+    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=151s`);
 
     // Create pokemon collection
     const pokemonCollection = addCollection({
@@ -39,6 +39,13 @@ module.exports = function(api) {
           `./src/assets/img/pokemon/back/${pokemon.id}.png`,
         ),
         types: pokemon.types.map(piece => capitalize(piece.type.name)),
+        stats: pokemon.stats.map(stat => ({
+          base: stat.base_stat,
+          name: stat.stat.name
+            .split("-")
+            .map(capitalize)
+            .join(" "),
+        })),
       };
 
       // Add the pokemon

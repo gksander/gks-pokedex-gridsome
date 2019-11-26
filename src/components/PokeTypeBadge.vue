@@ -1,7 +1,7 @@
 <template>
   <div
-    class="p-1 rounded-full text-sm w-16 text-center ml-1"
-    :class="className"
+    class="p-1 rounded-lg text-sm text-center mr-2"
+    :class="[...className, ...(isLarge ? ['w-20', 'text-lg'] : ['w-16'])]"
   >
     {{ type }}
   </div>
@@ -13,19 +13,13 @@ export default {
     type: {
       type: String,
     },
+    isLarge: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
-    // Testing types. E.g., is["normal"] === true
-    isType() {
-      return this.$static.allType.edges
-        .map(edge => edge.node.name)
-        .reduce((obj, type) => {
-          obj[type] = new RegExp(`^${type}$`, "i").test(this.type);
-          return obj;
-        }, {});
-    },
-
     className() {
       switch (this.type) {
         case "Bug":

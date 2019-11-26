@@ -1,21 +1,22 @@
 <template>
   <g-link :to="`/pokemon/${pokemon.id}`">
     <div class="border rounded hover:shadow-md">
-      <div class="p-2 flex flex-row justify-center items-center">
-        <g-image
-          :src="pokemon.sprite_front"
-          :alt="`Sprite for ${pokemon.name}`"
-        ></g-image>
-      </div>
-      <div class="p-2 text-center text-lg">
-        {{ pokemon.name }}
-      </div>
-      <div class="flex flex-row justify-center p-2">
-        <poke-type-badge
-          v-for="(type, i) in pokemon.types"
-          :key="i"
-          :type="type"
-        ></poke-type-badge>
+      <g-image
+        :src="pokemon.sprite_front"
+        :alt="`Sprite for ${pokemon.name}`"
+        class="w-full bg-gray-100 border-b"
+      ></g-image>
+      <div class="p-3">
+        <div class="text-2xl mb-1">
+          {{ pokemon.name }}
+        </div>
+        <div class="flex flex-row">
+          <poke-type-badge
+            v-for="(type, i) in pokemon.types"
+            :key="i"
+            :type="type"
+          ></poke-type-badge>
+        </div>
       </div>
     </div>
   </g-link>
