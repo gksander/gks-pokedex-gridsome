@@ -11,11 +11,24 @@ const { capitalize } = require("lodash");
 const API_BASE = "http://localhost:6080/api/v2";
 
 module.exports = function(api) {
+  /**
+   * Extending Webpack for Vuetify
+   */
+  api.chainWebpack((config, { isServer }) => {
+    if (isServer) {
+      config.externals([
+        nodeExternals({
+          whitelist: [/^vuetify/],
+        }),
+      ]);
+    }
+  });
+
   api.loadSource(async ({ addCollection }) => {
     /**
      * Pokemon
      */
-    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=151s`);
+    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=50`);
 
     // Create pokemon collection
     const pokemonCollection = addCollection({
