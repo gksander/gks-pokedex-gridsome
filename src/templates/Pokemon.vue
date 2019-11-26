@@ -1,7 +1,13 @@
 <template>
   <Layout>
-    <div class="display-3">{{ $page.pokemon.name }}</div>
-    <div>Type badges...</div>
+    <div class="display-3 mb-2">{{ $page.pokemon.name }}</div>
+    <div>
+      <poke-type-chip
+        v-for="type in $page.pokemon.types"
+        :key="type"
+        :type="type"
+      ></poke-type-chip>
+    </div>
     <!-- Cols for display -->
     <v-row>
       <!-- Sprites -->
@@ -38,9 +44,9 @@
 </template>
 
 <script>
-import PokeTypeBadge from "~/components/PokeTypeBadge";
+import PokeTypeChip from "~/components/PokeTypeChip";
 export default {
-  components: { PokeTypeBadge },
+  components: { PokeTypeChip },
 
   metaInfo() {
     return {
