@@ -13,6 +13,13 @@ import TypeChipNormal from "./typechips/TypeChipNormal";
 import TypeChipElectric from "./typechips/TypeChipElectric";
 import TypeChipGround from "./typechips/TypeChipGround";
 import TypeChipFairy from "./typechips/TypeChipFairy";
+import TypeChipFighting from "./typechips/TypeChipFighting";
+import TypeChipIce from "./typechips/TypeChipIce";
+import TypeChipGhost from "./typechips/TypeChipGhost";
+import TypeChipPsychic from "./typechips/TypeChipPsychic";
+import TypeChipRock from "./typechips/TypeChipRock";
+import TypeChipDragon from "./typechips/TypeChipDragon";
+import TypeChipSteel from "./typechips/TypeChipSteel";
 
 // Component
 export default {
@@ -33,6 +40,13 @@ export default {
     TypeChipElectric,
     TypeChipGround,
     TypeChipFairy,
+    TypeChipFighting,
+    TypeChipIce,
+    TypeChipGhost,
+    TypeChipPsychic,
+    TypeChipRock,
+    TypeChipDragon,
+    TypeChipSteel,
   },
 };
 </script>

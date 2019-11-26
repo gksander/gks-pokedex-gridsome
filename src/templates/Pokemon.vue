@@ -11,20 +11,24 @@
     <!-- Cols for display -->
     <v-row>
       <!-- Sprites -->
-      <v-col cols="6">
+      <v-col cols="12">
         <v-card>
-          <g-image
-            :src="$page.pokemon.sprite_front"
-            style="width: 100%"
-          ></g-image>
-        </v-card>
-      </v-col>
-      <v-col cols="6">
-        <v-card>
-          <g-image
-            :src="$page.pokemon.sprite_back"
-            style="width: 100%"
-          ></g-image>
+          <v-row no-gutters>
+            <v-col cols="6">
+              <g-image
+                :src="$page.pokemon.sprite_front"
+                style="width: 100%"
+                class="fill-height"
+              ></g-image>
+            </v-col>
+            <v-col cols="6">
+              <g-image
+                :src="$page.pokemon.sprite_back"
+                style="width: 100%"
+                class="fill-height grey lighten-4"
+              ></g-image>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
       <!-- Details -->

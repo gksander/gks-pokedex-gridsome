@@ -28,7 +28,7 @@ module.exports = function(api) {
     /**
      * Pokemon
      */
-    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=50`);
+    const { data: pokemon } = await axios.get(`${API_BASE}/pokemon?limit=151`);
 
     // Create pokemon collection
     const pokemonCollection = addCollection({
