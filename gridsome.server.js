@@ -3,6 +3,7 @@
 // Learn more: https://gridsome.org/docs/server-api/
 
 const axios = require("axios");
+const { capitalize } = require("lodash");
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
@@ -12,7 +13,7 @@ const API_BASE = "http://localhost:6080/api/v2";
 module.exports = function(api) {
   api.loadSource(async ({ addCollection }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
-    const { data } = await axios.get(`${API_BASE}/pokemon?limit=9`);
+    const { data } = await axios.get(`${API_BASE}/pokemon?limit=151`);
 
     // Create pokemon collection
     const pokemonCollection = addCollection({
@@ -25,7 +26,7 @@ module.exports = function(api) {
 
       const node = {
         id: pokemon.id,
-        name: pokemon.name,
+        name: capitalize(pokemon.name),
         height: pokemon.height,
         weight: pokemon.weight,
         order: pokemon.order,
@@ -35,6 +36,7 @@ module.exports = function(api) {
         sprite_back: require.resolve(
           `./src/assets/img/pokemon/back/${pokemon.id}.png`,
         ),
+        types: pokemon.types.map(piece => capitalize(piece.type.name)),
       };
 
       // Add the pokemon
