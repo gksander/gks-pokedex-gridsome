@@ -6,7 +6,7 @@
       <v-row>
         <v-col cols="8" offset="2" sm="5" offset-sm="0">
           <g-image
-            :src="$page.pokemon.svg"
+            :src="$page.pokemon.png"
             style="width: 100%"
             class="fill-height"
           ></g-image>
@@ -115,7 +115,7 @@ export default {
     pokemon(id: $id) {
       id,
       name,
-      svg(width: 150, height: 150, fit: contain)
+      png(width: 150, height: 150, fit: contain)
       types { id, name, slug }
       weight
       height

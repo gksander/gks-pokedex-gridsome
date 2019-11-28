@@ -5,9 +5,9 @@
       :alt="`Sprite for ${pokemon.name}`"
       style="width: 100%"
     ></g-image>
-    <v-card-title class="pa-2">
+    <div class="pa-2">
       {{ pokemon.name }}
-    </v-card-title>
+    </div>
   </v-card>
 </template>
 

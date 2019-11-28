@@ -126,7 +126,7 @@ module.exports = function(api) {
         sprite_back: require.resolve(
           `./src/assets/img/pokemon/back/${pokemon.id}.png`,
         ),
-        svg: require.resolve(`./src/assets/img/poke-svg/${pokemon.id}.svg`),
+        png: require.resolve(`./src/assets/img/poke-png/${pokemon.id}.png`),
         types: pokemon.types.map(piece =>
           store.createReference("Type", getIdFromUrl(piece.type.url)),
         ),

@@ -6,7 +6,8 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "deploy": "netlify deploy --dir=dist --prod",
-    "build-and-deploy": "yarn run build && yarn run deploy"
+    "build-and-deploy": "yarn run build && yarn run deploy",
+    "svg-to-png": "node ./scripts/svg-to-png.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -16,7 +17,10 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
+    "fs-extra": "^8.1.0",
+    "klaw": "^3.0.0",
     "prettier": "^1.19.1",
+    "sharp": "^0.23.3",
     "webpack-node-externals": "^1.7.2"
   }
 }
