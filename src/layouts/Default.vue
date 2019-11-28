@@ -23,7 +23,7 @@
           :to="`/pokemon/${edge.node.slug}`"
         >
           <v-list-item-avatar>
-            <g-image :src="edge.node.sprite_front"></g-image>
+            <g-image :src="edge.node.svg"></g-image>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>{{ edge.node.name }}</v-list-item-title>
@@ -88,7 +88,7 @@ query {
         id,
         name,
         slug,
-        sprite_front(width: 40, height: 40, background: "contain"),
+        svg(width: 40, height: 40, fit: contain),
         types
       }
     }
