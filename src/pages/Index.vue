@@ -1,6 +1,10 @@
 <template>
   <Layout>
-    <div>Hey world, click something</div>
+    <content-wrapper>
+      <v-btn to="/pokemon" block color="primary" outlined
+        >CLICK ME TO SEE POKEMON</v-btn
+      >
+    </content-wrapper>
   </Layout>
 </template>
 
