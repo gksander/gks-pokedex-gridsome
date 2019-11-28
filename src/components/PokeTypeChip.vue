@@ -1,7 +1,11 @@
 <template>
-  <g-link :to="`/types/${type.slug}`">
-    <component :is="`TypeChip${type.name}`" class="mr-2" />
-  </g-link>
+  <v-hover v-slot:default="{ hover }">
+    <component
+      :is="`TypeChip${type.name}`"
+      :class="['mr-2', hover ? 'elevation-3' : '']"
+      :to="`/types/${type.slug}`"
+    />
+  </v-hover>
 </template>
 
 <script>

@@ -11,13 +11,32 @@
       </v-col>
       <v-col cols="12" sm="7">
         <div class="display-1 mb-2">{{ $page.pokemon.name }}</div>
-        <div>
+        <div class="mb-4">
           <poke-type-chip
             v-for="type in $page.pokemon.types"
             :key="type.id"
             :type="type"
           ></poke-type-chip>
         </div>
+        <!-- Weight/height -->
+        <div class="d-flex mb-2">
+          <div class="mr-5 d-flex align-center">
+            <v-icon class="mr-2" color="grey darken-2"
+              >fa-ruler-vertical</v-icon
+            >
+            <span class="title font-weight-thin"
+              >{{ $page.pokemon.height }} ft</span
+            >
+          </div>
+          <div class="d-flex align-center">
+            <v-icon class="mr-2" color="grey darken-2">fa-weight</v-icon>
+            <span class="title font-weight-thin"
+              >{{ $page.pokemon.weight }} lbs</span
+            >
+          </div>
+        </div>
+        <!-- Description -->
+        <div v-html="$page.pokemon.species.flavor_description"></div>
       </v-col>
     </v-row>
     <!-- Stats -->
@@ -64,9 +83,14 @@ export default {
       name,
       svg(width: 150, height: 150, fit: contain)
       types { id, name, slug }
+      weight
+      height
       stats {
         base
         name
+      }
+      species {
+        flavor_description
       }
     }
   }

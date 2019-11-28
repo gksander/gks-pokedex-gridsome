@@ -13,6 +13,7 @@
     "vuetify": "^2.1.11"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
     "prettier": "^1.19.1",
     "webpack-node-externals": "^1.7.2"
   }

@@ -1,7 +1,9 @@
 <template>
-  <v-chip outlined color="brown lighten-1">Ground</v-chip>
+  <v-chip outlined color="brown lighten-1" :to="to">Ground</v-chip>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["to"],
+};
 </script>

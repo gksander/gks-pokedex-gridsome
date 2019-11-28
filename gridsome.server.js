@@ -42,6 +42,7 @@ module.exports = function(api) {
     const typeCollection = addCollection("Type");
     const versionCollection = addCollection("Version");
     const versionGroupCollection = addCollection("VersionGroup");
+    const evolutionChainCollection = addCollection("EvolutionChain");
 
     /**
      * Types
@@ -233,6 +234,37 @@ module.exports = function(api) {
         versions,
       });
     }
+
+    /**
+     * Evolution chains
+     */
+    //   const {
+    //     data: { results: chains },
+    //   } = await axios.get(`${API_BASE}/evolution-chain?limit=5`);
+    //   // Loop through the chains
+    //   for (let res of chains) {
+    //     // Fetch ev chain
+    //     let { data: chain } = await axios.get(res.url);
+    //
+    //     // Create the node
+    //     const node = {
+    //       id: chain.id,
+    //       chain: [],
+    //     };
+    //
+    //     // Start creating links (first has no evolution details)
+    //     node.chain.push({
+    //       pokemon: store.createReference(
+    //         "Pokemon",
+    //         getIdFromUrl(chain.species.url),
+    //       ),
+    //       evolution_details: null,
+    //     });
+    //
+    //
+    //     // Add the node
+    //     evolutionChainCollection.addNode(chain);
+    //   }
   });
 
   api.createPages(({ createPage }) => {

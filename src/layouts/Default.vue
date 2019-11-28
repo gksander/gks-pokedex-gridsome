@@ -24,7 +24,7 @@
       <v-toolbar-title>PokeDex</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon to="/">
-        <v-icon>home</v-icon>
+        <v-icon>fa-home</v-icon>
       </v-btn>
     </v-app-bar>
     <!-- Content body -->
@@ -47,7 +47,7 @@ export default {
       query: "",
       tabs: [
         { title: "Pokemon", to: "/pokemon" },
-        { title: "Generations", to: "/generations" },
+        // { title: "Generations", to: "/generations" },
         { title: "Types", to: "/types" },
       ],
     };

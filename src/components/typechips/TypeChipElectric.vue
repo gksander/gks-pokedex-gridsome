@@ -1,7 +1,9 @@
 <template>
-  <v-chip outlined color="yellow darken-3">Electric</v-chip>
+  <v-chip outlined color="yellow darken-3" :to="to">Electric</v-chip>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["to"],
+};
 </script>
