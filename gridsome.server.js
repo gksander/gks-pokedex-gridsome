@@ -140,6 +140,8 @@ module.exports = function(api) {
             .replace(/special/i, "Sp."),
         })),
         species: store.createReference("Species", pokemon.id),
+        next_pokemon: store.createReference("Pokemon", pokemon.id + 1),
+        prev_pokemon: store.createReference("Pokemon", pokemon.id - 1),
       });
     } // End Pokemon
 

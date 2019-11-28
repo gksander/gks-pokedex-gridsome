@@ -2,7 +2,7 @@
   <Layout>
     <!-- Cols for display -->
     <v-row>
-      <v-col cols="12" sm="5">
+      <v-col cols="8" offset="2" sm="5" offset-sm="0">
         <g-image
           :src="$page.pokemon.svg"
           style="width: 100%"
@@ -60,6 +60,22 @@
         <div>{{ stat.name }}</div>
       </v-col>
     </v-row>
+
+    <!-- Bottom navigation -->
+    <v-bottom-navigation app grow>
+      <v-btn :to="`/pokemon/${$page.pokemon.prev_pokemon.slug}`" width="100">
+        <span>{{ $page.pokemon.prev_pokemon.name }}</span>
+        <v-icon>fa-chevron-left</v-icon>
+      </v-btn>
+      <v-btn to="/pokemon" exact>
+        <span>All</span>
+        <v-icon>fa-list-alt</v-icon>
+      </v-btn>
+      <v-btn :to="`/pokemon/${$page.pokemon.next_pokemon.slug}`" width="100">
+        <span>{{ $page.pokemon.next_pokemon.name }}</span>
+        <v-icon>fa-chevron-right</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </Layout>
 </template>
 
@@ -85,13 +101,10 @@ export default {
       types { id, name, slug }
       weight
       height
-      stats {
-        base
-        name
-      }
-      species {
-        flavor_description
-      }
+      stats { base, name }
+      species { flavor_description }
+      prev_pokemon { name, slug }
+      next_pokemon { name, slug }
     }
   }
 </page-query>

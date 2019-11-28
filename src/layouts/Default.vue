@@ -5,7 +5,7 @@
       app
       v-model="sideNavVisible"
       clipped
-      :mobile-break-point="950"
+      :mobile-break-point="850"
       :width="270"
     >
       <v-list shaped>
