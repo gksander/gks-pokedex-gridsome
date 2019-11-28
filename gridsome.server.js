@@ -1,7 +1,7 @@
 // Server API makes it possible to hook into various parts of Gridsome
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
-
+const nodeExternals = require("webpack-node-externals");
 const axios = require("axios");
 const { capitalize, get } = require("lodash");
 // Helper to pull ID from a URL

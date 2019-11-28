@@ -1,17 +1,18 @@
 <template>
   <Layout>
-    <v-row>
-      <v-col
-        v-for="edge in $page.allPokemon.edges"
-        :key="edge.node.id"
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
-      >
-        <poke-list-card :pokemon="edge.node"></poke-list-card>
-      </v-col>
-    </v-row>
+    <content-wrapper>
+      <v-row>
+        <v-col
+          v-for="edge in $page.allPokemon.edges"
+          :key="edge.node.id"
+          cols="6"
+          sm="4"
+          md="3"
+        >
+          <poke-list-card :pokemon="edge.node"></poke-list-card>
+        </v-col>
+      </v-row>
+    </content-wrapper>
   </Layout>
 </template>
 
