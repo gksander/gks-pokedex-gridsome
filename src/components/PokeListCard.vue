@@ -1,10 +1,12 @@
 <template>
   <v-card :to="`/pokemon/${pokemon.slug}`">
-    <g-image
-      :src="pokemon.sprite_front"
-      :alt="`Sprite for ${pokemon.name}`"
-      style="width: 100%"
-    ></g-image>
+    <div class="pa-4 pb-0">
+      <g-image
+        :src="pokemon.png"
+        :alt="`Sprite for ${pokemon.name}`"
+        style="width: 100%"
+      ></g-image>
+    </div>
     <div class="pa-2">
       {{ pokemon.name }}
     </div>

@@ -31,7 +31,7 @@ query {
         id,
         name,
         slug,
-        sprite_front(width: 150, height: 150, fit: contain),
+        png (width: 150, height: 150, fit: contain, background: "transparent"),
       }
     }
   }

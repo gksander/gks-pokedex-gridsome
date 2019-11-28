@@ -6,7 +6,7 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "deploy": "netlify deploy --dir=dist --prod",
-    "build-and-deploy": "yarn run build && yarn run deploy",
+    "build-and-deploy": "yarn run svg-to-png && yarn run build && yarn run deploy",
     "svg-to-png": "node ./scripts/svg-to-png.js"
   },
   "dependencies": {

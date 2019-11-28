@@ -52,14 +52,16 @@
         >
           <v-progress-circular
             :value="stat.base"
-            class="mb-1"
-            color="primary"
+            class="mb-1 darken-2"
+            :color="color"
             size="52"
             width="6"
           >
             {{ stat.base }}
           </v-progress-circular>
-          <div>{{ stat.name }}</div>
+          <div :style="{ color }">
+            {{ stat.name }}
+          </div>
         </v-col>
       </v-row>
     </content-wrapper>
@@ -96,6 +98,10 @@ export default {
     nextLink() {
       return get(this.$page, "pokemon.next_pokemon.slug", "");
     },
+    color() {
+      const color = get(this.$page, "pokemon.species.color.name");
+      return color.replace(/white/i, "grey").replace(/yellow/i, "#c9bc4e");
+    },
   },
 
   methods: {
@@ -115,12 +121,12 @@ export default {
     pokemon(id: $id) {
       id,
       name,
-      png(width: 150, height: 150, fit: contain)
+      png(width: 150, height: 150, fit: contain, background: "transparent")
       types { id, name, slug }
       weight
       height
       stats { base, name }
-      species { flavor_description }
+      species { flavor_description, color { name } }
       prev_pokemon { name, slug }
       next_pokemon { name, slug }
     }
