@@ -14,7 +14,7 @@
         <div>
           <poke-type-chip
             v-for="type in $page.pokemon.types"
-            :key="type"
+            :key="type.id"
             :type="type"
           ></poke-type-chip>
         </div>
@@ -63,7 +63,7 @@ export default {
       id,
       name,
       svg(width: 150, height: 150, fit: contain)
-      types
+      types { id, name, slug }
       stats {
         base
         name

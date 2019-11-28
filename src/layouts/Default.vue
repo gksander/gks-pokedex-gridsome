@@ -8,28 +8,10 @@
       :mobile-break-point="950"
       :width="270"
     >
-      <div class="px-3 pt-2">
-        <v-text-field
-          label="Search"
-          hide-details
-          v-model="query"
-        ></v-text-field>
-      </div>
-      <!-- List out pokemon -->
-      <v-list two-line shaped>
-        <v-list-item
-          v-for="edge in filteredPokemon"
-          :key="edge.node.id"
-          :to="`/pokemon/${edge.node.slug}`"
-        >
-          <v-list-item-avatar>
-            <g-image :src="edge.node.svg"></g-image>
-          </v-list-item-avatar>
+      <v-list shaped>
+        <v-list-item v-for="tab in tabs" :key="tab.title" :to="tab.to">
           <v-list-item-content>
-            <v-list-item-title>{{ edge.node.name }}</v-list-item-title>
-            <v-list-item-subtitle>
-              {{ edge.node.types.join(" - ") }}
-            </v-list-item-subtitle>
+            <v-list-item-title>{{ tab.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -63,6 +45,11 @@ export default {
     return {
       sideNavVisible: null,
       query: "",
+      tabs: [
+        { title: "Pokemon", to: "/pokemon" },
+        { title: "Generations", to: "/generations" },
+        { title: "Types", to: "/types" },
+      ],
     };
   },
   // Computed
@@ -82,22 +69,5 @@ query {
   metadata {
     siteName
   }
-  allPokemon (sortBy: "id", order: ASC) {
-    edges {
-      node {
-        id,
-        name,
-        slug,
-        svg(width: 40, height: 40, fit: contain),
-        types
-      }
-    }
-  }
 }
 </static-query>
-
-<style>
-.container {
-  max-width: 560px;
-}
-</style>

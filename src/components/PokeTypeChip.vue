@@ -1,5 +1,7 @@
 <template>
-  <component :is="`TypeChip${type}`" class="mr-2" />
+  <g-link :to="`/types/${type.slug}`">
+    <component :is="`TypeChip${type.name}`" class="mr-2" />
+  </g-link>
 </template>
 
 <script>
@@ -25,7 +27,7 @@ import TypeChipSteel from "./typechips/TypeChipSteel";
 export default {
   props: {
     type: {
-      type: String,
+      type: Object,
       required: true,
     },
   },

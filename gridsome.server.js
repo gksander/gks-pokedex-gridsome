@@ -8,7 +8,7 @@ const { capitalize, get } = require("lodash");
 const getIdFromUrl = url => url.match(/(\d+)\/$/)[1];
 
 // How many pokemon to pull
-const NUM_POKEMON = 35;
+const NUM_POKEMON = 25;
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
@@ -38,14 +38,10 @@ module.exports = function(api) {
      */
     const pokemonCollection = addCollection("Pokemon");
     const speciesCollection = addCollection("Species");
-    const evolutionChainCollection = addCollection("EvolutionChain");
+    const generationsCollection = addCollection("Generation");
     const typeCollection = addCollection("Type");
-
-    /**
-     * References
-     */
-    pokemonCollection.addReference("species", "Species");
-    speciesCollection.addReference("evolutionChain", "EvolutionChain");
+    const versionCollection = addCollection("Version");
+    const versionGroupCollection = addCollection("VersionGroup");
 
     /**
      * Types
@@ -78,28 +74,23 @@ module.exports = function(api) {
       typeCollection.addNode({
         id: type.id,
         name: capitalize(type.name),
+        slug: type.name,
         damage_relations: relations,
         pokemon,
       });
     } // End of Type collection
 
     /**
-     * Pokemon
+     * Pokemon Species
      */
-    const { data: pokemon } = await axios.get(
-      `${API_BASE}/pokemon?limit=${NUM_POKEMON}`,
+    const { data: species } = await axios.get(
+      `${API_BASE}/pokemon-species?limit=${NUM_POKEMON}`,
     );
+    // Loop through the species to fetch data
+    for (let spec of species.results) {
+      const { data: species } = await axios.get(spec.url);
 
-    // Loop through each pokemon, fetch its data - and add a node
-    for (let pokeDetail of pokemon.results) {
-      const { data: pokemon } = await axios.get(pokeDetail.url);
-      const { data: species } = await axios.get(
-        `${API_BASE}/pokemon-species/${pokemon.id}`,
-      );
-
-      /**
-       * Species data
-       */
+      // Add the species
       speciesCollection.addNode({
         id: species.id,
         color: species.color,
@@ -108,11 +99,20 @@ module.exports = function(api) {
         ).flavor_text,
         capture_rate: Math.round((species.capture_rate / 255) * 100) / 100,
       });
+    }
 
-      /**
-       * Pokemon data
-       */
-      const node = {
+    /**
+     * Pokemon
+     */
+    const { data: pokemon } = await axios.get(
+      `${API_BASE}/pokemon?limit=${NUM_POKEMON}`,
+    );
+    // Loop through each pokemon, fetch its data - and add a node
+    for (let pokeDetail of pokemon.results) {
+      const { data: pokemon } = await axios.get(pokeDetail.url);
+
+      // Add the pokemon
+      pokemonCollection.addNode({
         id: pokemon.id,
         name: capitalize(pokemon.name),
         slug: pokemon.name.toLowerCase().replace(/ /g, "-"),
@@ -126,7 +126,9 @@ module.exports = function(api) {
           `./src/assets/img/pokemon/back/${pokemon.id}.png`,
         ),
         svg: require.resolve(`./src/assets/img/poke-svg/${pokemon.id}.svg`),
-        types: pokemon.types.map(piece => capitalize(piece.type.name)),
+        types: pokemon.types.map(piece =>
+          store.createReference("Type", getIdFromUrl(piece.type.url)),
+        ),
         stats: pokemon.stats.map(stat => ({
           base: stat.base_stat,
           name: stat.stat.name
@@ -136,22 +138,101 @@ module.exports = function(api) {
             .replace(/^hp$/i, "HP")
             .replace(/special/i, "Sp."),
         })),
-        species: pokemon.id,
-      };
+        species: store.createReference("Species", pokemon.id),
+      });
+    } // End Pokemon
 
-      // Add the pokemon
-      pokemonCollection.addNode(node);
+    /**
+     * Generations
+     */
+    const {
+      data: { results: generations },
+    } = await axios.get(`${API_BASE}/generation`);
+    // Loop through generations
+    for (let res of generations) {
+      const { data: gen } = await axios.get(res.url);
+
+      // Determine english name
+      const genName = gen.names.find(name => name.language.name === "en").name;
+
+      // Pokemon references
+      const pokemon = gen.pokemon_species
+        .map(piece => getIdFromUrl(piece.url))
+        .filter(id => id <= NUM_POKEMON)
+        .map(id => store.createReference("Pokemon", id));
+
+      // Version groups
+      const version_groups = gen.version_groups.map(group =>
+        store.createReference("VersionGroup", getIdFromUrl(group.url)),
+      );
+
+      // Add node
+      generationsCollection.addNode({
+        id: gen.id,
+        name: genName,
+        slug: genName.toLowerCase().replace(/ /g, "-"),
+        pokemon,
+        version_groups,
+      });
     }
 
-    // /**
-    //  * Types
-    //  */
-    // const { data: types } = await axios.get(`${API_BASE}/type`);
-    // const typesCollection = addCollection({ typeName: "Type" });
-    //
-    // for (let type of types.results) {
-    //   typesCollection.addNode(type);
-    // }
+    /**
+     * Versions
+     */
+    const {
+      data: { results: versions },
+    } = await axios.get(`${API_BASE}/version?limit=50`);
+    // Loop through the versions
+    for (let res of versions) {
+      // Fetch version data
+      const { data: version } = await axios.get(res.url);
+
+      // Version name
+      const versionName = version.names.find(
+        name => name.language.name === "en",
+      ).name;
+
+      // Build node
+      versionCollection.addNode({
+        id: version.id,
+        name: versionName,
+        slug: versionName.toLowerCase().replace(/ /g, "-"),
+        version_group: store.createReference(
+          "VersionGroup",
+          getIdFromUrl(version.version_group.url),
+        ),
+      });
+    }
+
+    /**
+     * Version groups
+     */
+    const {
+      data: { results: groups },
+    } = await axios.get(`${API_BASE}/version-group?limit=50`);
+    // Loop through
+    for (let res of groups) {
+      // Get version group
+      const { data: group } = await axios.get(res.url);
+
+      // Name of the group
+      const groupName = group.name
+        .split("-")
+        .map(capitalize)
+        .join(" ");
+
+      // Versions
+      const versions = group.versions.map(version =>
+        store.createReference("Version", getIdFromUrl(version.url)),
+      );
+
+      versionGroupCollection.addNode({
+        id: group.id,
+        slug: group.name,
+        name: groupName,
+        versions,
+      });
+    }
   });
 
   api.createPages(({ createPage }) => {

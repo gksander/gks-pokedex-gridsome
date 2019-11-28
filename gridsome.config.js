@@ -15,5 +15,12 @@ module.exports = {
         },
       },
     ],
+    Type: [
+      {
+        path: node => {
+          return `/types/${node.slug}`;
+        },
+      },
+    ],
   },
 };
