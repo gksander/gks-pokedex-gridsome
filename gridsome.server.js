@@ -2,13 +2,18 @@
 // on server-side and add custom data to the GraphQL data layer.
 // Learn more: https://gridsome.org/docs/server-api/
 const nodeExternals = require("webpack-node-externals");
-const axios = require("axios");
-const { capitalize, get } = require("lodash");
+const { capitalize } = require("lodash");
 const path = require("path");
 const csv = require("csvtojson");
 
 // Config
-const NUM_POKEMON = 491;
+const NUM_POKEMON = {
+  starters: 9,
+  gen1: 151,
+  gen2: 251,
+  gen3: 384,
+  gen4: 491,
+}["gen3"];
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
 const API_BASE = "http://localhost:6080/api/v2";

@@ -6,7 +6,26 @@
 
 module.exports = {
   siteName: "GKS",
-  plugins: [],
+  plugins: [
+    // {
+    //   use: "gridsome-plugin-pwa",
+    //   options: {
+    //     title: "Gridsome",
+    //     startUrl: "/",
+    //     display: "standalone",
+    //     statusBarStyle: "default",
+    //     manifestPath: "manifest.json",
+    //     serviceWorkerPath: "service-worker.js",
+    //     cachedFileTypes: "js,json,css,html,png,jpg,jpeg,svg",
+    //     shortName: "Gridsome",
+    //     themeColor: "#666600",
+    //     backgroundColor: "#ffffff",
+    //     icon: "", // must be provided
+    //     msTileImage: "",
+    //     msTileColor: "#666600",
+    //   },
+    // },
+  ],
   templates: {
     Pokemon: [
       {

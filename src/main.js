@@ -2,6 +2,8 @@
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import InfiniteLoading from "vue-infinite-loading";
+// User created
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
 import BottomBar from "~/components/BottomBar.vue";
@@ -25,4 +27,5 @@ export default function(Vue, { appOptions, router, head, isClient }) {
   Vue.component("Layout", DefaultLayout);
   Vue.component("ContentWrapper", ContentWrapper);
   Vue.component("BottomBar", BottomBar);
+  Vue.use(InfiniteLoading);
 }

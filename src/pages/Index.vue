@@ -4,25 +4,24 @@
       <div class="display-1 mb-2">Pokemon</div>
       <v-row>
         <v-col
-          v-for="edge in $page.allPokemon.edges"
-          :key="edge.node.id"
+          v-for="pokemon in loadedPokemon"
+          :key="pokemon.node.id"
           cols="6"
           sm="4"
           md="3"
         >
-          <poke-list-card :pokemon="edge.node"></poke-list-card>
+          <poke-list-card :pokemon="pokemon.node"></poke-list-card>
         </v-col>
+        <ClientOnly>
+          <v-col cols="6" sm="4" md="3">
+            <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+              <div slot="no-more" class="d-none">No more!</div>
+              <div slot="no-results">No pokemon...</div>
+            </infinite-loading>
+          </v-col>
+        </ClientOnly>
       </v-row>
     </content-wrapper>
-
-    <bottom-bar>
-      <v-pagination
-        :length="$page.allPokemon.pageInfo.totalPages"
-        :value="$page.allPokemon.pageInfo.currentPage"
-        @input="navigateToPage"
-        total-visible="9"
-      ></v-pagination>
-    </bottom-bar>
   </Layout>
 </template>
 
@@ -31,23 +30,32 @@ import PokeListCard from "../components/PokeListCard";
 export default {
   components: { PokeListCard },
 
-  computed: {
-    prevLink() {
-      const pageNum = this.$page.allPokemon.pageInfo.currentPage - 1;
-      return pageNum == 1 ? "/pokemon" : `/pokemon/${pageNum}`;
-    },
-    nextLink() {
-      const pageNum = this.$page.allPokemon.pageInfo.currentPage + 1;
-      return `/pokemon/${pageNum}`;
-    },
+  // Keep track of the pokemon we loaded in
+  data() {
+    return {
+      loadedPokemon: [],
+      currentPage: 1,
+    };
+  },
+
+  // On creation, add initial pokemon to our list
+  created() {
+    this.loadedPokemon.push(...this.$page.allPokemon.edges);
   },
 
   methods: {
-    navigateToPage(page) {
-      if (page == 1) {
-        this.$router.push("/");
+    async infiniteHandler($state) {
+      if (this.currentPage + 1 > this.$page.allPokemon.pageInfo.totalPages) {
+        $state.complete();
       } else {
-        this.$router.push(`/${page}`);
+        const { data } = await this.$fetch(`/${this.currentPage + 1}`);
+        if (data.allPokemon.edges.length) {
+          this.currentPage = data.allPokemon.pageInfo.currentPage;
+          this.loadedPokemon.push(...data.allPokemon.edges);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
       }
     },
   },
@@ -65,7 +73,7 @@ export default {
 query ($page: Int) {
   allPokemon (sortBy: "id", order: ASC, perPage: 25, page: $page) @paginate {
     totalCount
-    pageInfo { hasPreviousPage, hasNextPage, totalPages, currentPage }
+    pageInfo { totalPages, currentPage }
     edges {
       node {
         id,
