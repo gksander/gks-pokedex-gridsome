@@ -1,5 +1,5 @@
 <template>
-  <v-card :to="`/pokemon/${pokemon.slug}`">
+  <v-card :to="`/${pokemon.slug}`">
     <div class="pa-4 pb-0">
       <g-image
         :src="pokemon.png"

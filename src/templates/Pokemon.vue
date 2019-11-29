@@ -72,7 +72,7 @@
         <span>{{ _get($page, "pokemon.prev_pokemon.name", "") }}</span>
         <v-icon>fa-chevron-left</v-icon>
       </v-btn>
-      <v-btn to="/pokemon" exact>
+      <v-btn to="/" exact>
         <span>All</span>
         <v-icon>fa-list-alt</v-icon>
       </v-btn>

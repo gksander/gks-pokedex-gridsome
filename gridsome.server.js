@@ -8,7 +8,7 @@ const path = require("path");
 const csv = require("csvtojson");
 
 // Config
-const NUM_POKEMON = 384;
+const NUM_POKEMON = 491;
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
 const API_BASE = "http://localhost:6080/api/v2";
@@ -111,6 +111,11 @@ module.exports = function(api) {
             flavor_text: "No description.",
           }
         ).flavor_text,
+        pokemon: store.createReference("Pokemon", item.id),
+        evolves_from: store.createReference(
+          "Species",
+          item.evolves_from_species_id,
+        ),
       });
     }
 

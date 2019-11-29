@@ -11,7 +11,7 @@ module.exports = {
     Pokemon: [
       {
         path: node => {
-          return `/pokemon/${node.slug}`;
+          return `/${node.slug}`;
         },
       },
     ],

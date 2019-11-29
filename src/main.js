@@ -4,6 +4,7 @@ import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
+import BottomBar from "~/components/BottomBar.vue";
 import "./styles/global.css";
 
 export default function(Vue, { appOptions, router, head, isClient }) {
@@ -23,4 +24,5 @@ export default function(Vue, { appOptions, router, head, isClient }) {
   // Set default layout as a global component
   Vue.component("Layout", DefaultLayout);
   Vue.component("ContentWrapper", ContentWrapper);
+  Vue.component("BottomBar", BottomBar);
 }
