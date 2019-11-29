@@ -147,6 +147,12 @@ import { get } from "lodash";
 export default {
   components: { PokeTypeChip, PokeListCard },
 
+  data() {
+    return {
+      isMounted: false,
+    };
+  },
+
   computed: {
     prevLink() {
       return "/" + get(this.$page, "pokemon.prev_pokemon.slug", "");
@@ -196,7 +202,7 @@ export default {
     },
 
     evChainVertical() {
-      return this.$vuetify.breakpoint.smAndDown;
+      return !this.isMounted || this.$vuetify.breakpoint.smAndDown;
     },
   },
 
@@ -205,7 +211,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.$vuetify);
+    this.isMounted = true;
   },
 
   metaInfo() {
