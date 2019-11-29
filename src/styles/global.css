@@ -1,15 +1,3 @@
-/* global.css */
-@tailwind base;
-@tailwind components;
-/* Add your btn/input/etc components here */
-@tailwind utilities;
-
-/* Set font family for the document */
-html {
-  font-family: 'Raleway', sans-serif;
-}
-
-html, body {
-  padding: 0;
-  margin: 0;
+i.v-icon {
+  /*font-size: 1.3em !important;*/
 }

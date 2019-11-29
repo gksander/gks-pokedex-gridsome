@@ -28,7 +28,7 @@
       </v-btn>
     </v-app-bar>
     <!-- Content body -->
-    <v-content>
+    <v-content class="fill-height">
       <v-container>
         <slot />
       </v-container>
@@ -47,7 +47,7 @@ export default {
       query: "",
       tabs: [
         { title: "Pokemon", to: "/pokemon" },
-        // { title: "Generations", to: "/generations" },
+        { title: "Generation I", to: "/generation-1" },
         { title: "Types", to: "/types" },
       ],
     };

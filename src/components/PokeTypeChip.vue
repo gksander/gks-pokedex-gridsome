@@ -26,6 +26,9 @@ import TypeChipPsychic from "./typechips/TypeChipPsychic";
 import TypeChipRock from "./typechips/TypeChipRock";
 import TypeChipDragon from "./typechips/TypeChipDragon";
 import TypeChipSteel from "./typechips/TypeChipSteel";
+import TypeChipDark from "./typechips/TypeChipDark";
+import TypeChipUnknown from "./typechips/TypeChipUnknown";
+import TypeChipShadow from "./typechips/TypeChipShadow";
 
 // Component
 export default {
@@ -53,6 +56,9 @@ export default {
     TypeChipRock,
     TypeChipDragon,
     TypeChipSteel,
+    TypeChipDark,
+    TypeChipUnknown,
+    TypeChipShadow,
   },
 };
 </script>

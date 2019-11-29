@@ -8,7 +8,7 @@
       ></g-image>
     </div>
     <div class="pa-2">
-      {{ pokemon.name }}
+      {{ pokemon.name }} <span class="grey--text">(#{{ pokemon.id }})</span>
     </div>
   </v-card>
 </template>

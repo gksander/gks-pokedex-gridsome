@@ -1,10 +1,10 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
-// import "@fortawesome/fontawesome-free/css/all.css"; // Ensure you are using css-loader
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
+import "./styles/global.css";
 
 export default function(Vue, { appOptions, router, head, isClient }) {
   head.link.push({

@@ -38,7 +38,7 @@
             </div>
           </div>
           <!-- Description -->
-          <div v-html="$page.pokemon.species.flavor_description"></div>
+          <div v-html="$page.pokemon.species.flavor_text"></div>
         </v-col>
       </v-row>
       <!-- Stats -->
@@ -99,7 +99,7 @@ export default {
       return get(this.$page, "pokemon.next_pokemon.slug", "");
     },
     color() {
-      const color = get(this.$page, "pokemon.species.color.name");
+      const color = get(this.$page, "pokemon.species.color");
       return color.replace(/white/i, "grey").replace(/yellow/i, "#c9bc4e");
     },
   },
@@ -126,7 +126,7 @@ export default {
       weight
       height
       stats { base, name }
-      species { flavor_description, color { name } }
+      species { flavor_text, color }
       prev_pokemon { name, slug }
       next_pokemon { name, slug }
     }
