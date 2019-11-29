@@ -16,8 +16,6 @@ const NUM_POKEMON = {
 }["gen3"];
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
-const API_BASE = "http://localhost:6080/api/v2";
-
 /**
  * Default export
  */
