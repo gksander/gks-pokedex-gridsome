@@ -13,7 +13,7 @@ const NUM_POKEMON = {
   gen2: 251,
   gen3: 384,
   gen4: 491,
-}["gen3"];
+}["gen1"];
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
 /**
@@ -77,6 +77,12 @@ module.exports = function(api) {
     const pokemonStatsData = (
       await csv().fromFile(path.join(INPUT_PATH, "pokemon_stats.csv"))
     ).filter(dat => parseInt(dat.pokemon_id) <= NUM_POKEMON);
+    const evolutionChainsData = (
+      await csv().fromFile(path.join(INPUT_PATH, "evolution_chains.csv"))
+    ).filter(dat => parseInt(dat.id) <= 100); // H TODO: Remove this filter
+    const pokemonEvolutionData = (
+      await csv().fromFile(path.join(INPUT_PATH, "pokemon_evolution.csv"))
+    ).filter(dat => parseInt(dat.evolved_species_id) <= NUM_POKEMON);
 
     /**
      * Set up types
@@ -104,22 +110,29 @@ module.exports = function(api) {
     /**
      * Pokemon species
      */
+    // Transform species data into form that we want
+    const transformSpeciesData = item => ({
+      id: item.id,
+      color: pokemonColorsData.find(color => color.id == item.color_id)
+        .identifier,
+      flavor_text: (
+        speciesFlavorData.find(dat => dat.species_id == item.id) || {
+          flavor_text: "No description.",
+        }
+      ).flavor_text,
+      pokemon: store.createReference("Pokemon", item.id),
+      evolves_from: store.createReference(
+        "Species",
+        item.evolves_from_species_id,
+      ),
+      is_baby: item.is_baby,
+      evolution_chain: store.createReference(
+        "EvolutionChain",
+        item.evolution_chain_id,
+      ),
+    });
     for (let item of speciesData) {
-      speciesCollection.addNode({
-        id: item.id,
-        color: pokemonColorsData.find(color => color.id == item.color_id)
-          .identifier,
-        flavor_text: (
-          speciesFlavorData.find(dat => dat.species_id == item.id) || {
-            flavor_text: "No description.",
-          }
-        ).flavor_text,
-        pokemon: store.createReference("Pokemon", item.id),
-        evolves_from: store.createReference(
-          "Species",
-          item.evolves_from_species_id,
-        ),
-      });
+      speciesCollection.addNode(transformSpeciesData(item));
     }
 
     /**
@@ -163,6 +176,35 @@ module.exports = function(api) {
           "Pokemon",
           parseInt(pokemon.id) - 1,
         ),
+      });
+    }
+
+    /**
+     * Evolution chains...
+     */
+    const speciesToEvChainLink = species => {
+      return {
+        species: store.createReference("Species", species.id),
+        evolves_from: store.createReference(
+          "Species",
+          species.evolves_from_species_id,
+        ),
+        trigger: 3, // H TODO: Need this
+        min_level: 3, // H TODO: Need this
+        item: 3, // H TODO: item required to cause evolution
+      };
+    };
+    for (let chain of evolutionChainsData) {
+      // Find the first species in the chain
+      const speciesInChain = speciesData.filter(
+        species => species.evolution_chain_id == chain.id,
+      );
+      if (!speciesInChain.length) continue;
+
+      evolutionChainCollection.addNode({
+        id: chain.id,
+        baby_trigger_item: null, // H TODO: handle this...
+        links: speciesInChain.map(speciesToEvChainLink),
       });
     }
   });

@@ -65,6 +65,20 @@
           </div>
         </v-col>
       </v-row>
+
+      <!-- Evolution chain... -->
+      <template v-if="isPartOfChain">
+        <v-divider class="my-6"></v-divider>
+        <v-row>
+          <v-col v-for="bucket in buckets" :key="bucket[0].pokemon.slug">
+            <poke-list-card
+              v-for="species in bucket"
+              :key="species.pokemon.slug"
+              :pokemon="species.pokemon"
+            ></poke-list-card>
+          </v-col>
+        </v-row>
+      </template>
     </content-wrapper>
 
     <!-- Bottom navigation -->
@@ -97,10 +111,11 @@
 
 <script>
 import PokeTypeChip from "~/components/PokeTypeChip";
+import PokeListCard from "../components/PokeListCard";
 import { get } from "lodash";
 
 export default {
-  components: { PokeTypeChip },
+  components: { PokeTypeChip, PokeListCard },
 
   computed: {
     prevLink() {
@@ -113,10 +128,50 @@ export default {
       const color = get(this.$page, "pokemon.species.color");
       return color.replace(/white/i, "grey").replace(/yellow/i, "#c9bc4e");
     },
+    // Has evolution chain?
+    isPartOfChain() {
+      return this.$page.pokemon.species.evolution_chain.links.length > 1;
+    },
+    // Evolution chain buckets...
+    buckets() {
+      // Start buckets
+      const buckets = [],
+        links = this.$page.pokemon.species.evolution_chain.links;
+
+      // First species
+      const firstSpecies = links.find(link => !link.species.evolves_from)
+        .species;
+      buckets[0] = [firstSpecies];
+
+      // Loop til we can't find anything more for a bucket
+      let areDone = false;
+      while (!areDone) {
+        const lastBucket = buckets[buckets.length - 1],
+          lastBucketIds = lastBucket.map(species => species.pokemon.id);
+
+        const newBucket = links
+          .filter(link =>
+            lastBucketIds.includes(get(link, "species.evolves_from.id")),
+          )
+          .map(link => link.species);
+
+        if (!newBucket.length) {
+          areDone = true;
+        } else {
+          buckets.push(newBucket);
+        }
+      }
+
+      return buckets;
+    },
   },
 
   methods: {
     _get: get,
+  },
+
+  mounted() {
+    console.log(this.$page);
   },
 
   metaInfo() {
@@ -143,9 +198,19 @@ export default {
       weight
       height
       stats { base, name }
-      species { flavor_text, color }
       prev_pokemon { name, slug }
       next_pokemon { name, slug }
+      species {
+        flavor_text, color,
+        evolution_chain {
+          links {
+            species {
+              pokemon { id, name, slug, png(width: 150, height: 150, fit: contain, background: "transparent") }
+              evolves_from { id }
+            }
+          }
+        }
+      }
     }
   }
 </page-query>
