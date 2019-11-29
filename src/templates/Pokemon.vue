@@ -86,6 +86,7 @@
                 'align-center': true,
                 'flex-column': !evChainVertical,
                 'justify-center': !evChainVertical,
+                'flex-wrap': true,
               }"
             >
               <poke-list-card

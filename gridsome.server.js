@@ -13,7 +13,7 @@ const NUM_POKEMON = {
   gen2: 251,
   gen3: 384,
   gen4: 491,
-}["gen2"];
+}["gen3"];
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
 /**
@@ -77,9 +77,9 @@ module.exports = function(api) {
     const pokemonStatsData = (
       await csv().fromFile(path.join(INPUT_PATH, "pokemon_stats.csv"))
     ).filter(dat => parseInt(dat.pokemon_id) <= NUM_POKEMON);
-    const evolutionChainsData = (
-      await csv().fromFile(path.join(INPUT_PATH, "evolution_chains.csv"))
-    ).filter(dat => parseInt(dat.id) <= 100); // H TODO: Remove this filter
+    const evolutionChainsData = await csv().fromFile(
+      path.join(INPUT_PATH, "evolution_chains.csv"),
+    );
     const pokemonEvolutionData = (
       await csv().fromFile(path.join(INPUT_PATH, "pokemon_evolution.csv"))
     ).filter(dat => parseInt(dat.evolved_species_id) <= NUM_POKEMON);
