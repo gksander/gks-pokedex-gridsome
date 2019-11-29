@@ -18,6 +18,7 @@
               v-for="type in $page.pokemon.types"
               :key="type.id"
               :type="type"
+              small
             ></poke-type-chip>
           </div>
           <!-- Weight/height -->

@@ -1,24 +1,37 @@
 <template>
   <Layout>
-    <content-wrapper>
-      <div class="display-1 mb-2">{{ $page.type.name }}</div>
-      <!-- Damage relations -->
-      <div class="mb-3" v-for="cat in damageCategories" :key="cat.title">
-        <div class="title mb-1">{{ cat.title }}</div>
-        <template v-if="cat.types.length > 0">
-          <poke-type-chip
-            v-for="type in cat.types"
-            :key="type.name"
-            :type="type"
-          ></poke-type-chip>
-        </template>
-        <template v-else>
-          <div class="font-italic">Nothing...</div>
-        </template>
-      </div>
+    <content-wrapper style="padding-bottom: 60px">
+      <div class="display-2 mb-2">{{ $page.type.name }}</div>
+      <v-row>
+        <v-col
+          v-for="cat in damageCategories"
+          :key="cat.title"
+          cols="12"
+          sm="4"
+        >
+          <v-card>
+            <v-card-title>{{ cat.title }}</v-card-title>
+            <v-card-text>
+              <template v-if="cat.types.length">
+                <poke-type-chip
+                  v-for="type in cat.types"
+                  :key="type.name"
+                  :type="type"
+                  block
+                  class="mb-2"
+                ></poke-type-chip>
+              </template>
+              <template v-else>
+                <div class="font-italic">Nothing...</div>
+              </template>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-divider class="my-6"></v-divider>
 
       <!-- Pokemon of this type... -->
-      <div class="title">Pokemon</div>
       <v-row>
         <v-col
           v-for="edge in $page.type.belongsTo.edges"
@@ -31,6 +44,15 @@
         </v-col>
       </v-row>
     </content-wrapper>
+
+    <bottom-bar>
+      <v-pagination
+        :length="$page.type.belongsTo.pageInfo.totalPages"
+        :value="$page.type.belongsTo.pageInfo.currentPage"
+        @input="navigateToPage"
+        prev-icon="fa-chevron-left fa-xs"
+      ></v-pagination>
+    </bottom-bar>
   </Layout>
 </template>
 
@@ -68,33 +90,39 @@ export default {
     damageCategories() {
       return [
         {
-          title: "Super Effective Against:",
+          title: "Strong Against",
           types: this.superEffectiveAgainst,
         },
         {
-          title: "Not Very Effective Against:",
+          title: "Weak Against",
           types: this.notVeryEffectiveAgainst,
         },
-        { title: "Not Effective Against:", types: this.notEffectiveAgainst },
+        { title: "Doesn't Effect", types: this.notEffectiveAgainst },
       ];
     },
   },
 
-  mounted() {
-    console.log(this.$page.type.belongsTo.edges);
+  methods: {
+    navigateToPage(page) {
+      if (page == 1) {
+        this.$router.push(`/types/${this.$page.type.slug}/`);
+      } else {
+        this.$router.push(`/types/${this.$page.type.slug}/${page}`);
+      }
+    },
   },
 };
 </script>
 
 <page-query>
-query ($id: ID!) {
+query ($id: ID!, $page: Int) {
   type (id: $id) {
-    id,
-    name,
+    id, name, slug,
     belongsTo(
       filter: { typeName: { eq: Pokemon } },
-      sortBy: "id", order: ASC
-    ) {
+      sortBy: "id", order: ASC, perPage: 8, page: $page
+    ) @paginate {
+      pageInfo { hasPreviousPage, hasNextPage, totalPages, currentPage }
       edges {
         node {
           ... on Pokemon {

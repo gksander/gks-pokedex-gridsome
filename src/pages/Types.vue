@@ -2,23 +2,15 @@
   <Layout>
     <content-wrapper>
       <div class="display-1 mb-2">Types</div>
-      <v-row>
+      <v-row dense>
         <v-col
           v-for="edge in $page.allType.edges"
           :key="edge.node.id"
-          cols="12"
-          sm="6"
-          lg="4"
+          cols="6"
+          sm="4"
+          md="3"
         >
-          <v-hover v-slot:default="{ hover }">
-            <v-card :elevation="hover ? 4 : 1" :to="`/types/${edge.node.slug}`">
-              <v-card-title>
-                {{ edge.node.name }}
-                <v-spacer></v-spacer>
-                <poke-type-chip :type="edge.node"></poke-type-chip>
-              </v-card-title>
-            </v-card>
-          </v-hover>
+          <poke-type-chip :type="edge.node" block></poke-type-chip>
         </v-col>
       </v-row>
     </content-wrapper>

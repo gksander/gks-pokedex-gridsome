@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot:default="{ hover }">
-    <v-chip
+    <v-btn
       :to="`/types/${type.slug}`"
       :outlined="!solid"
       :color="color"
@@ -9,9 +9,11 @@
         hover ? 'elevation-3' : 'elevation-0',
         ...(className || []),
       ]"
+      :small="small"
+      :block="block"
     >
       {{ type.name }}
-    </v-chip>
+    </v-btn>
   </v-hover>
 </template>
 
@@ -24,6 +26,14 @@ export default {
     type: {
       type: Object,
       required: true,
+    },
+    block: {
+      type: Boolean,
+      default: false,
+    },
+    small: {
+      type: Boolean,
+      default: false,
     },
   },
 
