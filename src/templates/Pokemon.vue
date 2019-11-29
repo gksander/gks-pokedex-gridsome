@@ -86,8 +86,9 @@
                 'align-center': true,
                 'flex-column': !evChainVertical,
                 'justify-center': !evChainVertical,
-                'flex-wrap': true,
               }"
+              style="max-width: 100%"
+              class="overflow-auto"
             >
               <poke-list-card
                 v-for="species in bucket"
