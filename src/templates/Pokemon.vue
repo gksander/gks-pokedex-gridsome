@@ -69,15 +69,43 @@
       <!-- Evolution chain... -->
       <template v-if="isPartOfChain">
         <v-divider class="my-6"></v-divider>
-        <v-row>
-          <v-col v-for="bucket in buckets" :key="bucket[0].pokemon.slug">
-            <poke-list-card
-              v-for="species in bucket"
-              :key="species.pokemon.slug"
-              :pokemon="species.pokemon"
-            ></poke-list-card>
-          </v-col>
-        </v-row>
+        <div
+          class="d-flex"
+          :class="{
+            'flex-row': !evChainVertical,
+            'flex-column': evChainVertical,
+            'justify-center': !evChainVertical,
+            'align-center': evChainVertical,
+          }"
+        >
+          <template v-for="(bucket, i) in buckets">
+            <div
+              :key="bucket[0].pokemon.slug"
+              :class="{
+                'd-flex': true,
+                'align-center': true,
+                'flex-column': !evChainVertical,
+                'justify-center': !evChainVertical,
+              }"
+            >
+              <poke-list-card
+                v-for="species in bucket"
+                :key="species.pokemon.slug"
+                :pokemon="species.pokemon"
+                :elevation="species.pokemon.id == $page.pokemon.id ? 8 : 2"
+              ></poke-list-card>
+            </div>
+            <div
+              v-if="i != buckets.length - 1"
+              :key="i"
+              class="flex-grow-0 d-flex px-4 py-2"
+            >
+              <v-icon>{{
+                evChainVertical ? "fa-chevron-down" : "fa-chevron-right"
+              }}</v-icon>
+            </div>
+          </template>
+        </div>
       </template>
     </content-wrapper>
 
@@ -164,6 +192,10 @@ export default {
 
       return buckets;
     },
+
+    evChainVertical() {
+      return this.$vuetify.breakpoint.smAndDown;
+    },
   },
 
   methods: {
@@ -171,7 +203,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.$page);
+    console.log(this.$vuetify);
   },
 
   metaInfo() {

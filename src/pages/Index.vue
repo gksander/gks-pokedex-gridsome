@@ -2,7 +2,7 @@
   <Layout>
     <content-wrapper>
       <div class="display-1 mb-2">Pokemon</div>
-      <v-row>
+      <v-row dense>
         <v-col
           v-for="pokemon in loadedPokemon"
           :key="pokemon.node.id"

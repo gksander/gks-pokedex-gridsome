@@ -1,3 +1,6 @@
 .cursor-pointer {
   cursor: pointer;
 }
+.text-decoration-none {
+  text-decoration: none;
+}

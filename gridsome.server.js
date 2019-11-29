@@ -13,7 +13,7 @@ const NUM_POKEMON = {
   gen2: 251,
   gen3: 384,
   gen4: 491,
-}["gen1"];
+}["gen2"];
 const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
 
 /**
