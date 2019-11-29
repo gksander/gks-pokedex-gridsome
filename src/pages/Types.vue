@@ -21,6 +21,13 @@
 import PokeTypeChip from "../components/PokeTypeChip";
 export default {
   components: { PokeTypeChip },
+
+  metaInfo() {
+    return {
+      title: "Types",
+      meta: [{ name: "description", content: "Pokemon Types listing" }],
+    };
+  },
 };
 </script>
 

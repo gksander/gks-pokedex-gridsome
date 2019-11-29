@@ -20,7 +20,7 @@
         :length="$page.allPokemon.pageInfo.totalPages"
         :value="$page.allPokemon.pageInfo.currentPage"
         @input="navigateToPage"
-        prev-icon="fa-chevron-left fa-xs"
+        total-visible="9"
       ></v-pagination>
     </bottom-bar>
   </Layout>
@@ -50,6 +50,13 @@ export default {
         this.$router.push(`/${page}`);
       }
     },
+  },
+
+  metaInfo() {
+    return {
+      title: "Pokemon",
+      meta: [{ name: "description", content: "Pokemon listing" }],
+    };
   },
 };
 </script>

@@ -9,7 +9,12 @@
       :width="270"
     >
       <v-list shaped>
-        <v-list-item v-for="tab in tabs" :key="tab.title" :to="tab.to">
+        <v-list-item
+          v-for="tab in tabs"
+          :key="tab.title"
+          :to="tab.to"
+          :title="tab.title"
+        >
           <v-list-item-content>
             <v-list-item-title>{{ tab.title }}</v-list-item-title>
           </v-list-item-content>
@@ -20,10 +25,11 @@
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon
         @click="sideNavVisible = !sideNavVisible"
+        title="Toggle Menu"
       ></v-app-bar-nav-icon>
       <v-toolbar-title>PokeDex</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon to="/">
+      <v-btn icon to="/" title="Home">
         <v-icon>fa-home</v-icon>
       </v-btn>
     </v-app-bar>

@@ -63,6 +63,12 @@ export default {
   metaInfo() {
     return {
       title: this.$page.type.name,
+      meta: [
+        {
+          name: "Description",
+          content: `Details for type ${this.$page.type.name}`,
+        },
+      ],
     };
   },
 

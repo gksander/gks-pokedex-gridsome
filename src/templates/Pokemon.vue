@@ -8,7 +8,7 @@
           <g-image
             :src="$page.pokemon.png"
             style="width: 100%"
-            class="fill-height"
+            :alt="`Image for ${$page.pokemon.name}`"
           ></g-image>
         </v-col>
         <v-col cols="12" sm="7">
@@ -69,15 +69,25 @@
 
     <!-- Bottom navigation -->
     <v-bottom-navigation app grow>
-      <v-btn :to="prevLink" width="100" :disabled="!prevLink">
+      <v-btn
+        :to="prevLink"
+        width="100"
+        :disabled="!prevLink"
+        title="Previous Pokemon"
+      >
         <span>{{ _get($page, "pokemon.prev_pokemon.name", "") }}</span>
         <v-icon>fa-chevron-left</v-icon>
       </v-btn>
-      <v-btn to="/" exact>
+      <v-btn to="/" exact title="All Pokemon">
         <span>All</span>
         <v-icon>fa-list-alt</v-icon>
       </v-btn>
-      <v-btn :to="nextLink" :disabled="!nextLink" width="100">
+      <v-btn
+        :to="nextLink"
+        :disabled="!nextLink"
+        width="100"
+        title="Next Pokemon"
+      >
         <span>{{ _get($page, "pokemon.next_pokemon.name", "") }}</span>
         <v-icon>fa-chevron-right</v-icon>
       </v-btn>
@@ -112,6 +122,12 @@ export default {
   metaInfo() {
     return {
       title: this.$page.pokemon.name,
+      meta: [
+        {
+          name: "Description",
+          content: `Details about Pokemon ${this.$page.pokemon.name}`,
+        },
+      ],
     };
   },
 };

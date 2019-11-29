@@ -3,12 +3,12 @@
     <div class="pa-4 pb-0">
       <g-image
         :src="pokemon.png"
-        :alt="`Sprite for ${pokemon.name}`"
+        :alt="`Image for ${pokemon.name}`"
         style="width: 100%"
       ></g-image>
     </div>
     <div class="pa-2">
-      {{ pokemon.name }} <span class="grey--text">(#{{ pokemon.id }})</span>
+      {{ pokemon.name }} <span class="">(#{{ pokemon.id }})</span>
     </div>
   </v-card>
 </template>
