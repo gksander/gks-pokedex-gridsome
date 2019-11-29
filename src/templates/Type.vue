@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <content-wrapper style="padding-bottom: 60px">
+    <content-wrapper>
       <div class="display-2 mb-2">{{ $page.type.name }}</div>
       <v-row>
         <v-col
@@ -34,7 +34,7 @@
       <!-- Pokemon of this type... -->
       <v-row>
         <v-col
-          v-for="edge in $page.type.belongsTo.edges"
+          v-for="edge in loadedPokemon"
           :key="edge.node.id"
           cols="6"
           sm="4"
@@ -42,17 +42,20 @@
         >
           <poke-list-card :pokemon="edge.node"></poke-list-card>
         </v-col>
+        <ClientOnly>
+          <v-col cols="6" sm="4" md="3">
+            <infinite-loading
+              @infinite="infiniteHandler"
+              spinner="spiral"
+              ref="infiniteLoader"
+            >
+              <div slot="no-more" class="d-none">No more!</div>
+              <div slot="no-results">No pokemon...</div>
+            </infinite-loading>
+          </v-col>
+        </ClientOnly>
       </v-row>
     </content-wrapper>
-
-    <bottom-bar>
-      <v-pagination
-        :length="$page.type.belongsTo.pageInfo.totalPages"
-        :value="$page.type.belongsTo.pageInfo.currentPage"
-        @input="navigateToPage"
-        prev-icon="fa-chevron-left fa-xs"
-      ></v-pagination>
-    </bottom-bar>
   </Layout>
 </template>
 
@@ -73,6 +76,17 @@ export default {
   },
 
   components: { PokeTypeChip, PokeListCard },
+
+  data() {
+    return {
+      loadedPokemon: [],
+      currentPage: 1,
+    };
+  },
+
+  created() {
+    this.loadedPokemon.push(...this.$page.type.belongsTo.edges);
+  },
 
   computed: {
     // Types this type is strong against
@@ -109,11 +123,35 @@ export default {
   },
 
   methods: {
-    navigateToPage(page) {
-      if (page == 1) {
-        this.$router.push(`/types/${this.$page.type.slug}/`);
+    async infiniteHandler($state) {
+      if (
+        this.currentPage + 1 >
+        this.$page.type.belongsTo.pageInfo.totalPages
+      ) {
+        $state.complete();
       } else {
-        this.$router.push(`/types/${this.$page.type.slug}/${page}`);
+        const { data } = await this.$fetch(
+          `/types/${this.$page.type.slug}/${this.currentPage + 1}`,
+        );
+        if (data.type.belongsTo.edges.length) {
+          this.currentPage = data.type.belongsTo.pageInfo.currentPage;
+          this.loadedPokemon.push(...data.type.belongsTo.edges);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      }
+    },
+  },
+
+  watch: {
+    "$page.type.slug"() {
+      this.currentPage = 1;
+      this.loadedPokemon = this.$page.type.belongsTo.edges;
+      try {
+        this.$refs.infiniteLoader.stateChanger.reset();
+      } catch (_) {
+        console.log(_);
       }
     },
   },

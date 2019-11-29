@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <content-wrapper style="padding-bottom: 60px">
+    <content-wrapper>
       <div class="display-1 mb-2">Pokemon</div>
       <v-row>
         <v-col
