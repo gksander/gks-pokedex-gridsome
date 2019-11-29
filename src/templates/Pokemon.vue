@@ -93,10 +93,10 @@ export default {
 
   computed: {
     prevLink() {
-      return get(this.$page, "pokemon.prev_pokemon.slug", "");
+      return "/" + get(this.$page, "pokemon.prev_pokemon.slug", "");
     },
     nextLink() {
-      return get(this.$page, "pokemon.next_pokemon.slug", "");
+      return "/" + get(this.$page, "pokemon.next_pokemon.slug", "");
     },
     color() {
       const color = get(this.$page, "pokemon.species.color");
