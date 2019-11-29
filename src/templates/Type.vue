@@ -164,7 +164,7 @@ query ($id: ID!, $page: Int) {
     id, name, slug,
     belongsTo(
       filter: { typeName: { eq: Pokemon } },
-      sortBy: "id", order: ASC, perPage: 8, page: $page
+      sortBy: "id", order: ASC, perPage: 20, page: $page
     ) @paginate {
       pageInfo { hasPreviousPage, hasNextPage, totalPages, currentPage }
       edges {

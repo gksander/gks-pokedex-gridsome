@@ -52,8 +52,8 @@ export default {
       sideNavVisible: null,
       query: "",
       tabs: [
-        { title: "Home", to: "/" },
-        // { title: "Generation I", to: "/generation-1" },
+        { title: "Pokemon", to: "/" },
+        { title: "Search", to: "/search" },
         { title: "Types", to: "/types" },
       ],
     };
