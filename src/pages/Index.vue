@@ -3,7 +3,7 @@
     <content-wrapper>
       <v-row dense>
         <v-col
-          v-for="pokemon in loadedPokemon"
+          v-for="pokemon in sortedPokemon"
           :key="pokemon.node.id"
           cols="6"
           sm="4"
@@ -37,6 +37,17 @@ export default {
       loadedPokemon: [],
       currentPage: 1,
     };
+  },
+
+  /**
+   * Computed props
+   */
+  computed: {
+    sortedPokemon() {
+      return this.loadedPokemon.sort(
+        (a, b) => parseInt(a.node.id) - parseInt(b.node.id),
+      );
+    },
   },
 
   /**

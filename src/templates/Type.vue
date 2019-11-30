@@ -32,7 +32,7 @@
       <!-- Pokemon of this type... -->
       <v-row>
         <v-col
-          v-for="edge in loadedPokemon"
+          v-for="edge in sortedPokemon"
           :key="edge.node.id"
           cols="6"
           sm="4"
@@ -115,6 +115,12 @@ export default {
         },
         { title: "Doesn't Effect", types: this.notEffectiveAgainst },
       ];
+    },
+    // Sort by ID
+    sortedPokemon() {
+      return this.loadedPokemon.sort(
+        (a, b) => parseInt(a.node.id) - parseInt(b.node.id),
+      );
     },
   },
 
