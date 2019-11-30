@@ -130,7 +130,9 @@ module.exports = function(api) {
         color: pokemonColorsData.find(color => color.id == item.color_id)
           .identifier,
         flavor_text: (
-          speciesFlavorData.find(dat => dat.species_id == item.id) || {
+          speciesFlavorData.find(
+            dat => dat.species_id == item.id && dat.language_id == 9,
+          ) || {
             flavor_text: "No description.",
           }
         ).flavor_text.replace(/[\n\r\f]/g, " "),
