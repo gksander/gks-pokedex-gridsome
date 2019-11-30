@@ -27,10 +27,6 @@ export default {
     pokemon: {
       type: Object,
     },
-    elevation: {
-      type: Number,
-      default: 2,
-    },
   },
 
   components: { PokeTypeBadge },

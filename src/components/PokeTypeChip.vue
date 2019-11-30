@@ -4,15 +4,12 @@
       :to="`/types/${type.slug}`"
       :outlined="!solid"
       :color="color"
-      :class="[
-        'mr-2',
-        hover ? 'elevation-3' : 'elevation-0',
-        ...(className || []),
-      ]"
+      :class="[hover ? 'elevation-3' : 'elevation-0', ...(className || [])]"
       :small="small"
       :block="block"
     >
       {{ type.name }}
+      <v-icon right x-small v-if="starred">fa-star</v-icon>
     </v-btn>
   </v-hover>
 </template>
@@ -32,6 +29,10 @@ export default {
       default: false,
     },
     small: {
+      type: Boolean,
+      default: false,
+    },
+    starred: {
       type: Boolean,
       default: false,
     },

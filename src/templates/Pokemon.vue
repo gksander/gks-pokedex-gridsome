@@ -12,14 +12,17 @@
           ></g-image>
         </v-col>
         <v-col cols="12" sm="7">
-          <div class="display-1 mb-2">{{ $page.pokemon.name }}</div>
+          <div class="display-1">{{ $page.pokemon.name }}</div>
           <div class="mb-4">
-            <poke-type-chip
-              v-for="type in $page.pokemon.types"
-              :key="type.id"
-              :type="type"
-              small
-            ></poke-type-chip>
+            <v-row dense>
+              <v-col
+                v-for="type in $page.pokemon.types"
+                :key="type.id"
+                class="flex-grow-0"
+              >
+                <poke-type-chip :type="type"></poke-type-chip>
+              </v-col>
+            </v-row>
           </div>
           <!-- Weight/height -->
           <div class="d-flex mb-2">
@@ -40,6 +43,21 @@
           </div>
           <!-- Description -->
           <div v-html="$page.pokemon.species.flavor_text"></div>
+          <!-- Weaknesses -->
+          <div class="title mt-2">Weaknesses</div>
+          <v-row dense>
+            <v-col
+              v-for="factor in damageFactors"
+              :key="factor.type.slug"
+              class="flex-grow-0"
+            >
+              <poke-type-chip
+                :type="factor.type"
+                small
+                :starred="factor.factor > 3.9"
+              ></poke-type-chip>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
       <!-- Stats -->
@@ -201,8 +219,34 @@ export default {
       return buckets;
     },
 
+    // Should we display evolution chain vertically? (Small screens)
     evChainVertical() {
       return !this.isMounted || this.$vuetify.breakpoint.smAndDown;
+    },
+
+    // Damage factors, form of [{type: ..., factor: 2}, ...]
+    damageFactors() {
+      // Group factors
+      const factors = {};
+      for (let factor of this.$page.pokemon.damage_factors) {
+        const slug = factor.damage_type.slug;
+
+        // If we already have a record started, append the factor
+        if (factors[slug]) {
+          factors[slug].factor =
+            (factors[slug].factor * parseInt(factor.damage_factor)) / 100;
+        }
+        // Else, start a new factor
+        else {
+          factors[slug] = {
+            type: factor.damage_type,
+            factor: parseInt(factor.damage_factor) / 100,
+          };
+        }
+      }
+
+      // Reduce to array, only include super effective ones
+      return Object.values(factors).filter(factor => factor.factor > 1);
     },
   },
 
@@ -233,7 +277,7 @@ export default {
     pokemon(id: $id) {
       id,
       name,
-      png(width: 150, height: 150, fit: contain, background: "transparent")
+      png(width: 350, height: 350, fit: contain, background: "transparent")
       types { id, name, slug }
       weight
       height
@@ -250,6 +294,10 @@ export default {
             }
           }
         }
+      }
+      damage_factors {
+        damage_type { slug, name }
+        damage_factor
       }
     }
   }

@@ -10,16 +10,14 @@
           sm="4"
         >
           <v-card>
-            <v-card-title>{{ cat.title }}</v-card-title>
+            <v-card-title class="pb-2">{{ cat.title }}</v-card-title>
             <v-card-text>
               <template v-if="cat.types.length">
-                <poke-type-chip
-                  v-for="type in cat.types"
-                  :key="type.name"
-                  :type="type"
-                  block
-                  class="mb-2"
-                ></poke-type-chip>
+                <v-row dense>
+                  <v-col v-for="type in cat.types" :key="type.name" cols="12">
+                    <poke-type-chip :type="type" block small></poke-type-chip>
+                  </v-col>
+                </v-row>
               </template>
               <template v-else>
                 <div class="font-italic">Nothing...</div>

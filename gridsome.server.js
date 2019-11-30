@@ -53,9 +53,12 @@ module.exports = function(api) {
      * Load in data first
      */
     const typesData = await csv().fromFile(path.join(INPUT_PATH, "types.csv"));
-    const damageFactorData = await csv().fromFile(
-      path.join(INPUT_PATH, "type_efficacy.csv"),
-    );
+    const damageFactorData = (
+      await csv().fromFile(path.join(INPUT_PATH, "type_efficacy.csv"))
+    ).map(item => ({
+      id: `${item.damage_type_id}.${item.target_type_id}`,
+      ...item,
+    }));
     const speciesData = (
       await csv().fromFile(path.join(INPUT_PATH, "pokemon_species.csv"))
     ).filter(dat => parseInt(dat.id) <= NUM_POKEMON);
@@ -101,6 +104,7 @@ module.exports = function(api) {
      */
     for (let item of damageFactorData) {
       damageFactorCollection.addNode({
+        id: item.id,
         damage_type: store.createReference("Type", item.damage_type_id),
         target_type: store.createReference("Type", item.target_type_id),
         damage_factor: item.damage_factor,
@@ -111,28 +115,27 @@ module.exports = function(api) {
      * Pokemon species
      */
     // Transform species data into form that we want
-    const transformSpeciesData = item => ({
-      id: item.id,
-      color: pokemonColorsData.find(color => color.id == item.color_id)
-        .identifier,
-      flavor_text: (
-        speciesFlavorData.find(dat => dat.species_id == item.id) || {
-          flavor_text: "No description.",
-        }
-      ).flavor_text,
-      pokemon: store.createReference("Pokemon", item.id),
-      evolves_from: store.createReference(
-        "Species",
-        item.evolves_from_species_id,
-      ),
-      is_baby: item.is_baby,
-      evolution_chain: store.createReference(
-        "EvolutionChain",
-        item.evolution_chain_id,
-      ),
-    });
     for (let item of speciesData) {
-      speciesCollection.addNode(transformSpeciesData(item));
+      speciesCollection.addNode({
+        id: item.id,
+        color: pokemonColorsData.find(color => color.id == item.color_id)
+          .identifier,
+        flavor_text: (
+          speciesFlavorData.find(dat => dat.species_id == item.id) || {
+            flavor_text: "No description.",
+          }
+        ).flavor_text,
+        pokemon: store.createReference("Pokemon", item.id),
+        evolves_from: store.createReference(
+          "Species",
+          item.evolves_from_species_id,
+        ),
+        is_baby: item.is_baby,
+        evolution_chain: store.createReference(
+          "EvolutionChain",
+          item.evolution_chain_id,
+        ),
+      });
     }
 
     /**
@@ -156,6 +159,17 @@ module.exports = function(api) {
           };
         });
 
+      // Types
+      const types = pokemonTypesData.filter(
+        type => type.pokemon_id == pokemon.id,
+      );
+      const typesIds = types.map(type => type.type_id);
+
+      // All damage relations for the given pokemon
+      const damage_factors = damageFactorData
+        .filter(dat => typesIds.includes(dat.target_type_id))
+        .map(factor => store.createReference("DamageFactor", factor.id));
+
       pokemonCollection.addNode({
         id: pokemon.id,
         name: capitalize(pokemon.identifier),
@@ -163,9 +177,8 @@ module.exports = function(api) {
         height: Math.round((parseInt(pokemon.height) / 3.048) * 100) / 100, // Feet
         weight: Math.round((parseInt(pokemon.weight) / 4.536) * 100) / 100, // Lbs
         png: require.resolve(`./src/assets/img/poke-png/${pokemon.id}.png`),
-        types: pokemonTypesData
-          .filter(type => type.pokemon_id == pokemon.id)
-          .map(type => store.createReference("Type", type.type_id)),
+        types: types.map(type => store.createReference("Type", type.type_id)),
+        damage_factors,
         stats,
         species: store.createReference("Species", pokemon.id),
         next_pokemon: store.createReference(
