@@ -27,15 +27,13 @@
           <!-- Weight/height -->
           <div class="d-flex mb-2">
             <div class="mr-5 d-flex align-center">
-              <v-icon class="mr-2" color="grey darken-2"
-                >fa-ruler-vertical</v-icon
-              >
+              <v-icon class="mr-2" color="grey darken-2">$height</v-icon>
               <span class="title font-weight-thin"
                 >{{ $page.pokemon.height }} ft</span
               >
             </div>
             <div class="d-flex align-center">
-              <v-icon class="mr-2" color="grey darken-2">fa-weight</v-icon>
+              <v-icon class="mr-2" color="grey darken-2">$weight</v-icon>
               <span class="title font-weight-thin"
                 >{{ $page.pokemon.weight }} lbs</span
               >
@@ -119,10 +117,11 @@
               v-if="i != buckets.length - 1"
               :key="i"
               class="flex-grow-0 d-flex px-2 py-2"
+              :class="{
+                'align-center': !evChainVertical,
+              }"
             >
-              <v-icon>{{
-                evChainVertical ? "fa-chevron-down" : "fa-chevron-right"
-              }}</v-icon>
+              <v-icon>{{ evChainVertical ? "$down" : "$right" }}</v-icon>
             </div>
           </template>
         </div>
@@ -138,11 +137,11 @@
         title="Previous Pokemon"
       >
         <span>{{ _get($page, "pokemon.prev_pokemon.name", "") }}</span>
-        <v-icon>fa-chevron-left</v-icon>
+        <v-icon>$prev</v-icon>
       </v-btn>
       <v-btn to="/" exact title="All Pokemon">
         <span>All</span>
-        <v-icon>fa-list-alt</v-icon>
+        <v-icon>$list</v-icon>
       </v-btn>
       <v-btn
         :to="nextLink"
@@ -151,7 +150,7 @@
         title="Next Pokemon"
       >
         <span>{{ _get($page, "pokemon.next_pokemon.name", "") }}</span>
-        <v-icon>fa-chevron-right</v-icon>
+        <v-icon>$next</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </Layout>

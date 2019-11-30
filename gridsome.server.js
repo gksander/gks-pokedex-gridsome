@@ -7,13 +7,14 @@ const path = require("path");
 const csv = require("csvtojson");
 
 // Config
-const NUM_POKEMON = {
-  starters: 9,
-  gen1: 151,
-  gen2: 251,
-  gen3: 384,
-  gen4: 491,
-}["gen3"];
+const NUM_POKEMON =
+  {
+    starters: 9,
+    gen1: 151,
+    gen2: 251,
+    gen3: 384,
+    gen4: 491,
+  }["gen3"] || 9;
 const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**

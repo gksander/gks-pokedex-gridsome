@@ -9,7 +9,7 @@
       :block="block"
     >
       {{ type.name }}
-      <v-icon right x-small v-if="starred">fa-star</v-icon>
+      <v-icon right x-small v-if="starred">$star</v-icon>
     </v-btn>
   </v-hover>
 </template>

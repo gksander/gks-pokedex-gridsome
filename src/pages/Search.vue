@@ -31,12 +31,15 @@
                 <td>{{ item.id }}</td>
                 <td>{{ item.name }}</td>
                 <td>
-                  <poke-type-chip
-                    v-for="type in item.types"
-                    :key="type.id"
-                    :type="type"
-                    small
-                  ></poke-type-chip>
+                  <v-row dense>
+                    <v-col
+                      v-for="type in item.types"
+                      :key="type.id"
+                      class="flex-grow-0"
+                    >
+                      <poke-type-chip :type="type" small></poke-type-chip>
+                    </v-col>
+                  </v-row>
                 </td>
               </tr>
             </tbody>
