@@ -21,14 +21,13 @@
 </template>
 
 <script>
-import PokeTypeBadge from "./PokeTypeBadge";
 export default {
   props: {
+    // Pokemon needs id, slug, name, and png.
+    // This is data that needs to come from a page/template, and then passed along here.
     pokemon: {
       type: Object,
     },
   },
-
-  components: { PokeTypeBadge },
 };
 </script>

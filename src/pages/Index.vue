@@ -14,8 +14,8 @@
         <ClientOnly>
           <v-col cols="6" sm="4" md="3">
             <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-              <div slot="no-more" class="d-none">No more!</div>
-              <div slot="no-results">No pokemon...</div>
+              <div slot="no-more" class="d-none"></div>
+              <div slot="no-results" class="d-none"></div>
             </infinite-loading>
           </v-col>
         </ClientOnly>
@@ -29,7 +29,9 @@ import PokeListCard from "../components/PokeListCard";
 export default {
   components: { PokeListCard },
 
-  // Keep track of the pokemon we loaded in
+  /**
+   * Keep track of the pokemon we loaded in
+   */
   data() {
     return {
       loadedPokemon: [],
@@ -37,28 +39,43 @@ export default {
     };
   },
 
-  // On creation, add initial pokemon to our list
+  /**
+   * On creation, add initial pokemon to our list
+   */
   created() {
-    this.loadedPokemon.push(...this.$page.allPokemon.edges);
+    this.loadedPokemon = this.$page.allPokemon.edges;
   },
 
+  /**
+   * Methods
+   */
   methods: {
+    /**
+     * Handler for the infinite scroll component
+     */
     async infiniteHandler($state) {
+      // If next page doesn't exist, break.
       if (this.currentPage + 1 > this.$page.allPokemon.pageInfo.totalPages) {
         $state.complete();
       } else {
+        // Fetch data from the next page
         const { data } = await this.$fetch(`/${this.currentPage + 1}`);
+        // If we've got data, add it to our list
         if (data.allPokemon.edges.length) {
           this.currentPage = data.allPokemon.pageInfo.currentPage;
           this.loadedPokemon.push(...data.allPokemon.edges);
           $state.loaded();
         } else {
+          // No more data - we're done
           $state.complete();
         }
       }
     },
   },
 
+  /**
+   * Page meta
+   */
   metaInfo() {
     return {
       title: "Pokemon",

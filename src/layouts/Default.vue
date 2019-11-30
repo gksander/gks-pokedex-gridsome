@@ -43,29 +43,17 @@
 </template>
 
 <script>
-import SiteHeader from "~/components/SiteHeader";
 export default {
-  components: { SiteHeader },
   // Component data
   data() {
     return {
       sideNavVisible: null,
-      query: "",
       tabs: [
         { title: "Pokemon", to: "/" },
         { title: "Search", to: "/search" },
         { title: "Types", to: "/types" },
       ],
     };
-  },
-  // Computed
-  computed: {
-    filteredPokemon() {
-      const re = new RegExp(this.query, "i");
-      return this.$static.allPokemon.edges.filter(edge =>
-        re.test(edge.node.name),
-      );
-    },
   },
 };
 </script>

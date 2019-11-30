@@ -6,7 +6,6 @@ import InfiniteLoading from "vue-infinite-loading";
 // User created
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
-import BottomBar from "~/components/BottomBar.vue";
 import "./styles/global.css";
 
 export default function(Vue, { appOptions, router, head, isClient }) {
@@ -15,17 +14,16 @@ export default function(Vue, { appOptions, router, head, isClient }) {
     href: "https://use.fontawesome.com/releases/v5.0.13/css/all.css",
   });
 
-  const opts = {
+  // Set up Vuetify
+  Vue.use(Vuetify);
+  appOptions.vuetify = new Vuetify({
     icons: {
       iconfont: "fa",
     },
-  }; //opts includes, vuetify themes, icons, etc.
-  Vue.use(Vuetify);
+  });
 
-  appOptions.vuetify = new Vuetify(opts);
-  // Set default layout as a global component
+  // Make a few components globally accessible
   Vue.component("Layout", DefaultLayout);
   Vue.component("ContentWrapper", ContentWrapper);
-  Vue.component("BottomBar", BottomBar);
   Vue.use(InfiniteLoading);
 }

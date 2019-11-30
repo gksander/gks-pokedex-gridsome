@@ -106,7 +106,7 @@
                 'justify-center': !evChainVertical,
               }"
               style="max-width: 100%"
-              class="overflow-auto"
+              class="overflow-auto pa-2"
             >
               <poke-list-card
                 v-for="species in bucket"
@@ -118,7 +118,7 @@
             <div
               v-if="i != buckets.length - 1"
               :key="i"
-              class="flex-grow-0 d-flex px-4 py-2"
+              class="flex-grow-0 d-flex px-2 py-2"
             >
               <v-icon>{{
                 evChainVertical ? "fa-chevron-down" : "fa-chevron-right"
@@ -165,19 +165,27 @@ import { get } from "lodash";
 export default {
   components: { PokeTypeChip, PokeListCard },
 
+  /**
+   * Page data
+   */
   data() {
     return {
       isMounted: false,
     };
   },
 
+  /**
+   * Computed props
+   */
   computed: {
+    // Links to previous/next pokemon
     prevLink() {
       return "/" + get(this.$page, "pokemon.prev_pokemon.slug", "");
     },
     nextLink() {
       return "/" + get(this.$page, "pokemon.next_pokemon.slug", "");
     },
+    // Color of the pokemon (with some tweaks for light colors)
     color() {
       const color = get(this.$page, "pokemon.species.color");
       return color.replace(/white/i, "grey").replace(/yellow/i, "#c9bc4e");
@@ -250,14 +258,23 @@ export default {
     },
   },
 
+  /**
+   * Component methods
+   */
   methods: {
     _get: get,
   },
 
+  /**
+   * On mount, mark that we're mounted. (For display purposes...)
+   */
   mounted() {
     this.isMounted = true;
   },
 
+  /**
+   * Page meta
+   */
   metaInfo() {
     return {
       title: this.$page.pokemon.name,

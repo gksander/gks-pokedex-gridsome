@@ -7,8 +7,7 @@
     "explore": "gridsome explore",
     "deploy": "netlify deploy --dir=dist --prod",
     "build-and-deploy": "yarn run build && yarn run deploy",
-    "svg-to-png": "node ./scripts/svg-to-png.js",
-    "csv-to-json": "node ./scripts/fetch-data.js"
+    "svg-to-png": "node ./scripts/svg-to-png.js"
   },
   "dependencies": {
     "axios": "^0.19.0",

@@ -52,6 +52,10 @@ import PokeTypeChip from "../components/PokeTypeChip";
 
 export default {
   components: { PokeTypeChip },
+
+  /**
+   * Component data
+   */
   data() {
     return {
       query: "",

@@ -4,7 +4,7 @@ const klaw = require("klaw");
 const path = require("path");
 
 /**
- * Function to slice and dice
+ * Function to slice and dice SVGs
  */
 module.exports = async () => {
   await new Promise(async resolve => {
@@ -15,8 +15,10 @@ module.exports = async () => {
     // Dump the output
     await fse.emptyDir(outputPath);
 
+    // Walk through the asset path...
     await klaw(assetPath)
       .on("data", item => {
+        // For each item, use sharp to convert to PNG
         try {
           sharp(item.path)
             .resize(500, 500, { fit: "inside" })

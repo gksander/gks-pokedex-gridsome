@@ -20,31 +20,41 @@ import typeToColor from "../util/type-to-color";
 
 export default {
   props: {
+    // The type object (id, slug, name required)
     type: {
       type: Object,
       required: true,
     },
+    // Whether to display the button as a block
     block: {
       type: Boolean,
       default: false,
     },
+    // Small button?
     small: {
       type: Boolean,
       default: false,
     },
+    // Add a star? Used for super-duper effective types
     starred: {
       type: Boolean,
       default: false,
     },
   },
 
+  /**
+   * Computed props
+   */
   computed: {
+    // Color of the button
     color() {
       return typeToColor(this.type.name);
     },
+    // Show it as solid?
     solid() {
       return /steel/i.test(this.type.name);
     },
+    // Additional classes for certain types
     className() {
       return /fairy/i.test(this.type.name) ? ["pink--text", "lighten-2"] : [];
     },

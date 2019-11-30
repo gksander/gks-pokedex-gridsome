@@ -22,6 +22,9 @@ import PokeTypeChip from "../components/PokeTypeChip";
 export default {
   components: { PokeTypeChip },
 
+  /**
+   * Page meta
+   */
   metaInfo() {
     return {
       title: "Types",

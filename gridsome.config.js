@@ -26,6 +26,7 @@ module.exports = {
     //   },
     // },
   ],
+  // Templates to render out for given Edge types
   templates: {
     Pokemon: [
       {

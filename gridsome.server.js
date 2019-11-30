@@ -14,7 +14,7 @@ const NUM_POKEMON = {
   gen3: 384,
   gen4: 491,
 }["gen3"];
-const INPUT_PATH = path.join(__dirname, "src/assets/data/csv");
+const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**
  * Default export
@@ -44,47 +44,55 @@ module.exports = function(api) {
     const damageFactorCollection = addCollection("DamageFactor");
     const pokemonCollection = addCollection("Pokemon");
     const speciesCollection = addCollection("Species");
-    const generationsCollection = addCollection("Generation");
-    const versionCollection = addCollection("Version");
-    const versionGroupCollection = addCollection("VersionGroup");
     const evolutionChainCollection = addCollection("EvolutionChain");
 
     /**
      * Load in data first
      */
-    const typesData = await csv().fromFile(path.join(INPUT_PATH, "types.csv"));
+    // Types
+    const typesData = await csv().fromFile(path.join(DATA_DIR, "types.csv"));
+    // Damage factors (how strong types are against each other)
     const damageFactorData = (
-      await csv().fromFile(path.join(INPUT_PATH, "type_efficacy.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "type_efficacy.csv"))
     ).map(item => ({
       id: `${item.damage_type_id}.${item.target_type_id}`,
       ...item,
     }));
+    // Pokemon species
     const speciesData = (
-      await csv().fromFile(path.join(INPUT_PATH, "pokemon_species.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "pokemon_species.csv"))
     ).filter(dat => parseInt(dat.id) <= NUM_POKEMON);
+    // Species "Flavor" info, to get description
     const speciesFlavorData = (
       await csv().fromFile(
-        path.join(INPUT_PATH, "pokemon_species_flavor_text.csv"),
+        path.join(DATA_DIR, "pokemon_species_flavor_text.csv"),
       )
     ).filter(dat => parseInt(dat.species_id) <= NUM_POKEMON);
+    // The colors of pokemon
     const pokemonColorsData = await csv().fromFile(
-      path.join(INPUT_PATH, "pokemon_colors.csv"),
+      path.join(DATA_DIR, "pokemon_colors.csv"),
     );
+    // Pokemon themselves
     const pokemonData = (
-      await csv().fromFile(path.join(INPUT_PATH, "pokemon.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "pokemon.csv"))
     ).filter(dat => parseInt(dat.id) <= NUM_POKEMON);
+    // Pivot table for pokemon and types
     const pokemonTypesData = (
-      await csv().fromFile(path.join(INPUT_PATH, "pokemon_types.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "pokemon_types.csv"))
     ).filter(dat => parseInt(dat.pokemon_id) <= NUM_POKEMON);
-    const statsData = await csv().fromFile(path.join(INPUT_PATH, "stats.csv"));
+    // Stat information
+    const statsData = await csv().fromFile(path.join(DATA_DIR, "stats.csv"));
+    // Pivot table for pokemon and stats
     const pokemonStatsData = (
-      await csv().fromFile(path.join(INPUT_PATH, "pokemon_stats.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "pokemon_stats.csv"))
     ).filter(dat => parseInt(dat.pokemon_id) <= NUM_POKEMON);
+    // Evolution chains
     const evolutionChainsData = await csv().fromFile(
-      path.join(INPUT_PATH, "evolution_chains.csv"),
+      path.join(DATA_DIR, "evolution_chains.csv"),
     );
+    // Details about evolutions (level, etc.). Not currently using it.
     const pokemonEvolutionData = (
-      await csv().fromFile(path.join(INPUT_PATH, "pokemon_evolution.csv"))
+      await csv().fromFile(path.join(DATA_DIR, "pokemon_evolution.csv"))
     ).filter(dat => parseInt(dat.evolved_species_id) <= NUM_POKEMON);
 
     /**
@@ -114,7 +122,6 @@ module.exports = function(api) {
     /**
      * Pokemon species
      */
-    // Transform species data into form that we want
     for (let item of speciesData) {
       speciesCollection.addNode({
         id: item.id,
@@ -202,9 +209,6 @@ module.exports = function(api) {
           "Species",
           species.evolves_from_species_id,
         ),
-        trigger: 3, // H TODO: Need this
-        min_level: 3, // H TODO: Need this
-        item: 3, // H TODO: item required to cause evolution
       };
     };
     for (let chain of evolutionChainsData) {
@@ -216,7 +220,7 @@ module.exports = function(api) {
 
       evolutionChainCollection.addNode({
         id: chain.id,
-        baby_trigger_item: null, // H TODO: handle this...
+        baby_trigger_item: null, // TODO: handle this...
         links: speciesInChain.map(speciesToEvChainLink),
       });
     }
