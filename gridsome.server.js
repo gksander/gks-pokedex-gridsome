@@ -14,7 +14,7 @@ const NUM_POKEMON =
     gen2: 251,
     gen3: 384,
     gen4: 491,
-  }["gen3"] || 9;
+  }["gen4"] || 9;
 const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**
@@ -132,7 +132,7 @@ module.exports = function(api) {
           speciesFlavorData.find(dat => dat.species_id == item.id) || {
             flavor_text: "No description.",
           }
-        ).flavor_text,
+        ).flavor_text.replace(/[\n\r\f]/g, " "),
         pokemon: store.createReference("Pokemon", item.id),
         evolves_from: store.createReference(
           "Species",
