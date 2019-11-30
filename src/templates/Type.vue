@@ -48,7 +48,7 @@
               ref="infiniteLoader"
             >
               <div slot="no-more" class="d-none">No more!</div>
-              <div slot="no-results">No pokemon...</div>
+              <div slot="no-results" class="d-none">No pokemon...</div>
             </infinite-loading>
           </v-col>
         </ClientOnly>
