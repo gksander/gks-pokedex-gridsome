@@ -11,7 +11,7 @@
           :src="pokemon.png"
           :alt="`Image for ${pokemon.name}`"
           style="width: 100%"
-        ></g-image>
+        />
       </div>
       <div class="px-2 pt-1 text-truncate text-center">
         {{ pokemon.name }} <span class="">(#{{ pokemon.id }})</span>

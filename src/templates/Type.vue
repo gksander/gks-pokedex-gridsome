@@ -1,60 +1,53 @@
 <template>
-  <Layout>
-    <content-wrapper>
-      <div class="display-2 mb-2">{{ $page.type.name }}</div>
-      <v-row>
-        <v-col
-          v-for="cat in damageCategories"
-          :key="cat.title"
-          cols="12"
-          sm="4"
-        >
-          <v-card>
-            <v-card-title class="pb-2">{{ cat.title }}</v-card-title>
-            <v-card-text>
-              <template v-if="cat.types.length">
-                <v-row dense>
-                  <v-col v-for="type in cat.types" :key="type.name" cols="12">
-                    <poke-type-chip :type="type" block small></poke-type-chip>
-                  </v-col>
-                </v-row>
-              </template>
-              <template v-else>
-                <div class="font-italic">Nothing...</div>
-              </template>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
+  <content-wrapper>
+    <div class="display-2 mb-2">{{ $page.type.name }}</div>
+    <v-row>
+      <v-col v-for="cat in damageCategories" :key="cat.title" cols="12" sm="4">
+        <v-card>
+          <v-card-title class="pb-2">{{ cat.title }}</v-card-title>
+          <v-card-text>
+            <template v-if="cat.types.length">
+              <v-row dense>
+                <v-col v-for="type in cat.types" :key="type.name" cols="12">
+                  <poke-type-chip :type="type" block small></poke-type-chip>
+                </v-col>
+              </v-row>
+            </template>
+            <template v-else>
+              <div class="font-italic">Nothing...</div>
+            </template>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
 
-      <v-divider class="my-6"></v-divider>
+    <v-divider class="my-6"></v-divider>
 
-      <!-- Pokemon of this type... -->
-      <v-row>
-        <v-col
-          v-for="edge in sortedPokemon"
-          :key="edge.node.id"
-          cols="6"
-          sm="4"
-          md="3"
-        >
-          <poke-list-card :pokemon="edge.node"></poke-list-card>
+    <!-- Pokemon of this type... -->
+    <v-row>
+      <v-col
+        v-for="edge in sortedPokemon"
+        :key="edge.node.id"
+        cols="6"
+        sm="4"
+        md="3"
+      >
+        <poke-list-card :pokemon="edge.node"></poke-list-card>
+      </v-col>
+      <ClientOnly>
+        <v-col cols="6" sm="4" md="3">
+          <infinite-loading
+            @infinite="infiniteHandler"
+            spinner="spiral"
+            ref="infiniteLoader"
+          >
+            <div slot="no-more" class="d-none">No more!</div>
+            <div slot="no-results" class="d-none">No pokemon...</div>
+          </infinite-loading>
         </v-col>
-        <ClientOnly>
-          <v-col cols="6" sm="4" md="3">
-            <infinite-loading
-              @infinite="infiniteHandler"
-              spinner="spiral"
-              ref="infiniteLoader"
-            >
-              <div slot="no-more" class="d-none">No more!</div>
-              <div slot="no-results" class="d-none">No pokemon...</div>
-            </infinite-loading>
-          </v-col>
-        </ClientOnly>
-      </v-row>
-    </content-wrapper>
-  </Layout>
+      </ClientOnly>
+    </v-row>
+  </content-wrapper>
 </template>
 
 <script>

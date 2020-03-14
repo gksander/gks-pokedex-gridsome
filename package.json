@@ -7,13 +7,15 @@
     "explore": "gridsome explore",
     "deploy": "netlify deploy --dir=dist --prod",
     "build-and-deploy": "yarn run build && yarn run deploy",
-    "svg-to-png": "node ./scripts/svg-to-png.js"
+    "svg-to-png": "node ./scripts/svg-to-png.js",
+    "extract-colors": "node ./scripts/extract-colors.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "gridsome": "^0.7.0",
     "gridsome-plugin-pwa": "^0.0.10",
     "lodash": "^4.17.15",
+    "node-vibrant": "^3.1.5",
     "vue-infinite-loading": "^2.4.4",
     "vuetify": "^2.1.11"
   },

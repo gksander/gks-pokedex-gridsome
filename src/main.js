@@ -80,5 +80,12 @@ export default function(Vue, { appOptions, router, head, isClient }) {
       iconfont: "faSvg",
       values: iconValues,
     },
+    theme: {
+      themes: {
+        light: {
+          primary: '#E3350D'
+        }
+      }
+    }
   });
 }

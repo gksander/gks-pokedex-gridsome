@@ -1,37 +1,33 @@
 <template>
   <v-app>
-    <!-- Navigation drawer -->
-    <v-navigation-drawer
-      app
-      v-model="sideNavVisible"
-      clipped
-      :mobile-break-point="850"
-      :width="270"
-    >
-      <v-list shaped>
-        <v-list-item
-          v-for="tab in tabs"
-          :key="tab.title"
-          :to="tab.to"
-          :title="tab.title"
-        >
-          <v-list-item-content>
-            <v-list-item-title>{{ tab.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <!-- App bar -->
-    <v-app-bar app clipped-left>
-      <v-app-bar-nav-icon
-        @click="sideNavVisible = !sideNavVisible"
-        title="Toggle Menu"
-      ></v-app-bar-nav-icon>
+    <v-app-bar
+      app
+      clipped-left
+      color="primary"
+      dark
+      prominent
+      shrink-on-scroll
+      scroll-threshold="400"
+    >
+      <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+        />
+      </template>
       <v-toolbar-title>PokeDex</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-btn icon to="/" title="Home">
         <v-icon>$home</v-icon>
       </v-btn>
+      <template v-slot:extension>
+        <v-tabs>
+          <v-tab to="/">Pokemon</v-tab>
+          <v-tab to="/search">Search</v-tab>
+          <v-tab to="/types">Types</v-tab>
+        </v-tabs>
+      </template>
     </v-app-bar>
     <!-- Content body -->
     <v-content class="fill-height">

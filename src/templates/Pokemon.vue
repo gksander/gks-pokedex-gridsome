@@ -1,5 +1,11 @@
 <template>
-  <Layout>
+  <div
+    :style="{
+      background: `linear-gradient(to bottom, white 65%, ${bgColor})`,
+      height: `calc(100vh - ${$vuetify.application.bottom}px)`
+    }"
+    class="overflow-auto"
+  >
     <!-- Container -->
     <content-wrapper>
       <!-- Cols for display -->
@@ -9,7 +15,7 @@
             :src="$page.pokemon.png"
             style="width: 100%"
             :alt="`Image for ${$page.pokemon.name}`"
-          ></g-image>
+          />
         </v-col>
         <v-col cols="12" sm="7">
           <div class="display-1">{{ $page.pokemon.name }}</div>
@@ -53,7 +59,7 @@
                 :type="factor.type"
                 small
                 :starred="factor.factor > 3.9"
-              ></poke-type-chip>
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -111,7 +117,7 @@
                 :key="species.pokemon.slug"
                 :pokemon="species.pokemon"
                 :elevation="species.pokemon.id == $page.pokemon.id ? 8 : 2"
-              ></poke-list-card>
+              />
             </div>
             <div
               v-if="i != buckets.length - 1"
@@ -153,7 +159,7 @@
         <v-icon>$next</v-icon>
       </v-btn>
     </v-bottom-navigation>
-  </Layout>
+  </div>
 </template>
 
 <script>
@@ -186,8 +192,25 @@ export default {
     },
     // Color of the pokemon (with some tweaks for light colors)
     color() {
-      const color = get(this.$page, "pokemon.species.color");
-      return color.replace(/white/i, "grey").replace(/yellow/i, "#c9bc4e");
+      const rgb = get(
+        this.$page,
+        "pokemon.species.colorPalette.DarkVibrant.rgb",
+      ) ||
+        get(this.$page, "pokemon.species.colorPalette.Vibrant.rgb") || [
+          0,
+          0,
+          0,
+        ];
+      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    },
+    // Background color for the pokemon
+    bgColor() {
+      const rgb = get(
+        this.$page,
+        "pokemon.species.colorPalette.LightMuted.rgb",
+        [255, 255, 255],
+      );
+      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     },
     // Has evolution chain?
     isPartOfChain() {
@@ -302,6 +325,14 @@ export default {
       next_pokemon { name, slug }
       species {
         flavor_text, color,
+        colorPalette {
+          Vibrant { rgb }
+          Muted { rgb }
+          DarkVibrant { rgb }
+          LightVibrant { rgb }
+          DarkMuted { rgb }
+          LightMuted { rgb }
+        }
         evolution_chain {
           links {
             species {

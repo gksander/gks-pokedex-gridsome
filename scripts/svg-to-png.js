@@ -12,22 +12,23 @@ module.exports = async () => {
     const assetPath = path.resolve(__dirname, "../src/assets/img/poke-svg");
     const outputPath = path.resolve(__dirname, "../src/assets/img/poke-png");
 
-    // Dump the output
-    await fse.emptyDir(outputPath);
-
     // Walk through the asset path...
     await klaw(assetPath)
-      .on("data", item => {
+      .on("data", async item => {
         // For each item, use sharp to convert to PNG
         try {
-          sharp(item.path)
-            .resize(500, 500, { fit: "inside" })
-            .toFile(
-              path.join(
-                outputPath,
-                path.basename(item.path).replace(/svg$/, "png"),
-              ),
-            );
+        	const fileExists = await fse.pathExists(item.path.replace(/poke-svg/, "poke-png").replace(/svg$/, 'png'));
+          if (!fileExists) {
+          	console.log(`Converting ${item.path} to png`);
+            await sharp(item.path)
+              .resize(500, 500, { fit: "inside" })
+              .toFile(
+                path.join(
+                  outputPath,
+                  path.basename(item.path).replace(/svg$/, "png"),
+                ),
+              );
+          }
         } catch (error) {
           console.log(`Error on ${item.path}`, error);
         }

@@ -1,27 +1,25 @@
 <template>
-  <Layout>
-    <content-wrapper>
-      <v-row dense>
-        <v-col
-          v-for="pokemon in sortedPokemon"
-          :key="pokemon.node.id"
-          cols="6"
-          sm="4"
-          md="3"
-        >
-          <poke-list-card :pokemon="pokemon.node"></poke-list-card>
+  <content-wrapper>
+    <v-row dense>
+      <v-col
+        v-for="pokemon in sortedPokemon"
+        :key="pokemon.node.id"
+        cols="6"
+        sm="4"
+        md="3"
+      >
+        <poke-list-card :pokemon="pokemon.node"></poke-list-card>
+      </v-col>
+      <ClientOnly>
+        <v-col cols="6" sm="4" md="3">
+          <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+            <div slot="no-more" class="d-none"></div>
+            <div slot="no-results" class="d-none"></div>
+          </infinite-loading>
         </v-col>
-        <ClientOnly>
-          <v-col cols="6" sm="4" md="3">
-            <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-              <div slot="no-more" class="d-none"></div>
-              <div slot="no-results" class="d-none"></div>
-            </infinite-loading>
-          </v-col>
-        </ClientOnly>
-      </v-row>
-    </content-wrapper>
-  </Layout>
+      </ClientOnly>
+    </v-row>
+  </content-wrapper>
 </template>
 
 <script>

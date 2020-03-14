@@ -5,6 +5,7 @@ const nodeExternals = require("webpack-node-externals");
 const { capitalize } = require("lodash");
 const path = require("path");
 const csv = require("csvtojson");
+const pokemonColorPalettes = require("./src/assets/data/pokemon-colors");
 
 // Config
 const NUM_POKEMON =
@@ -129,6 +130,7 @@ module.exports = function(api) {
         id: item.id,
         color: pokemonColorsData.find(color => color.id == item.color_id)
           .identifier,
+        colorPalette: pokemonColorPalettes[item.id] || {},
         flavor_text: (
           speciesFlavorData.find(
             dat => dat.species_id == item.id && dat.language_id == 9,
