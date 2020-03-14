@@ -16,7 +16,7 @@ const NUM_POKEMON =
     gen3: 384,
     gen4: 491,
     gen5: 649,
-  }["gen9"] || 9;
+  }["gen5"] || 9;
 const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**
@@ -48,7 +48,8 @@ module.exports = function(api) {
     const pokemonCollection = addCollection("Pokemon");
     const speciesCollection = addCollection("Species");
     const evolutionChainCollection = addCollection("EvolutionChain");
-    const moveCollection = addCollection("Move");
+    // const moveCollection = addCollection("Move");
+    // const pokemonMoveCollection = addCollection("PokemonMove");
 
     /**
      * Load in data first
@@ -102,9 +103,16 @@ module.exports = function(api) {
     const moveData = (
       await csv().fromFile(path.join(DATA_DIR, "moves.csv"))
     ).filter(dat => parseInt(dat.id) < 1000);
+    // Get name of moves
     const moveNameData = (
       await csv().fromFile(path.join(DATA_DIR, "move_names.csv"))
     ).filter(dat => dat.local_language_id == "9");
+    // Relating moves and pokemon
+    const pokemonMoveData = (
+      await csv().fromFile(path.join(DATA_DIR, "pokemon_moves.csv"))
+    )
+      .filter(dat => parseInt(dat.pokemon_id) < NUM_POKEMON)
+      .filter(dat => parseInt(dat.level) > 0);
 
     /**
      * Set up types
@@ -191,6 +199,11 @@ module.exports = function(api) {
         .filter(dat => typesIds.includes(dat.target_type_id))
         .map(factor => store.createReference("DamageFactor", factor.id));
 
+      // Moves
+      // const moves = pokemonMoveData
+      //   .filter(dat => dat.pokemon_id === pokemon.id)
+      //   .sort((a, b) => parseInt(a.level) - parseInt(b.level));
+
       pokemonCollection.addNode({
         id: pokemon.id,
         name: capitalize(pokemon.identifier),
@@ -199,6 +212,7 @@ module.exports = function(api) {
         weight: Math.round((parseInt(pokemon.weight) / 4.536) * 100) / 100, // Lbs
         png: require.resolve(`./src/assets/img/poke-png/${pokemon.id}.png`),
         types: types.map(type => store.createReference("Type", type.type_id)),
+        // moves: moves.map(move => store.createReference("PokemonMove", move.id)),
         damage_factors,
         stats,
         species: store.createReference("Species", pokemon.id),
@@ -242,15 +256,26 @@ module.exports = function(api) {
     /**
      * Moves
      */
-    for (let move of moveData) {
-      moveCollection.addNode({
-        ...move,
-        name: (moveNameData.find(dat => dat.move_id === move.id) || {name: '...'}).name,
-        type: store.createReference("Type", move.type_id),
-        slug: move.identifier,
-      })
-    }
+    // for (let move of moveData) {
+    //   moveCollection.addNode({
+    //     ...move,
+    //     name: (
+    //       moveNameData.find(dat => dat.move_id === move.id) || { name: "..." }
+    //     ).name,
+    //     type: store.createReference("Type", move.type_id),
+    //     slug: move.identifier,
+    //   });
+    // }
 
+    /**
+     * Pokemon Moves
+     */
+    // for (let move of pokemonMoveData) {
+    //   pokemonMoveCollection.addNode({
+    //     ...move,
+    //     move: store.createReference("Move", move.move_id),
+    //   });
+    // }
   }); // End of loadSource()
 
   api.createPages(({ createPage }) => {
