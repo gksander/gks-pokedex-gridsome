@@ -7,6 +7,7 @@
       :class="[hover ? 'elevation-3' : 'elevation-0', ...(className || [])]"
       :small="small"
       :block="block"
+      style="background-color: white"
     >
       {{ type.name }}
       <v-icon right x-small v-if="starred">$star</v-icon>

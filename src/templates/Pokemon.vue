@@ -1,11 +1,13 @@
 <template>
-  <div
-    :style="{
-      background: `linear-gradient(to bottom, white 65%, ${bgColor})`,
-      height: `calc(100vh - ${$vuetify.application.bottom}px)`
-    }"
-    class="overflow-auto"
-  >
+  <div>
+    <!-- Gradient background -->
+    <div :style="{
+      background: `linear-gradient(to bottom right, white 70%, ${bgColor})`,
+      position: 'fixed',
+      left: 0, right: 0,
+      top: `${$vuetify.application.top}px`,
+      bottom: `${$vuetify.application.bottom}px`,
+    }"/>
     <!-- Container -->
     <content-wrapper>
       <!-- Cols for display -->
@@ -207,7 +209,7 @@ export default {
     bgColor() {
       const rgb = get(
         this.$page,
-        "pokemon.species.colorPalette.LightMuted.rgb",
+        "pokemon.species.colorPalette.LightVibrant.rgb",
         [255, 255, 255],
       );
       return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
