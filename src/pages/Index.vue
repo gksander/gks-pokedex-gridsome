@@ -1,31 +1,69 @@
 <template>
   <content-wrapper>
-    <v-row >
-      <v-col
+    <v-timeline dense>
+      <v-timeline-item
         v-for="pokemon in sortedPokemon"
-        :key="pokemon.node.id"
-        cols="6"
-        sm="4"
-        md="3"
+        :key="pokemon.id"
+        :color="getPrimaryColor(pokemon)"
       >
-        <poke-list-card :pokemon="pokemon.node"></poke-list-card>
-      </v-col>
-      <ClientOnly>
-        <v-col cols="6" sm="4" md="3">
-          <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-            <div slot="no-more" class="d-none"></div>
-            <div slot="no-results" class="d-none"></div>
-          </infinite-loading>
-        </v-col>
-      </ClientOnly>
-    </v-row>
+        <v-hover v-slot="{ hover }">
+          <v-card
+            :to="`/${pokemon.slug}`"
+            class="pa-3 relative"
+            :style="{
+              background: `linear-gradient(to ${
+                $vuetify.breakpoint.xsOnly ? 'top' : 'left'
+              }, ${$vuetify.theme.themes.dark.secondary} 50% 75%, ${getBgColor(
+                pokemon,
+              )})`,
+            }"
+            :elevation="hover ? 8 : 2"
+          >
+            <v-row>
+              <v-col cols="12" sm="4" class="d-flex justify-center">
+                <g-image
+                  :src="pokemon.png"
+                  :alt="`Image for ${pokemon.name}`"
+                />
+              </v-col>
+              <v-col cols="12" sm="8">
+                <div class="font-weight-bold title">
+                  {{ pokemon.name }} (#{{ pokemon.id }})
+                </div>
+                <!-- Types -->
+                <v-row dense class="mb-3">
+                  <v-col
+                    v-for="type in pokemon.types"
+                    :key="type.id"
+                    class="flex-grow-0"
+                  >
+                    <poke-type-chip :type="type" small />
+                  </v-col>
+                </v-row>
+                <!-- Description -->
+                <div v-html="pokemon.species.flavor_text" />
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-hover>
+      </v-timeline-item>
+    </v-timeline>
+    <ClientOnly>
+      <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+        <div slot="no-more" class="d-none"></div>
+        <div slot="no-results" class="d-none"></div>
+      </infinite-loading>
+    </ClientOnly>
   </content-wrapper>
 </template>
 
 <script>
 import PokeListCard from "../components/PokeListCard";
+import PokeTypeChip from "../components/PokeTypeChip";
+import { get } from "lodash";
+
 export default {
-  components: { PokeListCard },
+  components: { PokeListCard, PokeTypeChip },
 
   /**
    * Keep track of the pokemon we loaded in
@@ -42,9 +80,9 @@ export default {
    */
   computed: {
     sortedPokemon() {
-      return this.loadedPokemon.sort(
-        (a, b) => parseInt(a.node.id) - parseInt(b.node.id),
-      );
+      return this.loadedPokemon
+        .sort((a, b) => parseInt(a.node.id) - parseInt(b.node.id))
+        .map(edge => edge.node);
     },
   },
 
@@ -80,6 +118,26 @@ export default {
         }
       }
     },
+
+    // Get pokemon's BG color
+    getBgColor(pokemon) {
+      const rgb =
+        get(pokemon, "species.colorPalette.DarkMuted.rgb") ||
+        get(pokemon, "species.colorPalette.DarkVibrant.rgb");
+      return rgb
+        ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+        : this.$vuetify.theme.themes.dark.secondary;
+    },
+
+    // Get pokemon's vibrant color
+    getPrimaryColor(pokemon) {
+      const rgb =
+        get(pokemon, "species.colorPalette.LightVibrant.rgb") ||
+        get(pokemon, "species.colorPalette.Vibrant.rgb");
+      return rgb
+        ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+        : this.$vuetify.theme.themes.dark.primary;
+    },
   },
 
   /**
@@ -105,9 +163,17 @@ query ($page: Int) {
         name,
         slug,
         png (width: 150, height: 150, fit: contain, background: "transparent"),
+        weight, height,
+        types { id, name, slug }
         species {
+          flavor_text
           colorPalette {
             Vibrant { rgb }
+            Muted { rgb }
+            DarkVibrant { rgb }
+            LightVibrant { rgb }
+            DarkMuted { rgb }
+            LightMuted { rgb }
           }
         }
       }
