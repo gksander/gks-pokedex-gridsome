@@ -2,12 +2,14 @@
   <v-hover v-slot:default="{ hover }">
     <v-btn
       :to="`/types/${type.slug}`"
-      :outlined="!solid"
       :color="color"
       :class="[hover ? 'elevation-3' : 'elevation-0', ...(className || [])]"
       :small="small"
       :block="block"
-      style="background-color: white"
+      :style="{
+      	backgroundColor: $vuetify.theme.themes.dark.secondary
+      }"
+      :light="light"
     >
       {{ type.name }}
       <v-icon right x-small v-if="starred">$star</v-icon>
@@ -53,7 +55,10 @@ export default {
     },
     // Show it as solid?
     solid() {
-      return /steel/i.test(this.type.name);
+      return /(rock|ground)/i.test(this.type.name);
+    },
+    light() {
+    	return /(normal|steel)/i.test(this.type.name)
     },
     // Additional classes for certain types
     className() {

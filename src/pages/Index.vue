@@ -1,6 +1,6 @@
 <template>
   <content-wrapper>
-    <v-row dense>
+    <v-row >
       <v-col
         v-for="pokemon in sortedPokemon"
         :key="pokemon.node.id"
@@ -105,6 +105,11 @@ query ($page: Int) {
         name,
         slug,
         png (width: 150, height: 150, fit: contain, background: "transparent"),
+        species {
+          colorPalette {
+            Vibrant { rgb }
+          }
+        }
       }
     }
   }

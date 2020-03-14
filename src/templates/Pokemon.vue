@@ -1,13 +1,16 @@
 <template>
   <div>
     <!-- Gradient background -->
-    <div :style="{
-      background: `linear-gradient(to bottom right, white 70%, ${bgColor})`,
-      position: 'fixed',
-      left: 0, right: 0,
-      top: `${$vuetify.application.top}px`,
-      bottom: `${$vuetify.application.bottom}px`,
-    }"/>
+    <div
+      :style="{
+        background: `linear-gradient(to bottom, ${$vuetify.theme.themes.dark.secondary} 50% 75%, ${bgColor})`,
+        position: 'fixed',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+      }"
+    />
     <!-- Container -->
     <content-wrapper>
       <!-- Cols for display -->
@@ -35,13 +38,13 @@
           <!-- Weight/height -->
           <div class="d-flex mb-2">
             <div class="mr-5 d-flex align-center">
-              <v-icon class="mr-2" color="grey darken-2">$height</v-icon>
+              <v-icon class="mr-2">$height</v-icon>
               <span class="title font-weight-thin"
                 >{{ $page.pokemon.height }} ft</span
               >
             </div>
             <div class="d-flex align-center">
-              <v-icon class="mr-2" color="grey darken-2">$weight</v-icon>
+              <v-icon class="mr-2">$weight</v-icon>
               <span class="title font-weight-thin"
                 >{{ $page.pokemon.weight }} lbs</span
               >
@@ -119,6 +122,7 @@
                 :key="species.pokemon.slug"
                 :pokemon="species.pokemon"
                 :elevation="species.pokemon.id == $page.pokemon.id ? 8 : 2"
+                class="ma-2"
               />
             </div>
             <div
@@ -196,7 +200,7 @@ export default {
     color() {
       const rgb = get(
         this.$page,
-        "pokemon.species.colorPalette.DarkVibrant.rgb",
+        "pokemon.species.colorPalette.LightVibrant.rgb",
       ) ||
         get(this.$page, "pokemon.species.colorPalette.Vibrant.rgb") || [
           0,
@@ -209,9 +213,13 @@ export default {
     bgColor() {
       const rgb = get(
         this.$page,
-        "pokemon.species.colorPalette.LightVibrant.rgb",
-        [255, 255, 255],
-      );
+        "pokemon.species.colorPalette.DarkMuted.rgb",
+      ) ||
+        get(this.$page, "pokemon.species.colorPalette.DarkVibrant.rgb") || [
+          0,
+          0,
+          0,
+        ];
       return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     },
     // Has evolution chain?
@@ -338,7 +346,11 @@ export default {
         evolution_chain {
           links {
             species {
-              pokemon { id, name, slug, png(width: 150, height: 150, fit: contain, background: "transparent") }
+              pokemon {
+                id, name, slug,
+                png(width: 150, height: 150, fit: contain, background: "transparent"),
+                species { colorPalette { Vibrant { rgb } } }
+              }
               evolves_from { id }
             }
           }

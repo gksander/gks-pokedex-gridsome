@@ -16,7 +16,7 @@ const typeToColor = typeName => {
     case "Flying":
       return "blue darken-4";
     case "Normal":
-      return "black";
+      return "white";
     case "Electric":
       return "yellow darken-3";
     case "Ground":

@@ -1,5 +1,5 @@
 <template>
-  <v-content class="fill-height" :style="style || {}">
+  <v-content class="fill-height">
     <v-container>
       <v-row>
         <v-col cols="12" md="10" offset-md="1" lg="8" offset-lg="2">
@@ -11,9 +11,5 @@
 </template>
 
 <script>
-export default {
-	props: {
-		style: Object
-  }
-};
+export default {};
 </script>
