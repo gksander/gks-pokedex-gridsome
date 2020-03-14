@@ -246,7 +246,8 @@ module.exports = function(api) {
       moveCollection.addNode({
         ...move,
         name: (moveNameData.find(dat => dat.move_id === move.id) || {name: '...'}).name,
-        type: store.createReference("Type", move.type_id)
+        type: store.createReference("Type", move.type_id),
+        slug: move.identifier,
       })
     }
 

@@ -55,6 +55,7 @@ export default {
         // { title: "Pokemon", to: "/" },
         { title: "Search", to: "/search" },
         { title: "Types", to: "/types" },
+        { title: "Moves", to: "/moves" },
       ],
       isMounted: false,
     };
