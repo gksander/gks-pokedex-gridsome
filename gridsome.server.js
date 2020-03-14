@@ -16,7 +16,7 @@ const NUM_POKEMON =
     gen3: 384,
     gen4: 491,
     gen5: 649,
-  }["gen5"] || 9;
+  }["gen9"] || 9;
 const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**
@@ -48,6 +48,7 @@ module.exports = function(api) {
     const pokemonCollection = addCollection("Pokemon");
     const speciesCollection = addCollection("Species");
     const evolutionChainCollection = addCollection("EvolutionChain");
+    const moveCollection = addCollection("Move");
 
     /**
      * Load in data first
@@ -97,6 +98,13 @@ module.exports = function(api) {
     const pokemonEvolutionData = (
       await csv().fromFile(path.join(DATA_DIR, "pokemon_evolution.csv"))
     ).filter(dat => parseInt(dat.evolved_species_id) <= NUM_POKEMON);
+    // Parse out some move info
+    const moveData = (
+      await csv().fromFile(path.join(DATA_DIR, "moves.csv"))
+    ).filter(dat => parseInt(dat.id) < 1000);
+    const moveNameData = (
+      await csv().fromFile(path.join(DATA_DIR, "move_names.csv"))
+    ).filter(dat => dat.local_language_id == "9");
 
     /**
      * Set up types
@@ -230,7 +238,19 @@ module.exports = function(api) {
         links: speciesInChain.map(speciesToEvChainLink),
       });
     }
-  });
+
+    /**
+     * Moves
+     */
+    for (let move of moveData) {
+      moveCollection.addNode({
+        ...move,
+        name: (moveNameData.find(dat => dat.move_id === move.id) || {name: '...'}).name,
+        type: store.createReference("Type", move.type_id)
+      })
+    }
+
+  }); // End of loadSource()
 
   api.createPages(({ createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api/
