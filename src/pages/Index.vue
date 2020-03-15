@@ -1,60 +1,68 @@
 <template>
-  <content-wrapper>
-    <v-timeline dense>
-      <v-timeline-item
-        v-for="pokemon in sortedPokemon"
-        :key="pokemon.id"
-        :color="getPrimaryColor(pokemon)"
-      >
-        <v-hover v-slot="{ hover }">
-          <v-card
-            :to="`/${pokemon.slug}`"
-            class="pa-3 relative"
-            :style="{
-              background: `linear-gradient(to ${
-                $vuetify.breakpoint.xsOnly ? 'top' : 'left'
-              }, ${$vuetify.theme.themes.dark.secondary} 50% 75%, ${getBgColor(
-                pokemon,
-              )})`,
-            }"
-            :elevation="hover ? 8 : 2"
-          >
-            <v-row>
-              <v-col cols="12" sm="4" class="d-flex justify-center">
-                <g-image
-                  :src="pokemon.png"
-                  :alt="`Image for ${pokemon.name}`"
-                />
-              </v-col>
-              <v-col cols="12" sm="8">
-                <div class="font-weight-bold title">
-                  {{ pokemon.name }} (#{{ pokemon.id }})
-                </div>
-                <!-- Types -->
-                <v-row dense class="mb-3">
-                  <v-col
-                    v-for="type in pokemon.types"
-                    :key="type.id"
-                    class="flex-grow-0"
-                  >
-                    <poke-type-chip :type="type" small />
+  <v-content>
+    <v-container>
+      <v-row>
+        <v-col
+          v-for="pokemon in sortedPokemon"
+          :key="pokemon.id"
+          cols="12"
+          md="6"
+        >
+          <v-hover v-slot="{ hover }">
+            <v-card
+              :to="`/${pokemon.slug}`"
+              class="fill-height"
+              :elevation="hover ? 10 : 2"
+            >
+              <div
+                :style="{
+                  background: `linear-gradient(to ${
+                    $vuetify.breakpoint.xsOnly ? 'top' : 'left'
+                  }, transparent 50% 75%, ${getBgColor(pokemon)})`,
+                  zIndex: 0,
+                }"
+                class="pa-3"
+              >
+                <v-row>
+                  <v-col cols="12" sm="auto" class="d-flex justify-center">
+                    <g-image
+                      :src="pokemon.png"
+                      :alt="`Image for ${pokemon.name}`"
+                    />
+                  </v-col>
+                  <v-col>
+                    <div class="font-weight-bold title">
+                      {{ pokemon.name }} (#{{ pokemon.id }})
+                    </div>
+                    <!-- Types -->
+                    <v-row dense class="mb-3">
+                      <v-col
+                        v-for="type in pokemon.types"
+                        :key="type.id"
+                        class="flex-grow-0"
+                      >
+                        <poke-type-chip :type="type" small />
+                      </v-col>
+                    </v-row>
+                    <!-- Description -->
+                    <div v-html="pokemon.species.flavor_text" />
                   </v-col>
                 </v-row>
-                <!-- Description -->
-                <div v-html="pokemon.species.flavor_text" />
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-hover>
-      </v-timeline-item>
-    </v-timeline>
-    <ClientOnly>
-      <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-        <div slot="no-more" class="d-none"></div>
-        <div slot="no-results" class="d-none"></div>
-      </infinite-loading>
-    </ClientOnly>
-  </content-wrapper>
+              </div>
+            </v-card>
+          </v-hover>
+        </v-col>
+        <ClientOnly>
+          <v-col cols="12" sm="6">
+            <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+              <div slot="no-more" class="d-none"></div>
+              <div slot="no-results" class="d-none"></div>
+            </infinite-loading>
+          </v-col>
+        </ClientOnly>
+      </v-row>
+    </v-container>
+  </v-content>
 </template>
 
 <script>

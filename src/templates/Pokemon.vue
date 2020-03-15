@@ -3,7 +3,7 @@
     <!-- Gradient background -->
     <div
       :style="{
-        background: `linear-gradient(to bottom, ${$vuetify.theme.themes.dark.secondary} 50% 75%, ${bgColor})`,
+        background: `linear-gradient(to bottom, transparent 50% 75%, ${bgColor})`,
         position: 'fixed',
         left: 0,
         right: 0,

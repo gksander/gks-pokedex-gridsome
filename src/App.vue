@@ -2,12 +2,6 @@
   <v-app>
     <!-- App bar -->
     <v-app-bar app color="primary" dark >
-      <template v-slot:img="{ props }">
-        <v-img
-          v-bind="props"
-          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-        />
-      </template>
       <v-toolbar-items>
         <v-btn text to="/">
           <g-image
@@ -15,7 +9,7 @@
             width="40"
             fit="contain"
             style="margin-right: 10px"
-          ></g-image>
+          />
           PokeDex
         </v-btn>
       </v-toolbar-items>
