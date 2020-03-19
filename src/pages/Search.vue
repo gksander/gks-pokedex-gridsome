@@ -8,12 +8,13 @@
           single-line
           hide-details
           outlined
-        ></v-text-field>
+        />
       </v-card-title>
       <v-data-table
         :headers="[
           { text: 'ID', value: 'id' },
           { text: 'Name', value: 'name' },
+          { text: 'Photo', sortable: false },
           { text: 'Types', value: 'types' },
         ]"
         :items="$page.allPokemon.edges.map(edge => edge.node)"
@@ -29,6 +30,15 @@
             >
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
+              <td>
+                <v-img
+                  :src="`/img/pokemon/${item.id}.svg`"
+                  :alt="`Image for ${item.name}`"
+                  :aspect-ratio="1"
+                  contain
+                  width="30"
+                />
+              </td>
               <td>
                 <v-row dense>
                   <v-col
@@ -62,6 +72,16 @@ export default {
       query: "",
     };
   },
+
+	/**
+	 * Page meta
+	 */
+	metaInfo() {
+		return {
+			title: "Search Pokemon",
+			meta: [{ name: "description", content: "Pokemon listing" }],
+		};
+	},
 };
 </script>
 
