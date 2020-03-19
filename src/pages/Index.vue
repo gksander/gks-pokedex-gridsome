@@ -14,7 +14,7 @@
                 :style="{
                   background: `linear-gradient(to ${
                     $vuetify.breakpoint.xsOnly ? 'top' : 'left'
-                  }, transparent 50% 75%, ${getBgColor(pokemon)})`,
+                  }, ${getDarkerBgColor(pokemon)} 50%, ${getBgColor(pokemon)})`,
                   zIndex: 0,
                 }"
                 class="pa-3"
@@ -65,6 +65,7 @@
 import PokeListCard from "../components/PokeListCard";
 import PokeTypeChip from "../components/PokeTypeChip";
 import { get } from "lodash";
+import tinycolor from "tinycolor2"
 
 export default {
   components: { PokeListCard, PokeTypeChip },
@@ -131,6 +132,12 @@ export default {
       return rgb
         ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
         : this.$vuetify.theme.themes.dark.secondary;
+    },
+
+    getDarkerBgColor(pokemon) {
+    	const bgColor = this.getBgColor(pokemon);
+    	const { _r, _g, _b } = tinycolor(bgColor).darken(20);
+    	return `rgb(${_r}, ${_g}, ${_b})`
     },
 
     // Get pokemon's vibrant color

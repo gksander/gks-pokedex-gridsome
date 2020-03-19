@@ -15,6 +15,7 @@
     "gridsome-plugin-pwa": "^0.0.10",
     "lodash": "^4.17.15",
     "node-vibrant": "^3.1.5",
+    "tinycolor2": "^1.4.1",
     "vue-infinite-loading": "^2.4.4",
     "vuetify": "^2.1.11"
   },

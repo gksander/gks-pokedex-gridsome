@@ -5,6 +5,7 @@
         class="pa-2"
         :style="{
           borderBottom: `2px solid ${color}`,
+          background: `linear-gradient(to bottom, ${bgColor}, ${darkerBgColor})`
         }"
         :elevation="hover ? 5 : 2"
       >
@@ -25,6 +26,8 @@
 
 <script>
 import { get } from "lodash";
+import tinycolor from "tinycolor2";
+
 export default {
   props: {
     // Pokemon needs id, slug, name, and png.
@@ -43,6 +46,21 @@ export default {
       ]);
       return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     },
+
+    bgColor() {
+	    const rgb =
+		    get(this.pokemon, "species.colorPalette.DarkMuted.rgb") ||
+		    get(this.pokemon, "species.colorPalette.DarkVibrant.rgb");
+	    return rgb
+		    ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
+		    : this.$vuetify.theme.themes.dark.secondary;
+    },
+
+    darkerBgColor() {
+    	const bgColor = this.bgColor;
+	    const { _r, _g, _b } = tinycolor(bgColor).darken(20);
+	    return `rgb(${_r}, ${_g}, ${_b})`
+    }
   },
 };
 </script>

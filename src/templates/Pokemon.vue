@@ -349,7 +349,13 @@ export default {
             species {
               pokemon {
                 id, name, slug,
-                species { colorPalette { Vibrant { rgb } } }
+                species {
+                  colorPalette {
+                    Vibrant { rgb }
+                    DarkMuted { rgb }
+                    DarkVibrant { rgb }
+                  }
+                }
               }
               evolves_from { id }
             }
