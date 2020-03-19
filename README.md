@@ -1,14 +1,12 @@
-# Default starter for Gridsome
+# PokeDex Playground
 
-This is the project you get when you run `gridsome create new-project`.
+This is a pet project I (Grant Sander) created to explore [GridsomeJS](https://gridsome.org/) and [the PokeAPI](https://github.com/PokeAPI/pokeapi). I accidentally fell in love with Gridsome in the process and took this further than I originally anticipated.
 
-### 1. Install Gridsome CLI tool if you don't have
+## Tools used
 
-`npm install --global @gridsome/cli`
+- [GridsomeJS](https://gridsome.org/) for building out the site.
+- [VuetifyJS](https://vuetifyjs.com/en/) as a component library.
+- [The PokeAPI](https://github.com/PokeAPI/pokeapi) for the Pokemon data.
+- [Pokemon SVG](https://github.com/jnovack/pokemon-svg) for the SVG images of the Pokemon.
+- [Sharp](https://github.com/lovell/sharp) and [Node Vibrant](https://github.com/akfish/node-vibrant/) for extracting colors from the SVG images in the site.
 
-### 2. Create a Gridsome project
-
-1. `gridsome create my-gridsome-site` to install default starter
-2. `cd my-gridsome-site` to open the folder
-3. `gridsome develop` to start a local dev server at `http://localhost:8080`
-4. Happy coding 🎉🙌

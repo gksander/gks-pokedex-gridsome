@@ -49,7 +49,7 @@
           </g-link>
         </v-col>
         <ClientOnly>
-          <v-col cols="12" sm="6">
+          <v-col cols="6">
             <infinite-loading @infinite="infiniteHandler" spinner="spiral">
               <div slot="no-more" class="d-none"></div>
               <div slot="no-results" class="d-none"></div>

@@ -7,7 +7,6 @@
     "explore": "gridsome explore",
     "deploy": "netlify deploy --dir=dist --prod",
     "build-and-deploy": "npm run build && npm run deploy",
-    "svg-to-png": "node ./scripts/svg-to-png.js",
     "extract-colors": "node ./scripts/extract-colors.js"
   },
   "dependencies": {
