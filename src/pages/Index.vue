@@ -2,16 +2,14 @@
   <v-content>
     <v-container>
       <v-row>
-        <v-col
-          v-for="pokemon in sortedPokemon"
-          :key="pokemon.id"
-          cols="12"
-          md="6"
-        >
+        <v-col v-for="pokemon in sortedPokemon" :key="pokemon.id" cols="6">
           <g-link :to="`/${pokemon.slug}`" style="text-decoration: none;">
-            <v-card class="fill-height" :style="{
-            	borderBottom: `2px solid ${getPrimaryColor(pokemon)}`,
-            }">
+            <v-card
+              class="fill-height"
+              :style="{
+                borderBottom: `2px solid ${getPrimaryColor(pokemon)}`,
+              }"
+            >
               <div
                 :style="{
                   background: `linear-gradient(to ${
@@ -22,23 +20,28 @@
                 class="pa-3"
               >
                 <v-row>
-                  <v-col cols="12" sm="4" class="d-flex justify-center">
-                    <v-hover v-slot="{ hover }">
-                      <v-img
-                        :src="`/img/pokemon/${pokemon.id}.svg`"
-                        :aspect-ratio="1"
-                        :width="hover ? '100%' : '95%'"
-                        contain
-                        :alt="`Image of ${pokemon.name}`"
-                      />
-                    </v-hover>
+                  <v-col cols="12" md="4" class="d-flex justify-center">
+                    <v-img
+                      :src="`/img/pokemon/${pokemon.id}.svg`"
+                      :aspect-ratio="1"
+                      contain
+                      :alt="`Image of ${pokemon.name}`"
+                      width="100%"
+                      max-width="200px"
+                    />
                   </v-col>
                   <v-col>
-                    <div class="font-weight-bold title white--text">
+                    <div
+                      class="font-weight-bold title white--text overflow-hidden"
+                      style="white-space: nowrap; text-overflow: ellipsis;"
+                    >
                       {{ pokemon.name }} (#{{ pokemon.id }})
                     </div>
                     <!-- Description -->
-                    <div v-html="pokemon.species.flavor_text" />
+                    <div
+                      class="d-none d-sm-block"
+                      v-html="pokemon.species.flavor_text"
+                    />
                   </v-col>
                 </v-row>
               </div>

@@ -84,7 +84,7 @@ export default function(Vue, { appOptions, router, head, isClient }) {
       dark: true,
       themes: {
         dark: {
-          primary: '#E3350D'
+          primary: '#8c1a00'
         }
       }
     }

@@ -1,14 +1,15 @@
 <template>
   <v-app>
     <!-- App bar -->
-    <v-app-bar app color="primary" dark >
+    <v-app-bar app dark>
       <v-toolbar-items>
-        <v-btn text to="/">
+        <v-btn text to="/" exact-active-class="black">
           <g-image
             src="~/assets/img/pokeball.png"
             width="40"
             fit="contain"
             style="margin-right: 10px"
+            alt="Pokeball image"
           />
           PokeDex
         </v-btn>
@@ -23,15 +24,25 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item v-for="link in links" :key="link.title" :to="link.to">
+            <v-list-item
+              v-for="link in links"
+              :key="link.title"
+              :to="link.to"
+              exact-active-class="black"
+            >
               <v-list-item-title>{{ link.title }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
         <template v-else>
-          <v-btn v-for="link in links" :key="link.title" text :to="link.to">{{
-            link.title
-          }}</v-btn>
+          <v-btn
+            v-for="link in links"
+            :key="link.title"
+            text
+            :to="link.to"
+            exact-active-class="black"
+            >{{ link.title }}</v-btn
+          >
         </template>
       </v-toolbar-items>
     </v-app-bar>
