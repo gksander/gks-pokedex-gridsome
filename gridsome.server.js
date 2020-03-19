@@ -210,7 +210,6 @@ module.exports = function(api) {
         slug: pokemon.identifier.toLowerCase().replace(/ /g, "-"),
         height: Math.round((parseInt(pokemon.height) / 3.048) * 100) / 100, // Feet
         weight: Math.round((parseInt(pokemon.weight) / 4.536) * 100) / 100, // Lbs
-        png: require.resolve(`./src/assets/img/poke-png/${pokemon.id}.png`),
         types: types.map(type => store.createReference("Type", type.type_id)),
         // moves: moves.map(move => store.createReference("PokemonMove", move.id)),
         damage_factors,

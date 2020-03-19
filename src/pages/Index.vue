@@ -8,47 +8,42 @@
           cols="12"
           md="6"
         >
-          <v-hover v-slot="{ hover }">
-            <g-link :to="`/${pokemon.slug}`" style="text-decoration: none;">
-              <v-card class="fill-height" :elevation="hover ? 10 : 2">
-                <div
-                  :style="{
-                    background: `linear-gradient(to ${
-                      $vuetify.breakpoint.xsOnly ? 'top' : 'left'
-                    }, transparent 50% 75%, ${getBgColor(pokemon)})`,
-                    zIndex: 0,
-                  }"
-                  class="pa-3"
-                >
-                  <v-row>
-                    <v-col cols="12" sm="auto" class="d-flex justify-center">
-                      <g-image
-                        :src="pokemon.png"
-                        :alt="`Image for ${pokemon.name}`"
+          <g-link :to="`/${pokemon.slug}`" style="text-decoration: none;">
+            <v-card class="fill-height" :style="{
+            	borderBottom: `2px solid ${getPrimaryColor(pokemon)}`,
+            }">
+              <div
+                :style="{
+                  background: `linear-gradient(to ${
+                    $vuetify.breakpoint.xsOnly ? 'top' : 'left'
+                  }, transparent 50% 75%, ${getBgColor(pokemon)})`,
+                  zIndex: 0,
+                }"
+                class="pa-3"
+              >
+                <v-row>
+                  <v-col cols="12" sm="4" class="d-flex justify-center">
+                    <v-hover v-slot="{ hover }">
+                      <v-img
+                        :src="`/img/pokemon/${pokemon.id}.svg`"
+                        :aspect-ratio="1"
+                        :width="hover ? '100%' : '95%'"
+                        contain
+                        :alt="`Image of ${pokemon.name}`"
                       />
-                    </v-col>
-                    <v-col>
-                      <div class="font-weight-bold title">
-                        {{ pokemon.name }} (#{{ pokemon.id }})
-                      </div>
-                      <!-- Types -->
-                      <v-row dense class="mb-3">
-                        <v-col
-                          v-for="type in pokemon.types"
-                          :key="type.id"
-                          class="flex-grow-0"
-                        >
-                          <poke-type-chip :type="type" small />
-                        </v-col>
-                      </v-row>
-                      <!-- Description -->
-                      <div v-html="pokemon.species.flavor_text" />
-                    </v-col>
-                  </v-row>
-                </div>
-              </v-card>
-            </g-link>
-          </v-hover>
+                    </v-hover>
+                  </v-col>
+                  <v-col>
+                    <div class="font-weight-bold title white--text">
+                      {{ pokemon.name }} (#{{ pokemon.id }})
+                    </div>
+                    <!-- Description -->
+                    <div v-html="pokemon.species.flavor_text" />
+                  </v-col>
+                </v-row>
+              </div>
+            </v-card>
+          </g-link>
         </v-col>
         <ClientOnly>
           <v-col cols="12" sm="6">
@@ -168,18 +163,13 @@ query ($page: Int) {
         id,
         name,
         slug,
-        png (width: 150, height: 150, fit: contain, background: "transparent"),
-        weight, height,
-        types { id, name, slug }
         species {
           flavor_text
           colorPalette {
             Vibrant { rgb }
-            Muted { rgb }
             DarkVibrant { rgb }
             LightVibrant { rgb }
             DarkMuted { rgb }
-            LightMuted { rgb }
           }
         }
       }

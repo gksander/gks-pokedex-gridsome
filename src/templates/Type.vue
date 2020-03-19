@@ -195,7 +195,6 @@ query ($id: ID!, $page: Int) {
         node {
           ... on Pokemon {
             id, slug, name,
-            png (width: 150, height: 150, fit: contain, background: "transparent"),
             species { colorPalette { Vibrant { rgb } } }
           }
         }

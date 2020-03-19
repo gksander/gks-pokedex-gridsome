@@ -8,10 +8,12 @@
         }"
         :elevation="hover ? 5 : 2"
       >
-        <g-image
-          :src="pokemon.png"
+        <v-img
+          :src="`/img/pokemon/${pokemon.id}.svg`"
           :alt="`Image for ${pokemon.name}`"
-          style="width: 100%"
+          :aspect-ratio="1"
+          contain
+          width="150"
         />
         <div class="px-2 pt-1 text-truncate text-center">
           {{ pokemon.name }} <span class="">(#{{ pokemon.id }})</span>

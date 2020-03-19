@@ -16,10 +16,12 @@
       <!-- Cols for display -->
       <v-row>
         <v-col cols="8" offset="2" sm="5" offset-sm="0">
-          <g-image
-            :src="$page.pokemon.png"
-            style="width: 100%"
+          <v-img
+            :src="`/img/pokemon/${$page.pokemon.id}.svg`"
             :alt="`Image for ${$page.pokemon.name}`"
+            style="width: 100%"
+            :aspect-ratio="1"
+            contain
           />
         </v-col>
         <v-col cols="12" sm="7">
@@ -326,7 +328,6 @@ export default {
     pokemon(id: $id) {
       id,
       name,
-      png(width: 350, height: 350, fit: contain, background: "transparent")
       types { id, name, slug }
       weight
       height
@@ -348,7 +349,6 @@ export default {
             species {
               pokemon {
                 id, name, slug,
-                png(width: 150, height: 150, fit: contain, background: "transparent"),
                 species { colorPalette { Vibrant { rgb } } }
               }
               evolves_from { id }

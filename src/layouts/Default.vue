@@ -10,12 +10,6 @@
       shrink-on-scroll
       scroll-threshold="400"
     >
-      <template v-slot:img="{ props }">
-        <v-img
-          v-bind="props"
-          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-        />
-      </template>
       <v-toolbar-title>PokeDex</v-toolbar-title>
       <v-spacer/>
       <v-btn icon to="/" title="Home">
