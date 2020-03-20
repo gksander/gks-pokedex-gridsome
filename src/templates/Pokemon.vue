@@ -297,6 +297,15 @@ export default {
    */
   methods: {
     _get: get,
+
+    // Key listener
+    keydownHandler(e) {
+    	if (/arrowright/i.test(e.key) || /^k$/i.test(e.key)) {
+        this.$router.push(this.nextLink);
+      } else if (/arrowleft/i.test(e.key) || /^j$/i.test(e.key)) {
+        this.$router.push(this.prevLink);
+      }
+    }
   },
 
   /**
@@ -304,9 +313,14 @@ export default {
    */
   mounted() {
     this.isMounted = true;
+    window.addEventListener('keydown', this.keydownHandler);
   },
 
-  /**
+  beforeDestroy() {
+  	window.removeEventListener('keydown', this.keydownHandler);
+  },
+
+	/**
    * Page meta
    */
   metaInfo() {

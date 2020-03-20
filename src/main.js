@@ -24,6 +24,8 @@ import {
   faCaretDown,
   faCaretRight,
   faCaretLeft,
+  faSun,
+  faMoon,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Register FA icons
@@ -40,6 +42,8 @@ library.add(
   faCaretDown,
   faCaretRight,
   faCaretLeft,
+  faSun,
+  faMoon,
 );
 
 export default function(Vue, { appOptions, router, head, isClient }) {
@@ -63,6 +67,8 @@ export default function(Vue, { appOptions, router, head, isClient }) {
     { key: "height", icon: ["fa", "ruler-vertical"] },
     { key: "weight", icon: ["fa", "weight"] },
     { key: "dropdown", icon: ["fa", "caret-down"] },
+    { key: "sun", icon: ["fa", "sun"] },
+    { key: "moon", icon: ["fa", "moon"] },
   ].reduce((obj, val) => {
     obj[val.key] = {
       component: FontAwesomeIcon,
@@ -84,9 +90,9 @@ export default function(Vue, { appOptions, router, head, isClient }) {
       dark: true,
       themes: {
         dark: {
-          primary: '#8c1a00'
-        }
-      }
-    }
+          primary: "#8c1a00",
+        },
+      },
+    },
   });
 }

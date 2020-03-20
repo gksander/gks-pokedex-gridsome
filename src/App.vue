@@ -16,6 +16,14 @@
       </v-toolbar-items>
       <v-spacer />
       <v-toolbar-items>
+        <v-checkbox
+          v-model="$vuetify.theme.dark"
+          hide-details
+          class="align-center"
+          on-icon="$moon"
+          off-icon="$sun"
+        />
+        <!-- Mobile menu -->
         <v-menu offset-y v-if="showMenu">
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
@@ -34,6 +42,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
+        <!-- Desktop -->
         <template v-else>
           <v-btn
             v-for="link in links"
