@@ -93,6 +93,13 @@ export default function(Vue, { appOptions, router, head, isClient }) {
           primary: "#8c1a00",
         },
       },
+      options: {
+        minifyTheme: function(css) {
+          return process.env.NODE_ENV === "production"
+            ? css.replace(/[\r\n|\r|\n]/g, "")
+            : css;
+        },
+      },
     },
   });
 }

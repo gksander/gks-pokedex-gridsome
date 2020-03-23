@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <!-- App bar -->
-    <v-app-bar app dark>
+    <v-app-bar app>
       <v-toolbar-items>
-        <v-btn text to="/" exact-active-class="black">
+        <v-btn text to="/">
           <g-image
             src="~/assets/img/pokeball.png"
             width="40"
@@ -36,7 +36,6 @@
               v-for="link in links"
               :key="link.title"
               :to="link.to"
-              exact-active-class="black"
             >
               <v-list-item-title>{{ link.title }}</v-list-item-title>
             </v-list-item>
@@ -49,7 +48,6 @@
             :key="link.title"
             text
             :to="link.to"
-            exact-active-class="black"
             >{{ link.title }}</v-btn
           >
         </template>
@@ -61,6 +59,8 @@
 </template>
 
 <script>
+const STORAGE_KEY = "IS_DARK_MODE";
+
 export default {
   // Component data
   data() {
@@ -80,8 +80,19 @@ export default {
     },
   },
 
+  watch: {
+    "$vuetify.theme.dark"(val) {
+      if (window && window.localStorage) {
+      	window.localStorage.setItem(STORAGE_KEY, val);
+      }
+    },
+  },
+
   mounted() {
     this.isMounted = true;
+
+    // On mount, pull dark-mode value.
+    this.$vuetify.theme.dark = !localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY) === "true";
   },
 };
 </script>

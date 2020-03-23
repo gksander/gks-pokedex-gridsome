@@ -15,7 +15,13 @@
           :aspect-ratio="1"
           contain
           width="150"
-        />
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5" />
+            </v-row>
+          </template>
+        </v-img>
         <div class="px-2 pt-1 text-truncate text-center">
           {{ pokemon.name }} <span class="">(#{{ pokemon.id }})</span>
         </div>
@@ -48,17 +54,19 @@ export default {
     },
 
     bgColor() {
+    	const prefix = this.$vuetify.theme.dark ? 'Dark' : 'Light';
+
 	    const rgb =
-		    get(this.pokemon, "species.colorPalette.DarkMuted.rgb") ||
-		    get(this.pokemon, "species.colorPalette.DarkVibrant.rgb");
+		    get(this.pokemon, `species.colorPalette.${prefix}Muted.rgb`) ||
+		    get(this.pokemon, `species.colorPalette.${prefix}Vibrant.rgb`);
 	    return rgb
 		    ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
-		    : this.$vuetify.theme.themes.dark.secondary;
+		    : this.$vuetify.theme.themes.secondary;
     },
 
     darkerBgColor() {
     	const bgColor = this.bgColor;
-	    const { _r, _g, _b } = tinycolor(bgColor).darken(20);
+	    const { _r, _g, _b } = tinycolor(bgColor)[this.$vuetify.theme.dark ? "darken" : "lighten"](this.$vuetify.theme.dark ? 20 : 30);
 	    return `rgb(${_r}, ${_g}, ${_b})`
     }
   },

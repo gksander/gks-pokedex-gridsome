@@ -22,7 +22,13 @@
             style="width: 100%"
             :aspect-ratio="1"
             contain
-          />
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5" />
+              </v-row>
+            </template>
+          </v-img>
         </v-col>
         <v-col cols="12" sm="7">
           <div class="display-1">{{ $page.pokemon.name }}</div>
@@ -200,9 +206,11 @@ export default {
     },
     // Color of the pokemon (with some tweaks for light colors)
     color() {
+      const prefix = this.$vuetify.theme.dark ? "Light" : "Dark";
+
       const rgb = get(
         this.$page,
-        "pokemon.species.colorPalette.LightVibrant.rgb",
+        `pokemon.species.colorPalette.${prefix}Vibrant.rgb`,
       ) ||
         get(this.$page, "pokemon.species.colorPalette.Vibrant.rgb") || [
           0,
@@ -213,11 +221,13 @@ export default {
     },
     // Background color for the pokemon
     bgColor() {
+    	const prefix = this.$vuetify.theme.dark ? 'Dark' : 'Light';
+
       const rgb = get(
         this.$page,
-        "pokemon.species.colorPalette.DarkMuted.rgb",
+        `pokemon.species.colorPalette.${prefix}Muted.rgb`,
       ) ||
-        get(this.$page, "pokemon.species.colorPalette.DarkVibrant.rgb") || [
+        get(this.$page, `pokemon.species.colorPalette.${prefix}Vibrant.rgb`) || [
           0,
           0,
           0,
@@ -300,12 +310,12 @@ export default {
 
     // Key listener
     keydownHandler(e) {
-    	if (/arrowright/i.test(e.key) || /^k$/i.test(e.key)) {
+      if (/arrowright/i.test(e.key) || /^k$/i.test(e.key)) {
         this.$router.push(this.nextLink);
       } else if (/arrowleft/i.test(e.key) || /^j$/i.test(e.key)) {
         this.$router.push(this.prevLink);
       }
-    }
+    },
   },
 
   /**
@@ -313,14 +323,14 @@ export default {
    */
   mounted() {
     this.isMounted = true;
-    window.addEventListener('keydown', this.keydownHandler);
+    window.addEventListener("keydown", this.keydownHandler);
   },
 
   beforeDestroy() {
-  	window.removeEventListener('keydown', this.keydownHandler);
+    window.removeEventListener("keydown", this.keydownHandler);
   },
 
-	/**
+  /**
    * Page meta
    */
   metaInfo() {
@@ -368,6 +378,8 @@ export default {
                     Vibrant { rgb }
                     DarkMuted { rgb }
                     DarkVibrant { rgb }
+                    LightVibrant { rgb }
+                    LightMuted { rgb }
                   }
                 }
               }

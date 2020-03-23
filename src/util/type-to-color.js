@@ -1,7 +1,7 @@
 /**
  * Get color of a type
  */
-const typeToColor = typeName => {
+const typeToColor = (typeName, dark = true) => {
   switch (typeName) {
     case "Bug":
       return "green lighten-2";

@@ -37,7 +37,13 @@
                   :aspect-ratio="1"
                   contain
                   width="30"
-                />
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5" />
+                    </v-row>
+                  </template>
+                </v-img>
               </td>
               <td>
                 <v-row dense>

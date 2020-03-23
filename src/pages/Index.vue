@@ -9,6 +9,7 @@
               :style="{
                 borderBottom: `2px solid ${getPrimaryColor(pokemon)}`,
               }"
+              :dark="$vuetify.theme.dark"
             >
               <div
                 :style="{
@@ -28,11 +29,24 @@
                       :alt="`Image of ${pokemon.name}`"
                       width="100%"
                       max-width="200px"
-                    />
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          />
+                        </v-row>
+                      </template>
+                    </v-img>
                   </v-col>
                   <v-col>
                     <div
-                      class="font-weight-bold title white--text overflow-hidden"
+                      class="font-weight-bold title overflow-hidden"
                       style="white-space: nowrap; text-overflow: ellipsis;"
                     >
                       {{ pokemon.name }} (#{{ pokemon.id }})
@@ -65,7 +79,7 @@
 import PokeListCard from "../components/PokeListCard";
 import PokeTypeChip from "../components/PokeTypeChip";
 import { get } from "lodash";
-import tinycolor from "tinycolor2"
+import tinycolor from "tinycolor2";
 
 export default {
   components: { PokeListCard, PokeTypeChip },
@@ -126,24 +140,29 @@ export default {
 
     // Get pokemon's BG color
     getBgColor(pokemon) {
+      const prefix = this.$vuetify.theme.dark ? "Dark" : "Light";
       const rgb =
-        get(pokemon, "species.colorPalette.DarkMuted.rgb") ||
-        get(pokemon, "species.colorPalette.DarkVibrant.rgb");
+        get(pokemon, `species.colorPalette.${prefix}Muted.rgb`) ||
+        get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`);
       return rgb
         ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
         : this.$vuetify.theme.themes.dark.secondary;
     },
 
     getDarkerBgColor(pokemon) {
-    	const bgColor = this.getBgColor(pokemon);
-    	const { _r, _g, _b } = tinycolor(bgColor).darken(20);
-    	return `rgb(${_r}, ${_g}, ${_b})`
+      const bgColor = this.getBgColor(pokemon);
+      const { _r, _g, _b } = tinycolor(bgColor)[
+        this.$vuetify.theme.dark ? "darken" : "lighten"
+      ](20);
+      return `rgb(${_r}, ${_g}, ${_b})`;
     },
 
     // Get pokemon's vibrant color
     getPrimaryColor(pokemon) {
+      const prefix = this.$vuetify.theme.dark ? "Light" : "Dark";
+
       const rgb =
-        get(pokemon, "species.colorPalette.LightVibrant.rgb") ||
+        get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`) ||
         get(pokemon, "species.colorPalette.Vibrant.rgb");
       return rgb
         ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
