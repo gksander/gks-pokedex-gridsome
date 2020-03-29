@@ -195,7 +195,15 @@ query ($id: ID!, $page: Int) {
         node {
           ... on Pokemon {
             id, slug, name,
-            species { colorPalette { Vibrant { rgb } DarkMuted { rgb } DarkVibrant { rgb } } }
+            species {
+              colorPalette {
+                Vibrant { rgb }
+                DarkMuted { rgb }
+                DarkVibrant { rgb }
+                LightMuted { rgb }
+                LightVibrant { rgb }
+              }
+            }
           }
         }
       }
