@@ -17,7 +17,7 @@ module.exports = async () => {
       .on("data", async item => {
         // For each item, use sharp to convert to PNG
         try {
-        	const fileExists = await fse.pathExists(item.path.replace(/poke-svg/, "poke-png").replace(/svg$/, 'png'));
+        	const fileExists = await fse.pathExists(item.path.replace(/pokemon/, "pokemon-png").replace(/svg$/, 'png'));
           if (!fileExists) {
           	console.log(`Converting ${item.path} to png`);
             await sharp(item.path)
