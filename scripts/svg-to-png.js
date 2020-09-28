@@ -9,8 +9,8 @@ const path = require("path");
 module.exports = async () => {
   await new Promise(async resolve => {
     // Input/output paths
-    const assetPath = path.resolve(__dirname, "../src/assets/img/poke-svg");
-    const outputPath = path.resolve(__dirname, "../src/assets/img/poke-png");
+    const assetPath = path.resolve(__dirname, "../static/img/pokemon");
+    const outputPath = path.resolve(__dirname, "../static/img/pokemon-png");
 
     // Walk through the asset path...
     await klaw(assetPath)
@@ -21,7 +21,7 @@ module.exports = async () => {
           if (!fileExists) {
           	console.log(`Converting ${item.path} to png`);
             await sharp(item.path)
-              .resize(500, 500, { fit: "inside" })
+              .resize(800, 800, { fit: "inside" })
               .toFile(
                 path.join(
                   outputPath,
