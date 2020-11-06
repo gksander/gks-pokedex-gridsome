@@ -9,9 +9,9 @@
         <div>
           <g-link
             to="/"
-            class="flex items-center text-primary-800 px-3 py-2 rounded hover:bg-gray-100 transition-colors duration-150"
+            class="flex items-center text-primary-800 px-3 py-2 rounded border-2 border-transparent hover:border-primary-800 transition-colors duration-150"
             exact
-            active-class="bg-gray-100"
+            active-class="border-primary-800"
           >
             <div class="w-6 mr-2">
               <poke-ball />
@@ -24,9 +24,9 @@
             v-for="link in links"
             :key="link.title"
             :to="link.to"
-            class="px-3 py-2 text-primary-800 font-bold rounded hover:bg-gray-100 transition-colors duration-150"
+            class="px-3 py-2 text-primary-800 font-bold rounded transition-colors duration-150 border-2 border-transparent hover:border-primary-800"
             exact
-            active-class="bg-gray-100"
+            active-class="border-primary-800"
             >{{ link.title }}</g-link
           >
         </div>

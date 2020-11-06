@@ -1,40 +1,64 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <g-link :to="`/${pokemon.slug}`" style="text-decoration: none;">
-      <v-card
-        class="pa-2"
-        :style="{
-          borderBottom: `2px solid ${color}`,
-          background: `linear-gradient(to bottom, ${bgColor}, ${darkerBgColor})`
-        }"
-        :elevation="hover ? 5 : 2"
-      >
-        <v-img
-          :src="`/img/pokemon/${pokemon.id}.svg`"
-          :alt="`Image for ${pokemon.name}`"
-          :aspect-ratio="1"
-          contain
-          width="150"
-        >
-          <template v-slot:placeholder>
-            <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular indeterminate color="grey lighten-5" />
-            </v-row>
-          </template>
-        </v-img>
-        <div class="px-2 pt-1 text-truncate text-center">
-          {{ pokemon.name }} <span class="">(#{{ pokemon.id }})</span>
+  <div class="grid sm:grid-cols-4 gap-6 card transition-all duration-300">
+    <div class="sm:col-span-1 flex justify-center">
+      <div class="w-56 sm:w-full pokeImg">
+        <div class="relative" style="padding-top: 100%">
+          <div class="absolute inset-0">
+            <div
+              :style="{
+                color: pokeballColor,
+              }"
+              class="p-2"
+            >
+              <poke-ball class="pokeball transition-all duration-300" />
+            </div>
+            <g-link
+              class="absolute inset-0 image transition-all duration-300"
+              :style="{
+                backgroundImage: `url('/img/pokemon/${pokemon.id}.svg')`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
+              }"
+              :to="`/${pokemon.slug}`"
+            />
+          </div>
         </div>
-      </v-card>
-    </g-link>
-  </v-hover>
+      </div>
+    </div>
+    <div class="sm:col-span-3 sm:pt-3">
+      <div class="flex justify-between items-baseline">
+        <g-link
+          :to="`/${pokemon.slug}`"
+          class="font-bold text-2xl text-gray-800 hover:text-primary-800 transition-colors duration-150"
+        >
+          {{ pokemon.name }}</g-link
+        >
+        <span class="text-gray-600 text-xl font-bold">#{{ pokemon.id }}</span>
+      </div>
+      <div v-html="pokemon.species.flavor_text" class="text-gray-700 mb-2" />
+      <div class="flex gap-x-2">
+        <poke-type-chip
+          v-for="type in pokemon.types"
+          :key="type.slug"
+          :type="type"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import { get } from "lodash";
-import tinycolor from "tinycolor2";
+import PokeTypeChip from "./PokeTypeChip";
+import PokeBall from "./PokeBall";
 
 export default {
+  components: {
+    PokeTypeChip,
+    PokeBall,
+  },
+
   props: {
     // Pokemon needs id, slug, name, and png.
     // This is data that needs to come from a page/template, and then passed along here.
@@ -44,31 +68,38 @@ export default {
   },
 
   computed: {
-    color() {
-      const rgb = get(this.pokemon, "species.colorPalette.Vibrant.rgb", [
-        0,
-        0,
-        0,
-      ]);
-      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+    pokeballColor() {
+      const rgb =
+        get(this.pokemon, `species.colorPalette.LightMuted.rgb`) ||
+        get(this.pokemon, `species.colorPalette.LightVibrant.rgb`);
+      return rgb
+        ? `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`
+        : "rgba(0,0,0,0.5)";
+      // const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
     },
-
-    bgColor() {
-    	const prefix = this.$vuetify.theme.dark ? 'Dark' : 'Light';
-
-	    const rgb =
-		    get(this.pokemon, `species.colorPalette.${prefix}Muted.rgb`) ||
-		    get(this.pokemon, `species.colorPalette.${prefix}Vibrant.rgb`);
-	    return rgb
-		    ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
-		    : this.$vuetify.theme.themes.secondary;
-    },
-
-    darkerBgColor() {
-    	const bgColor = this.bgColor;
-	    const { _r, _g, _b } = tinycolor(bgColor)[this.$vuetify.theme.dark ? "darken" : "lighten"](this.$vuetify.theme.dark ? 20 : 30);
-	    return `rgb(${_r}, ${_g}, ${_b})`
-    }
   },
 };
 </script>
+
+<style scoped>
+/**
+.card {
+  filter: grayscale(0.75);
+}
+.card:hover {
+  filter: grayscale(0);
+}
+
+ */
+.pokeImg:hover .image {
+  cursor: pointer;
+  filter: drop-shadow(1px 1px 2px rgba(50, 50, 50, 0.6));
+}
+.pokeball {
+  filter: brightness(0) opacity(0.3);
+}
+.pokeImg:hover .pokeball {
+  filter: brightness(1) opacity(1);
+  transform: scale(1.2) rotate(180deg);
+}
+</style>

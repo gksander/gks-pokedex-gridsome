@@ -1,6 +1,38 @@
 <template>
   <div class="container max-w-2xl py-6 px-2">
-    Type details
+    <div class="text-5xl mb-3">{{ $page.type.name }}</div>
+    <div class="grid gap-4">
+      <div v-for="cat in damageCategories" :key="cat.title">
+        <div class="text-2xl mb-1">{{ cat.title }}</div>
+        <div class="flex gap-x-1" v-if="cat.types.length">
+          <poke-type-chip
+            v-for="type in cat.types"
+            :key="type.id"
+            :type="type"
+          />
+        </div>
+        <div v-else class="italic text-gray-700">
+          Nothing...
+        </div>
+      </div>
+    </div>
+    <hr class="my-6" />
+    <div class="text-2xl mb-4">Pokemon with this type</div>
+    <div class="grid gap-8">
+      <poke-list-card
+        v-for="pokemon in loadedPokemon"
+        :key="loadedPokemon.id"
+        :pokemon="pokemon"
+      />
+      <infinite-loading
+        @infinite="infiniteHandler"
+        spinner="spiral"
+        ref="infiniteLoader"
+      >
+        <div slot="no-more" class="d-none"></div>
+        <div slot="no-results" class="d-none"></div>
+      </infinite-loading>
+    </div>
   </div>
 </template>
 
@@ -24,7 +56,7 @@ export default {
    * On creation we need to add the initial pokemon to our list
    */
   created() {
-    this.loadedPokemon = this.$page.type.belongsTo.edges;
+    this.loadedPokemon = this.$page.type.belongsTo.edges.map(edge => edge.node);
   },
 
   /**
@@ -93,7 +125,9 @@ export default {
         // If we've got edges to add, add them in
         if (data.type.belongsTo.edges.length) {
           this.currentPage = data.type.belongsTo.pageInfo.currentPage;
-          this.loadedPokemon.push(...data.type.belongsTo.edges);
+          this.loadedPokemon.push(
+            ...data.type.belongsTo.edges.map(edge => edge.node),
+          );
           $state.loaded();
         } else {
           // Otherwise, we're done
@@ -112,7 +146,9 @@ export default {
      */
     "$page.type.slug"() {
       this.currentPage = 1;
-      this.loadedPokemon = this.$page.type.belongsTo.edges;
+      this.loadedPokemon = this.$page.type.belongsTo.edges.map(
+        edge => edge.node,
+      );
       try {
         this.$refs.infiniteLoader.stateChanger.reset();
       } catch (_) {}
@@ -142,7 +178,7 @@ query ($id: ID!, $page: Int) {
     id, name, slug,
     belongsTo(
       filter: { typeName: { eq: Pokemon } },
-      sortBy: "id", order: ASC, perPage: 20, page: $page
+      sortBy: "id", order: ASC, perPage: 10, page: $page
     ) @paginate {
       pageInfo { hasPreviousPage, hasNextPage, totalPages, currentPage }
       edges {
@@ -150,6 +186,7 @@ query ($id: ID!, $page: Int) {
           ... on Pokemon {
             id, slug, name,
             species {
+              flavor_text
               colorPalette {
                 Vibrant { rgb }
                 DarkMuted { rgb }
@@ -158,6 +195,7 @@ query ($id: ID!, $page: Int) {
                 LightVibrant { rgb }
               }
             }
+            types { slug, name }
           }
         }
       }

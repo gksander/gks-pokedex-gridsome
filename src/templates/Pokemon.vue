@@ -1,6 +1,39 @@
 <template>
   <div>
-    Pokemon details
+    <div class="container max-w-2xl py-6 px-2">
+      <div class="text-6xl">{{ $page.pokemon.name }}</div>
+      <div class="flex gap-x-2 mb-6">
+        <poke-type-chip
+          v-for="type in $page.pokemon.types"
+          :key="type.slug"
+          :type="type"
+        />
+      </div>
+      <div class="flex justify-center">
+        <div class="w-full sm:w-2/3">
+          <div class="w-full relative" style="padding-top: 100%">
+            <div
+              class="absolute inset-0"
+              :style="{
+                backgroundImage: `url('/img/pokemon/${$page.pokemon.id}.svg')`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: 'contain',
+                filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
+              }"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed inset-0"
+      :style="{
+        zIndex: -1,
+        backgroundColor: bgColor,
+        filter: 'opacity(0.3)',
+      }"
+    />
   </div>
 </template>
 
@@ -53,12 +86,14 @@ export default {
 
       const rgb = get(
         this.$page,
-        `pokemon.species.colorPalette.${prefix}Muted.rgb`,
+        `pokemon.species.colorPalette.LightVibrant.rgb`,
       ) ||
-        get(
-          this.$page,
-          `pokemon.species.colorPalette.${prefix}Vibrant.rgb`,
-        ) || [0, 0, 0];
+        get(this.$page, `pokemon.species.colorPalette.Vibrant.rgb`) ||
+        get(this.$page, `pokemon.species.colorPalette.LightMuted.rgb`) || [
+          200,
+          200,
+          200,
+        ];
       return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
     },
     // Has evolution chain?

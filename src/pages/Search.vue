@@ -1,6 +1,6 @@
 <template>
   <div class="container max-w-2xl px-2 py-6">
-    Search...
+    Search coming soon...
   </div>
 </template>
 
