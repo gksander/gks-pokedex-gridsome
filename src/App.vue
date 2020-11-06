@@ -1,36 +1,47 @@
 <template>
-  <div>
-    <header>
-      <div class="container flex flex-row justify-between">
+  <div class="h-screen overflow-hidden flex flex-col">
+    <header class="p-2">
+      <div class="container flex flex-row justify-between items-center">
         <div>
-          <g-link to="/">
-            <g-image
-              src="~/assets/img/pokeball.png"
-              width="40"
-              fit="contain"
-              style="margin-right: 10px"
-              alt="Pokeball image"
-            />
+          <g-link
+            to="/"
+            class="flex items-center text-primary-800 px-3 py-2 rounded hover:bg-gray-100 transition-colors duration-150"
+            exact
+            active-class="bg-gray-100"
+          >
+            <div class="w-6 mr-2">
+              <poke-ball />
+            </div>
+            <span class="font-bold text-lg">Pokedex</span>
           </g-link>
         </div>
         <div>
-          <g-link v-for="link in links" :key="link.title" :to="link.to">{{
-            link.title
-          }}</g-link>
+          <g-link
+            v-for="link in links"
+            :key="link.title"
+            :to="link.to"
+            class="px-3 py-2 text-primary-800 font-bold rounded hover:bg-gray-100 transition-colors duration-150"
+            exact
+            active-class="bg-gray-100"
+            >{{ link.title }}</g-link
+          >
         </div>
       </div>
     </header>
     <!-- Content body -->
-    <div class="container py-6 px-2">
+    <div class="flex-grow overflow-auto">
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
+import PokeBall from "./components/PokeBall";
+
 const STORAGE_KEY = "IS_DARK_MODE";
 
 export default {
+  components: { PokeBall },
   // Component data
   data() {
     return {

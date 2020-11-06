@@ -16,7 +16,7 @@ const NUM_POKEMON =
     gen3: 384,
     gen4: 491,
     gen5: 649,
-  }["starters"] || 9;
+  }["gen1"] || 9;
 const DATA_DIR = path.join(__dirname, "src/assets/data/csv");
 
 /**
