@@ -1,6 +1,29 @@
 <template>
-  <div>
-    Home page...
+  <div class="grid gap-8">
+    <div
+      v-for="pokemon in sortedPokemon"
+      :key="pokemon.id"
+      class="grid grid-cols-4 gap-4"
+    >
+      <div class="col-span-1">
+        <img :src="`/img/pokemon/${pokemon.id}.svg`" :alt="pokemon.name" />
+      </div>
+      <div class="col-span-3">
+        <g-link :to="`/${pokemon.slug}`" class="font-bold text-xl"
+          >{{ pokemon.name }} (#{{ pokemon.id }})</g-link
+        >
+        <div v-html="pokemon.species.flavor_text" />
+        <div>
+          <g-link
+            v-for="type in pokemon.types"
+            :key="type.slug"
+            :to="`/types/${type.slug}`"
+          >
+            {{ type.name }}
+          </g-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -124,6 +147,7 @@ query ($page: Int) {
             DarkMuted { rgb }
           }
         }
+        types { slug, name }
       }
     }
   }

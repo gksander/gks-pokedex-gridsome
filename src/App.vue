@@ -1,25 +1,29 @@
 <template>
   <div>
-    <header class="flex flex-row justify-between">
-      <div>
-        <g-link to="/">
-          <g-image
-            src="~/assets/img/pokeball.png"
-            width="40"
-            fit="contain"
-            style="margin-right: 10px"
-            alt="Pokeball image"
-          />
-        </g-link>
-      </div>
-      <div>
-        <g-link v-for="link in links" :key="link.title" :to="link.to">{{
-          link.title
-        }}</g-link>
+    <header>
+      <div class="container flex flex-row justify-between">
+        <div>
+          <g-link to="/">
+            <g-image
+              src="~/assets/img/pokeball.png"
+              width="40"
+              fit="contain"
+              style="margin-right: 10px"
+              alt="Pokeball image"
+            />
+          </g-link>
+        </div>
+        <div>
+          <g-link v-for="link in links" :key="link.title" :to="link.to">{{
+            link.title
+          }}</g-link>
+        </div>
       </div>
     </header>
     <!-- Content body -->
-    <router-view />
+    <div class="container py-6 px-2">
+      <router-view />
+    </div>
   </div>
 </template>
 
