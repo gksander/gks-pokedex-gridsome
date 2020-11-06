@@ -1,20 +1,46 @@
 <template>
-  <div class="container max-w-2xl py-6">
-    <div class="grid gap-8">
+  <div class="container max-w-2xl py-6 px-2">
+    <div class="grid gap-12">
       <div
         v-for="pokemon in sortedPokemon"
         :key="pokemon.id"
-        class="grid grid-cols-4 gap-4"
+        class="grid sm:grid-cols-4 gap-6"
       >
-        <div class="col-span-1">
-          <img :src="`/img/pokemon/${pokemon.id}.svg`" :alt="pokemon.name" />
+        <div class="sm:col-span-1 flex justify-center">
+          <!--         -->
+          <div class="w-56 sm:w-full">
+            <div class="relative" style="padding-top: 100%">
+              <div class="absolute inset-0">
+                <div
+                  :style="{
+                    color: getPokeballColor(pokemon),
+                  }"
+                  class="p-2"
+                >
+                  <poke-ball />
+                </div>
+                <div
+                  class="absolute inset-0"
+                  :style="{
+                    backgroundImage: `url('/img/pokemon/${pokemon.id}.svg')`,
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                  }"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-span-3">
-          <g-link :to="`/${pokemon.slug}`" class="font-bold text-xl"
+        <div class="sm:col-span-3 sm:pt-3">
+          <g-link
+            :to="`/${pokemon.slug}`"
+            class="font-bold text-xl text-gray-800"
             >{{ pokemon.name }} (#{{ pokemon.id }})</g-link
           >
-          <div v-html="pokemon.species.flavor_text" />
+          <div v-html="pokemon.species.flavor_text" class="text-gray-700" />
           <div>
+            <!-- S TODO: These should be type chips... -->
             <g-link
               v-for="type in pokemon.types"
               :key="type.slug"
@@ -38,9 +64,10 @@ import PokeListCard from "../components/PokeListCard";
 import PokeTypeChip from "../components/PokeTypeChip";
 import { get } from "lodash";
 import tinycolor from "tinycolor2";
+import PokeBall from "../components/PokeBall";
 
 export default {
-  components: { PokeListCard, PokeTypeChip },
+  components: { PokeListCard, PokeTypeChip, PokeBall },
 
   /**
    * Keep track of the pokemon we loaded in
@@ -96,29 +123,15 @@ export default {
       }
     },
 
-    // Get pokemon's BG color
-    getBgColor(pokemon) {
-      const prefix = "Dark";
+    // S TODO: Tweak this, maybe use the tinycolor.lighten
+    getPokeballColor(pokemon) {
       const rgb =
-        get(pokemon, `species.colorPalette.${prefix}Muted.rgb`) ||
-        get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`);
-      return rgb ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` : "white";
-    },
-
-    getDarkerBgColor(pokemon) {
-      const bgColor = this.getBgColor(pokemon);
-      const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
-      return `rgb(${_r}, ${_g}, ${_b})`;
-    },
-
-    // Get pokemon's vibrant color
-    getPrimaryColor(pokemon) {
-      const prefix = "Light";
-
-      const rgb =
-        get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`) ||
-        get(pokemon, "species.colorPalette.Vibrant.rgb");
-      return rgb ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` : "black";
+        get(pokemon, `species.colorPalette.LightMuted.rgb`) ||
+        get(pokemon, `species.colorPalette.LightVibrant.rgb`);
+      return rgb
+        ? `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`
+        : "rgba(0,0,0,0.5)";
+      // const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
     },
   },
 
