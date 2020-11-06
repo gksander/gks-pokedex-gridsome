@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container max-w-2xl py-6 px-2">
     Type details
   </div>
 </template>

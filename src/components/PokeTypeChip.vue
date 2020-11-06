@@ -2,7 +2,7 @@
   <g-link
     :to="`/types/${type.slug}`"
     :class="[
-      'border-none bg-gray-100 hover:bg-gray-200 rounded inline-flex justify-center items-center w-20 h-8 transition-colors duration-150',
+      'border-2 hover:bg-gray-100 rounded inline-flex justify-center items-center w-20 h-8 transition-colors duration-150',
       customClasses,
       {
         'w-full': block,
@@ -45,41 +45,41 @@ export default {
     customClasses() {
       switch (this.type.name) {
         case "Bug":
-          return "text-green-600";
+          return "text-green-600 border-green-600";
         case "Fire":
-          return "text-orange-600";
+          return "text-orange-600 border-orange-600";
         case "Grass":
-          return "text-green-700";
+          return "text-green-700 border-green-700";
         case "Poison":
-          return "text-purple-700";
+          return "text-purple-700 border-purple-700";
         case "Water":
-          return "text-blue-700";
+          return "text-blue-700 border-blue-700";
         case "Flying":
-          return "text-blue-800";
+          return "text-blue-800 border-blue-800";
         case "Normal":
-          return "text-gray-900";
+          return "text-gray-900 border-gray-900";
         case "Electric":
-          return "text-yellow-600";
+          return "text-yellow-600 border-yellow-600";
         case "Ground":
-          return "text-yellow-700";
+          return "text-yellow-700 border-yellow-700";
         case "Fairy":
-          return "text-pink-600";
+          return "text-pink-600 border-pink-600";
         case "Fighting":
-          return "text-red-700";
+          return "text-red-700 border-red-700";
         case "Ice":
-          return "text-blue-500";
+          return "text-blue-500 border-blue-500";
         case "Ghost":
-          return "text-purple-500";
+          return "text-purple-500 border-purple-500";
         case "Psychic":
-          return "text-purple-600";
+          return "text-purple-600 border-purple-600";
         case "Rock":
-          return "text-gray-700";
+          return "text-gray-700 border-gray-700";
         case "Dragon":
-          return "text-orange-700";
+          return "text-orange-700 border-orange-700";
         case "Steel":
-          return "text-gray-600";
+          return "text-gray-600 border-gray-600";
         default:
-          return "text-gray-900";
+          return "text-gray-900 border-gray-900";
       }
     },
   },
