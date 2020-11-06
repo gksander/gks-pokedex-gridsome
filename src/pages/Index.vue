@@ -7,7 +7,6 @@
         class="grid sm:grid-cols-4 gap-6"
       >
         <div class="sm:col-span-1 flex justify-center">
-          <!--         -->
           <div class="w-56 sm:w-full">
             <div class="relative" style="padding-top: 100%">
               <div class="absolute inset-0">

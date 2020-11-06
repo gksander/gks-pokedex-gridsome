@@ -1,6 +1,8 @@
 <template>
   <div class="h-screen overflow-hidden flex flex-col">
-    <header class="p-2">
+    <header
+      :class="['p-2 transition-all duration-300', showHeaderShadow && 'shadow']"
+    >
       <div class="container flex flex-row justify-between items-center">
         <div>
           <g-link
@@ -29,7 +31,7 @@
       </div>
     </header>
     <!-- Content body -->
-    <div class="flex-grow overflow-auto">
+    <div class="flex-grow overflow-auto" @scroll="onScroll">
       <router-view />
     </div>
   </div>
@@ -51,12 +53,23 @@ export default {
         // { title: "Moves", to: "/moves" },
       ],
       isMounted: false,
+      bodyScroll: 0,
     };
   },
 
   computed: {
     showMenu() {
       return !this.isMounted;
+    },
+
+    showHeaderShadow() {
+      return this.bodyScroll > 0;
+    },
+  },
+
+  methods: {
+    onScroll(e) {
+      this.bodyScroll = e?.target?.scrollTop || 0;
     },
   },
 

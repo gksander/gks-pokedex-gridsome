@@ -11,9 +11,6 @@
 </template>
 
 <script>
-// Component
-import typeToColor from "../util/type-to-color";
-
 export default {
   props: {
     // The type object (id, slug, name required)
