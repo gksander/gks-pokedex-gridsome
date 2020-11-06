@@ -1,20 +1,10 @@
 <template>
-  <v-hover v-slot:default="{ hover }">
-    <v-btn
-      :to="`/types/${type.slug}`"
-      :color="details.color"
-      :class="[
-        hover ? 'elevation-3' : 'elevation-0',
-        ...(details.className || []),
-      ]"
-      :small="small"
-      :block="block"
-      :outlined="details.outlined || false"
-    >
-      {{ type.name }}
-      <v-icon right x-small v-if="starred">$star</v-icon>
-    </v-btn>
-  </v-hover>
+  <g-link
+    :to="`/types/${type.slug}`"
+    class="border rounded inline-flex justify-center items-center w-16 h-8 "
+  >
+    {{ type.name }}
+  </g-link>
 </template>
 
 <script>

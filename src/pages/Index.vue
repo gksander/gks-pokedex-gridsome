@@ -33,21 +33,27 @@
           </div>
         </div>
         <div class="sm:col-span-3 sm:pt-3">
-          <g-link
-            :to="`/${pokemon.slug}`"
-            class="font-bold text-xl text-gray-800"
-            >{{ pokemon.name }} (#{{ pokemon.id }})</g-link
-          >
-          <div v-html="pokemon.species.flavor_text" class="text-gray-700" />
-          <div>
-            <!-- S TODO: These should be type chips... -->
+          <div class="flex justify-between items-baseline">
             <g-link
+              :to="`/${pokemon.slug}`"
+              class="font-bold text-2xl text-gray-800 hover:text-primary-800 transition-colors duration-150"
+            >
+              {{ pokemon.name }}</g-link
+            >
+            <span class="text-gray-600 text-xl font-bold"
+              >#{{ pokemon.id }}</span
+            >
+          </div>
+          <div
+            v-html="pokemon.species.flavor_text"
+            class="text-gray-700 mb-2"
+          />
+          <div class="flex gap-x-2">
+            <poke-type-chip
               v-for="type in pokemon.types"
               :key="type.slug"
-              :to="`/types/${type.slug}`"
-            >
-              {{ type.name }}
-            </g-link>
+              :type="type"
+            />
           </div>
         </div>
       </div>
@@ -123,7 +129,6 @@ export default {
       }
     },
 
-    // S TODO: Tweak this, maybe use the tinycolor.lighten
     getPokeballColor(pokemon) {
       const rgb =
         get(pokemon, `species.colorPalette.LightMuted.rgb`) ||
