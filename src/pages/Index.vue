@@ -1,78 +1,7 @@
 <template>
-  <v-content>
-    <v-container>
-      <v-row>
-        <v-col v-for="pokemon in sortedPokemon" :key="pokemon.id" cols="6">
-          <g-link :to="`/${pokemon.slug}`" style="text-decoration: none;">
-            <v-card
-              class="fill-height"
-              :style="{
-                borderBottom: `2px solid ${getPrimaryColor(pokemon)}`,
-              }"
-              :dark="$vuetify.theme.dark"
-            >
-              <div
-                :style="{
-                  background: `linear-gradient(to ${
-                    $vuetify.breakpoint.xsOnly ? 'top' : 'left'
-                  }, ${getDarkerBgColor(pokemon)} 50%, ${getBgColor(pokemon)})`,
-                  zIndex: 0,
-                }"
-                class="pa-3"
-              >
-                <v-row>
-                  <v-col cols="12" md="4" class="d-flex justify-center">
-                    <v-img
-                      :src="`/img/pokemon/${pokemon.id}.svg`"
-                      :aspect-ratio="1"
-                      contain
-                      :alt="`Image of ${pokemon.name}`"
-                      width="100%"
-                      max-width="200px"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          />
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-col>
-                  <v-col>
-                    <div
-                      class="font-weight-bold title overflow-hidden"
-                      style="white-space: nowrap; text-overflow: ellipsis;"
-                    >
-                      {{ pokemon.name }} (#{{ pokemon.id }})
-                    </div>
-                    <!-- Description -->
-                    <div
-                      class="d-none d-sm-block"
-                      v-html="pokemon.species.flavor_text"
-                    />
-                  </v-col>
-                </v-row>
-              </div>
-            </v-card>
-          </g-link>
-        </v-col>
-        <ClientOnly>
-          <v-col cols="6">
-            <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-              <div slot="no-more" class="d-none"></div>
-              <div slot="no-results" class="d-none"></div>
-            </infinite-loading>
-          </v-col>
-        </ClientOnly>
-      </v-row>
-    </v-container>
-  </v-content>
+  <div>
+    Home page...
+  </div>
 </template>
 
 <script>
@@ -140,33 +69,27 @@ export default {
 
     // Get pokemon's BG color
     getBgColor(pokemon) {
-      const prefix = this.$vuetify.theme.dark ? "Dark" : "Light";
+      const prefix = "Dark";
       const rgb =
         get(pokemon, `species.colorPalette.${prefix}Muted.rgb`) ||
         get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`);
-      return rgb
-        ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
-        : this.$vuetify.theme.themes.dark.secondary;
+      return rgb ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` : "white";
     },
 
     getDarkerBgColor(pokemon) {
       const bgColor = this.getBgColor(pokemon);
-      const { _r, _g, _b } = tinycolor(bgColor)[
-        this.$vuetify.theme.dark ? "darken" : "lighten"
-      ](20);
+      const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
       return `rgb(${_r}, ${_g}, ${_b})`;
     },
 
     // Get pokemon's vibrant color
     getPrimaryColor(pokemon) {
-      const prefix = this.$vuetify.theme.dark ? "Light" : "Dark";
+      const prefix = "Light";
 
       const rgb =
         get(pokemon, `species.colorPalette.${prefix}Vibrant.rgb`) ||
         get(pokemon, "species.colorPalette.Vibrant.rgb");
-      return rgb
-        ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`
-        : this.$vuetify.theme.themes.dark.primary;
+      return rgb ? `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` : "black";
     },
   },
 

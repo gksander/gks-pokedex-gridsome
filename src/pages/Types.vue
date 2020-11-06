@@ -1,18 +1,7 @@
 <template>
-  <content-wrapper>
-    <div class="display-1 mb-2">Types</div>
-    <v-row dense>
-      <v-col
-        v-for="edge in $page.allType.edges"
-        :key="edge.node.id"
-        cols="6"
-        sm="4"
-        md="3"
-      >
-        <poke-type-chip :type="edge.node" block></poke-type-chip>
-      </v-col>
-    </v-row>
-  </content-wrapper>
+  <div>
+    Types list...
+  </div>
 </template>
 
 <script>

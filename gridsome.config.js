@@ -5,7 +5,7 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: "GKS",
+  siteName: "GKS Pokedex",
   plugins: [
     // {
     //   use: "gridsome-plugin-pwa",
@@ -25,6 +25,9 @@ module.exports = {
     //     msTileColor: "#666600",
     //   },
     // },
+    {
+      use: "gridsome-plugin-tailwindcss",
+    },
   ],
   // Templates to render out for given Edge types
   templates: {
