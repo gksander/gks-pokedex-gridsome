@@ -1,7 +1,10 @@
 <template>
   <g-link
     :to="`/types/${type.slug}`"
-    class="border rounded inline-flex justify-center items-center w-16 h-8 "
+    :class="[
+      'border-none bg-gray-100 hover:bg-gray-200 rounded inline-flex justify-center items-center w-20 h-8 transition-colors duration-150',
+      customClasses,
+    ]"
   >
     {{ type.name }}
   </g-link>
@@ -39,60 +42,45 @@ export default {
    * Computed props
    */
   computed: {
-    // Details
-    details() {
-      const isDark = this.$vuetify.theme.dark;
-
+    customClasses() {
       switch (this.type.name) {
         case "Bug":
-          return { color: "green lighten-2" };
+          return "text-green-600";
         case "Fire":
-          return { color: "orange darken-1", className: ["white--text"] };
+          return "text-orange-600";
         case "Grass":
-          return { color: "green darken-3", className: ["white--text"] };
+          return "text-green-700";
         case "Poison":
-          return { color: "pink lighten-1", className: ["white--text"] };
+          return "text-purple-700";
         case "Water":
-          return { color: "blue darken-2", className: ["white--text"] };
+          return "text-blue-700";
         case "Flying":
-          return { color: "blue darken-4", className: ["white--text"] };
+          return "text-blue-800";
         case "Normal":
-          return { color: isDark ? "white" : "black", outlined: true };
+          return "text-gray-900";
         case "Electric":
-          return { color: "yellow darken-3" };
+          return "text-yellow-600";
         case "Ground":
-          return { color: "brown lighten-1", className: ["white--text"] };
+          return "text-yellow-700";
         case "Fairy":
-          return { color: "pink lighten-2" };
+          return "text-pink-600";
         case "Fighting":
-          return { color: "red darken-2", className: ["white--text"] };
+          return "text-red-700";
         case "Ice":
-          return { color: "blue lighten-2" };
+          return "text-blue-500";
         case "Ghost":
-          return { color: "purple lighten-2" };
+          return "text-purple-500";
         case "Psychic":
-          return { color: "purple darken-2", className: ["white--text"] };
+          return "text-purple-600";
         case "Rock":
-          return { color: "grey darken-2", className: ["white--text"] };
+          return "text-gray-700";
         case "Dragon":
-          return { color: "orange darken-1", className: ["white--text"] };
+          return "text-orange-700";
         case "Steel":
-          return { color: "grey lighten-3" };
+          return "text-gray-600";
         default:
-          return { color: "black", className: ["white--text"] };
+          return "text-gray-900";
       }
-    },
-
-    // Show it as solid?
-    solid() {
-      return /(rock|ground)/i.test(this.type.name);
-    },
-    light() {
-      return /(normal|steel)/i.test(this.type.name);
-    },
-    // Additional classes for certain types
-    className() {
-      return /fairy/i.test(this.type.name) ? ["pink--text", "lighten-2"] : [];
     },
   },
 };
