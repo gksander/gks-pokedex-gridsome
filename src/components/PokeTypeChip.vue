@@ -4,6 +4,9 @@
     :class="[
       'border-none bg-gray-100 hover:bg-gray-200 rounded inline-flex justify-center items-center w-20 h-8 transition-colors duration-150',
       customClasses,
+      {
+        'w-full': block,
+      },
     ]"
   >
     {{ type.name }}

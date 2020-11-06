@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container max-w-2xl px-2 py-6">
     Search...
   </div>
 </template>

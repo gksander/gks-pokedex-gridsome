@@ -1,13 +1,13 @@
 <template>
   <div class="container max-w-2xl py-6 px-2">
-    <div class="grid gap-12">
+    <div class="grid gap-16">
       <div
         v-for="pokemon in sortedPokemon"
         :key="pokemon.id"
         class="grid sm:grid-cols-4 gap-6"
       >
         <div class="sm:col-span-1 flex justify-center">
-          <div class="w-56 sm:w-full">
+          <div class="w-56 sm:w-full card">
             <div class="relative" style="padding-top: 100%">
               <div class="absolute inset-0">
                 <div
@@ -16,16 +16,17 @@
                   }"
                   class="p-2"
                 >
-                  <poke-ball />
+                  <poke-ball class="pokeball transition-all duration-300" />
                 </div>
-                <div
-                  class="absolute inset-0"
+                <g-link
+                  class="absolute inset-0 image transition-all duration-300"
                   :style="{
                     backgroundImage: `url('/img/pokemon/${pokemon.id}.svg')`,
                     backgroundSize: 'contain',
                     backgroundPosition: 'center center',
                     backgroundRepeat: 'no-repeat',
                   }"
+                  :to="`/${pokemon.slug}`"
                 />
               </div>
             </div>
@@ -150,6 +151,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card:hover .image {
+  cursor: pointer;
+  filter: drop-shadow(1px 1px 2px rgba(50, 50, 50, 0.6));
+}
+.card:hover .pokeball {
+  transform: scale(1.3) rotate(180deg);
+}
+</style>
 
 <page-query>
 query ($page: Int) {

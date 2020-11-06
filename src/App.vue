@@ -3,7 +3,9 @@
     <header
       :class="['p-2 transition-all duration-300', showHeaderShadow && 'shadow']"
     >
-      <div class="container flex flex-row justify-between items-center">
+      <div
+        class="container max-w-2xl flex flex-row justify-between items-center"
+      >
         <div>
           <g-link
             to="/"

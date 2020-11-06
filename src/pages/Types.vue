@@ -1,6 +1,15 @@
 <template>
-  <div>
-    Types list...
+  <div class="container max-w-2xl py-6 px-2">
+    <div class="text-3xl font-bold">Types</div>
+    <div class="mb-4 text-gray-700">Select a type to learn more about it.</div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <poke-type-chip
+        v-for="type in allTypes"
+        :key="type.id"
+        :type="type"
+        block
+      />
+    </div>
   </div>
 </template>
 
@@ -8,6 +17,12 @@
 import PokeTypeChip from "../components/PokeTypeChip";
 export default {
   components: { PokeTypeChip },
+
+  computed: {
+    allTypes() {
+      return this.$page.allType.edges.map(edge => edge.node);
+    },
+  },
 
   /**
    * Page meta
