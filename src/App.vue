@@ -9,12 +9,12 @@
         <div>
           <g-link
             to="/"
-            class="flex items-center text-primary-800 px-3 py-2 rounded border-2 border-transparent hover:border-primary-800 transition-colors duration-150"
+            class="flex items-center text-primary-800 px-3 py-2 rounded border-2 border-transparent hover:border-primary-800 transition-colors duration-150 homeLink"
             exact
             active-class="border-primary-800"
           >
             <div class="w-6 mr-2">
-              <poke-ball />
+              <poke-ball class="pokeball transition-all duration-300" />
             </div>
             <span class="font-bold text-lg">Pokedex</span>
           </g-link>
@@ -91,6 +91,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.homeLink:hover .pokeball {
+  transform: rotate(180deg);
+}
+</style>
 
 <static-query>
   query {

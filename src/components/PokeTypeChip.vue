@@ -12,6 +12,7 @@
     ]"
   >
     {{ type.name }}
+    <font-awesome-icon v-if="starred" icon="star" class="ml-1" />
   </g-link>
 </template>
 

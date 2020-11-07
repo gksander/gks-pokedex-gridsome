@@ -5,6 +5,8 @@ import InfiniteLoading from "vue-infinite-loading";
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
 import "./styles/global.css";
+import "typeface-sansita-swashed";
+import "typeface-montserrat";
 
 // Handle fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -50,30 +52,5 @@ export default function(Vue, { appOptions, router, head, isClient }) {
   Vue.component("ContentWrapper", ContentWrapper);
   Vue.use(InfiniteLoading);
 
-  // Icon values (for registering with Vuetify)
-  // const iconValues = [
-  //   { key: "menu", icon: ["fa", "bars"] },
-  //   { key: "home", icon: ["fa", "home"] },
-  //   { key: "left", icon: ["fa", "chevron-left"] },
-  //   { key: "prev", icon: ["fa", "caret-left"] },
-  //   { key: "right", icon: ["fa", "chevron-right"] },
-  //   { key: "next", icon: ["fa", "caret-right"] },
-  //   { key: "down", icon: ["fa", "chevron-down"] },
-  //   { key: "list", icon: ["fa", "list-alt"] },
-  //   { key: "star", icon: ["fa", "star"] },
-  //   { key: "sort", icon: ["fa", "caret-down"] },
-  //   { key: "height", icon: ["fa", "ruler-vertical"] },
-  //   { key: "weight", icon: ["fa", "weight"] },
-  //   { key: "dropdown", icon: ["fa", "caret-down"] },
-  //   { key: "sun", icon: ["fa", "sun"] },
-  //   { key: "moon", icon: ["fa", "moon"] },
-  // ].reduce((obj, val) => {
-  //   obj[val.key] = {
-  //     component: FontAwesomeIcon,
-  //     props: {
-  //       icon: val.icon,
-  //     },
-  //   };
-  //   return obj;
-  // }, {});
+  Vue.component("font-awesome-icon", FontAwesomeIcon);
 }

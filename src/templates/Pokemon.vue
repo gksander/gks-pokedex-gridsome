@@ -17,8 +17,10 @@
           </div>
         </div>
         <div>
-          <div class="text-6xl">{{ $page.pokemon.name }}</div>
-          <div class="flex gap-x-2 mb-4">
+          <div class="text-6xl leading-snug font-fancy">
+            {{ $page.pokemon.name }}
+          </div>
+          <div class="flex gap-x-2 mb-3">
             <poke-type-chip
               v-for="type in $page.pokemon.types"
               :key="type.slug"
@@ -26,11 +28,13 @@
             />
           </div>
           <!-- Weight/height -->
-          <div class="flex mb-2">
+          <div class="flex mb-2 text-gray-800">
             <div class="mr-5 flex items-center">
+              <font-awesome-icon icon="ruler-vertical" class="mr-2" />
               <span class="">{{ $page.pokemon.height }} ft</span>
             </div>
             <div class="flex items-center">
+              <font-awesome-icon icon="weight" class="mr-2" />
               <span class="">{{ $page.pokemon.weight }} lbs</span>
             </div>
           </div>
@@ -55,8 +59,8 @@
       </div>
       <template v-if="isPartOfChain">
         <div class="mb-12"></div>
-        <div class="text-3xl mb-4">Evolutions</div>
-        <div class="flex gap-2 flex-col sm:flex-row">
+        <div class="text-3xl font-bold mb-4">Evolutions</div>
+        <div class="flex gap-2 flex-col sm:flex-row items-center">
           <template v-for="(bucket, i) in buckets">
             <div
               :key="bucket[0].pokemon.slug"
@@ -101,7 +105,8 @@
               :key="i"
               class="flex p-2 items-center"
             >
-              &gt;
+              <font-awesome-icon icon="chevron-right" class="hidden sm:block" />
+              <font-awesome-icon icon="chevron-down" class="block sm:hidden" />
             </div>
           </template>
         </div>

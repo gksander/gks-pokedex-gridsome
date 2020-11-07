@@ -1,5 +1,49 @@
 <template>
   <div class="container max-w-2xl py-6 px-2">
+    <div class="mb-12">
+      <div class="text-5xl font-fancy">Grant's Pokedex</div>
+      <div>
+        A list of all pokemon (through generation 5), proudly powered by
+        <a
+          href="https://github.com/PokeAPI/pokeapi"
+          target="_blank"
+          rel="noreferrer"
+          class="text-primary-800"
+          >the Open PokeAPI</a
+        >
+        and
+        <a
+          href="https://github.com/jnovack/pokemon-svg"
+          target="_blank"
+          rel="noreferrer"
+          class="text-primary-800"
+          >pokemon-svg</a
+        >. Built with
+        <a
+          href="https://gridsome.org/"
+          target="_blank"
+          rel="noreferrer"
+          class="text-primary-800"
+          >Gridsome.js</a
+        >
+        and styled with the almighty
+        <a
+          href="https://tailwindcss.com/"
+          target="_blank"
+          rel="noreferrer"
+          class="text-primary-800"
+          >TailwindCSS</a
+        >. Check out
+        <a
+          href="https://github.com/gksander/gks-pokedex-gridsome"
+          target="_blank"
+          rel="noreferrer"
+          class="text-primary-800"
+          >the source code</a
+        >
+        on GitHub.
+      </div>
+    </div>
     <div class="grid gap-16">
       <poke-list-card
         v-for="pokemon in sortedPokemon"
