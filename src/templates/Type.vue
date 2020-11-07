@@ -1,9 +1,9 @@
 <template>
   <div class="container max-w-2xl py-6 px-2">
     <div class="text-6xl font-fancy mb-3">{{ $page.type.name }}</div>
-    <div class="grid gap-4">
+    <div class="grid gap-6">
       <div v-for="cat in damageCategories" :key="cat.title">
-        <div class="text-2xl mb-1">{{ cat.title }}</div>
+        <div class="text-3xl font-thin mb-1">{{ cat.title }}</div>
         <div class="flex gap-x-1" v-if="cat.types.length">
           <poke-type-chip
             v-for="type in cat.types"
@@ -17,7 +17,7 @@
       </div>
     </div>
     <hr class="my-6" />
-    <div class="text-2xl font-bold mb-4">Pokemon with this type</div>
+    <div class="text-4xl font-thin mb-4">Pokemon with this type</div>
     <div class="grid gap-8">
       <poke-list-card
         v-for="pokemon in loadedPokemon"
