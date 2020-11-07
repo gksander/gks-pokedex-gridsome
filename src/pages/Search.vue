@@ -73,6 +73,7 @@ export default {
     return {
       title: "Search Pokemon",
       meta: [{ name: "description", content: "Pokemon listing" }],
+      name: "search",
     };
   },
 };

@@ -1,7 +1,18 @@
 <template>
-  <div class="h-screen overflow-hidden flex flex-col">
+  <div
+    :style="{
+      backgroundColor: 'var(--background-color)',
+    }"
+    class="min-h-screen transition-colors duration-150"
+  >
     <header
-      :class="['p-2 transition-all duration-300', showHeaderShadow && 'shadow']"
+      :class="[
+        'p-2 transition-all duration-150 sticky top-0 z-10',
+        showHeaderShadow && 'shadow',
+      ]"
+      :style="{
+        backgroundColor: 'var(--background-color)',
+      }"
     >
       <div
         class="container max-w-2xl flex flex-row justify-between items-center"
@@ -33,14 +44,13 @@
       </div>
     </header>
     <!-- Content body -->
-    <div class="flex-grow overflow-auto" @scroll="onScroll">
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
 import PokeBall from "./components/PokeBall";
+import { setBackgroundColor } from "./util/setBackgroundColor";
 
 const STORAGE_KEY = "IS_DARK_MODE";
 
@@ -52,7 +62,6 @@ export default {
       links: [
         { title: "Search", to: "/search" },
         { title: "Types", to: "/types" },
-        // { title: "Moves", to: "/moves" },
       ],
       isMounted: false,
       bodyScroll: 0,
@@ -70,24 +79,26 @@ export default {
   },
 
   methods: {
-    onScroll(e) {
-      this.bodyScroll = e?.target?.scrollTop || 0;
+    onScroll() {
+      this.bodyScroll = window.scrollY || 0;
     },
   },
 
   watch: {
-    // "$vuetify.theme.dark"(val) {
-    //   if (window && window.localStorage) {
-    //   	window.localStorage.setItem(STORAGE_KEY, val);
-    //   }
-    // },
+    "$route.path"(val) {
+      if (["/", "/search"].includes(val) || val.startsWith("/types")) {
+        setBackgroundColor("white");
+      }
+    },
   },
 
   mounted() {
     this.isMounted = true;
+    window.addEventListener("scroll", this.onScroll);
+  },
 
-    // On mount, pull dark-mode value.
-    // this.$vuetify.theme.dark = !localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY) === "true";
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.onScroll);
   },
 };
 </script>

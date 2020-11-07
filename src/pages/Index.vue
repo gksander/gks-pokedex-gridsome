@@ -124,16 +124,6 @@ export default {
         }
       }
     },
-
-    getPokeballColor(pokemon) {
-      const rgb =
-        get(pokemon, `species.colorPalette.LightMuted.rgb`) ||
-        get(pokemon, `species.colorPalette.LightVibrant.rgb`);
-      return rgb
-        ? `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`
-        : "rgba(0,0,0,0.5)";
-      // const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
-    },
   },
 
   /**

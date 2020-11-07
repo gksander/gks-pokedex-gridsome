@@ -54,7 +54,7 @@
               small
               grayscale
               :starred="factor.factor > 3.9"
-              class="mr-1"
+              class="mr-1 mb-1"
             />
           </div>
         </div>
@@ -114,15 +114,6 @@
         </div>
       </template>
     </div>
-    <!-- Background color -->
-    <div
-      class="fixed inset-0"
-      :style="{
-        zIndex: -1,
-        backgroundColor: bgColor,
-        filter: 'opacity(0.3)',
-      }"
-    />
   </div>
 </template>
 
@@ -130,9 +121,13 @@
 import PokeTypeChip from "~/components/PokeTypeChip";
 import PokeListCard from "../components/PokeListCard";
 import { get } from "lodash";
+import tinycolor from "tinycolor2";
 import PokeBall from "../components/PokeBall";
+import { setBackgroundColor } from "../util/setBackgroundColor";
 
 export default {
+  name: "Pokemon",
+
   components: { PokeTypeChip, PokeListCard, PokeBall },
 
   /**
@@ -173,9 +168,7 @@ export default {
     },
     // Background color for the pokemon
     bgColor() {
-      const prefix = "Light";
-
-      const rgb = get(
+      const [r, g, b] = get(
         this.$page,
         `pokemon.species.colorPalette.LightVibrant.rgb`,
       ) ||
@@ -185,7 +178,8 @@ export default {
           200,
           200,
         ];
-      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+      return tinycolor.mix(`rgb(${r}, ${g}, ${b})`, "white", 80).toRgbString();
     },
     // Has evolution chain?
     isPartOfChain() {
@@ -269,6 +263,16 @@ export default {
         this.$router.push(this.prevLink);
       }
     },
+
+    setHeaderColor() {
+      setBackgroundColor(this.bgColor);
+    },
+  },
+
+  watch: {
+    $route() {
+      this.setHeaderColor();
+    },
   },
 
   /**
@@ -277,6 +281,8 @@ export default {
   mounted() {
     this.isMounted = true;
     window.addEventListener("keydown", this.keydownHandler);
+
+    this.setHeaderColor();
   },
 
   beforeDestroy() {
