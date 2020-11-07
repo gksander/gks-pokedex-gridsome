@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "gridsome": "^0.7",
+    "gridsome": "^0.7.0",
     "lodash": "^4.17.15",
     "tinycolor2": "^1.4.1",
     "typeface-montserrat": "^1.1.13",
