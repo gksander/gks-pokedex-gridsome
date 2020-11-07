@@ -2,11 +2,13 @@
   <g-link
     :to="`/types/${type.slug}`"
     :class="[
-      'border-2 rounded inline-flex justify-center items-center w-20 h-8 transition-colors duration-150',
+      'border-2 rounded inline-flex justify-center items-center transition-all duration-150',
+      small && 'text-xs',
+      small ? 'w-16' : 'w-20',
+      small ? 'h-6' : 'h-8',
+      block && 'w-full',
+      grayscale && 'grayscale',
       customClasses,
-      {
-        'w-full': block,
-      },
     ]"
   >
     {{ type.name }}
@@ -33,6 +35,10 @@ export default {
     },
     // Add a star? Used for super-duper effective types
     starred: {
+      type: Boolean,
+      default: false,
+    },
+    grayscale: {
       type: Boolean,
       default: false,
     },
@@ -85,3 +91,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.grayscale {
+  filter: grayscale(1) brightness(0.5);
+}
+.grayscale:hover {
+  filter: grayscale(0) brightness(1);
+}
+</style>

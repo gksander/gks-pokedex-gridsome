@@ -1,16 +1,8 @@
 <template>
   <div>
     <div class="container max-w-2xl py-6 px-2">
-      <div class="text-6xl">{{ $page.pokemon.name }}</div>
-      <div class="flex gap-x-2 mb-6">
-        <poke-type-chip
-          v-for="type in $page.pokemon.types"
-          :key="type.slug"
-          :type="type"
-        />
-      </div>
-      <div class="flex justify-center">
-        <div class="w-full sm:w-2/3">
+      <div class="grid sm:grid-cols-2 gap-12">
+        <div>
           <div class="w-full relative" style="padding-top: 100%">
             <div
               class="absolute inset-0"
@@ -24,8 +16,93 @@
             ></div>
           </div>
         </div>
+        <div>
+          <div class="text-6xl">{{ $page.pokemon.name }}</div>
+          <div class="flex gap-x-2 mb-4">
+            <poke-type-chip
+              v-for="type in $page.pokemon.types"
+              :key="type.slug"
+              :type="type"
+            />
+          </div>
+          <!-- Weight/height -->
+          <div class="flex mb-2">
+            <div class="mr-5 flex items-center">
+              <span class="">{{ $page.pokemon.height }} ft</span>
+            </div>
+            <div class="flex items-center">
+              <span class="">{{ $page.pokemon.weight }} lbs</span>
+            </div>
+          </div>
+          <!-- Description -->
+          <div
+            v-html="$page.pokemon.species.flavor_text"
+            class="text-gray-800 mb-4"
+          ></div>
+          <!-- Weaknesses -->
+          <div class="text-xl font-bold">Weaknesses</div>
+          <div class="flex flex-wrap gap-1">
+            <poke-type-chip
+              v-for="factor in damageFactors"
+              :key="factor.type.slug"
+              :type="factor.type"
+              small
+              grayscale
+              :starred="factor.factor > 3.9"
+            />
+          </div>
+        </div>
       </div>
+      <template v-if="isPartOfChain">
+        <div class="mb-12"></div>
+        <div class="text-3xl">Evolutions</div>
+        <div class="flex gap-2 flex-col sm:flex-row">
+          <template v-for="(bucket, i) in buckets">
+            <div
+              :key="bucket[0].pokemon.slug"
+              :style="{ width: evSize, height: evSize }"
+              class="overflow-auto"
+            >
+              <g-link
+                v-for="species in bucket"
+                :key="species.pokemon.slug"
+                :style="{ width: evSize, height: evSize }"
+                class="block relative transition-all duration-300"
+                :to="`/${species.pokemon.slug}`"
+              >
+                <!--                <div class="absolute inset-0">-->
+                <!--                  <div class="p-2 text-gray-400 bg-opacity-50">-->
+                <!--                    <poke-ball />-->
+                <!--                  </div>-->
+                <!--                </div>-->
+                <div
+                  class="absolute inset-0"
+                  :style="{
+                    backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+                  }"
+                />
+                <div
+                  class="absolute bottom-0 inset-x-0 text-center bg-black bg-opacity-50 text-white rounded-full"
+                >
+                  {{ species.pokemon.name }}
+                </div>
+              </g-link>
+            </div>
+            <div
+              v-if="i != buckets.length - 1"
+              :key="i"
+              class="flex p-2 items-center"
+            >
+              &gt;
+            </div>
+          </template>
+        </div>
+      </template>
     </div>
+    <!-- Background color -->
     <div
       class="fixed inset-0"
       :style="{
@@ -41,9 +118,10 @@
 import PokeTypeChip from "~/components/PokeTypeChip";
 import PokeListCard from "../components/PokeListCard";
 import { get } from "lodash";
+import PokeBall from "../components/PokeBall";
 
 export default {
-  components: { PokeTypeChip, PokeListCard },
+  components: { PokeTypeChip, PokeListCard, PokeBall },
 
   /**
    * Page data
@@ -51,6 +129,7 @@ export default {
   data() {
     return {
       isMounted: false,
+      evSize: "100px",
     };
   },
 
