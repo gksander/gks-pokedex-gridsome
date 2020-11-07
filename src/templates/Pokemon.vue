@@ -55,7 +55,7 @@
       </div>
       <template v-if="isPartOfChain">
         <div class="mb-12"></div>
-        <div class="text-3xl">Evolutions</div>
+        <div class="text-3xl mb-4">Evolutions</div>
         <div class="flex gap-2 flex-col sm:flex-row">
           <template v-for="(bucket, i) in buckets">
             <div
@@ -67,25 +67,30 @@
                 v-for="species in bucket"
                 :key="species.pokemon.slug"
                 :style="{ width: evSize, height: evSize }"
-                class="block relative transition-all duration-300"
+                class="block relative transition-all duration-300 flex flex-col evLink"
                 :to="`/${species.pokemon.slug}`"
               >
-                <!--                <div class="absolute inset-0">-->
-                <!--                  <div class="p-2 text-gray-400 bg-opacity-50">-->
-                <!--                    <poke-ball />-->
-                <!--                  </div>-->
-                <!--                </div>-->
+                <div class="flex-grow relative">
+                  <div
+                    class="absolute inset-0 evImg transition-all duration-200"
+                    :style="{
+                      backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
+                      backgroundSize: 'contain',
+                      backgroundPosition: 'center center',
+                      backgroundRepeat: 'no-repeat',
+                    }"
+                  />
+                </div>
                 <div
-                  class="absolute inset-0"
+                  :class="[
+                    'text-center text-gray-700 overflow-hidden whitespace-no-wrap',
+                    species.pokemon.id == $page.pokemon.id &&
+                      'font-bold text-gray-900',
+                  ]"
                   :style="{
-                    backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
+                    maxWidth: evSize,
+                    textOverflow: 'ellipsis',
                   }"
-                />
-                <div
-                  class="absolute bottom-0 inset-x-0 text-center bg-black bg-opacity-50 text-white rounded-full"
                 >
                   {{ species.pokemon.name }}
                 </div>
@@ -287,6 +292,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.evLink:hover .evImg {
+  filter: drop-shadow(1px 1px 2px rgba(50, 50, 50, 0.7));
+}
+</style>
 
 <page-query>
   query ($id: ID!) {
