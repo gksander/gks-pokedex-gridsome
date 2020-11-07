@@ -37,11 +37,12 @@
         <span class="text-gray-600 text-xl font-bold">#{{ pokemon.id }}</span>
       </div>
       <div v-html="pokemon.species.flavor_text" class="text-gray-700 mb-2" />
-      <div class="flex gap-x-2">
+      <div class="-mx-1">
         <poke-type-chip
           v-for="type in pokemon.types"
           :key="type.slug"
           :type="type"
+          class="mx-1"
         />
       </div>
     </div>

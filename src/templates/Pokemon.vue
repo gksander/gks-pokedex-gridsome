@@ -20,11 +20,12 @@
           <div class="text-6xl leading-snug font-fancy">
             {{ $page.pokemon.name }}
           </div>
-          <div class="flex gap-x-2 mb-3">
+          <div class="flex -mx-1 mb-3">
             <poke-type-chip
               v-for="type in $page.pokemon.types"
               :key="type.slug"
               :type="type"
+              class="mx-1"
             />
           </div>
           <!-- Weight/height -->
@@ -45,7 +46,7 @@
           ></div>
           <!-- Weaknesses -->
           <div class="text-xl font-bold">Weaknesses</div>
-          <div class="flex flex-wrap gap-1">
+          <div class="flex flex-wrap">
             <poke-type-chip
               v-for="factor in damageFactors"
               :key="factor.type.slug"
@@ -53,6 +54,7 @@
               small
               grayscale
               :starred="factor.factor > 3.9"
+              class="mr-1"
             />
           </div>
         </div>

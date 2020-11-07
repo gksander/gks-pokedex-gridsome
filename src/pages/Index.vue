@@ -51,10 +51,12 @@
         :pokemon="pokemon"
       />
 
-      <infinite-loading @infinite="infiniteHandler" spinner="spiral">
-        <div slot="no-more" class="d-none"></div>
-        <div slot="no-results" class="d-none"></div>
-      </infinite-loading>
+      <ClientOnly>
+        <infinite-loading @infinite="infiniteHandler" spinner="spiral">
+          <div slot="no-more" class="d-none"></div>
+          <div slot="no-results" class="d-none"></div>
+        </infinite-loading>
+      </ClientOnly>
     </div>
   </div>
 </template>

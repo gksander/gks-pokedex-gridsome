@@ -5,8 +5,14 @@ This is a pet project I (Grant Sander) created to explore [GridsomeJS](https://g
 ## Tools used
 
 - [GridsomeJS](https://gridsome.org/) for building out the site.
-- [VuetifyJS](https://vuetifyjs.com/en/) as a component library.
+- [TailwindCSS](https://tailwindcss.com/) for styling.
 - [The PokeAPI](https://github.com/PokeAPI/pokeapi) for the Pokemon data.
 - [Pokemon SVG](https://github.com/jnovack/pokemon-svg) for the SVG images of the Pokemon.
 - [Sharp](https://github.com/lovell/sharp) and [Node Vibrant](https://github.com/akfish/node-vibrant/) for extracting colors from the SVG images in the site.
 
+## TODO:
+
+- [ ] Sticky header that doesn't suck on mobile
+- [ ] On pokemon page, maybe some sort of floating bottom nav for navigating between pokemon
+- [ ] Search page
+- [ ] Less shitty evolution buckets.
