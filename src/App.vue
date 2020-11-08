@@ -82,19 +82,26 @@ export default {
     onScroll() {
       this.bodyScroll = window.scrollY || 0;
     },
-  },
 
-  watch: {
-    "$route.path"(val) {
+    setBgColorIfNecessary() {
+      const val = this.$route.path;
+
       if (["/", "/search"].includes(val) || val.startsWith("/types")) {
         setBackgroundColor("white");
       }
     },
   },
 
+  watch: {
+    "$route.path"() {
+      this.setBgColorIfNecessary();
+    },
+  },
+
   mounted() {
     this.isMounted = true;
     window.addEventListener("scroll", this.onScroll);
+    this.setBgColorIfNecessary();
   },
 
   beforeDestroy() {
