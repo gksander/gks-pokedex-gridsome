@@ -4,11 +4,12 @@
     <div class="grid gap-6">
       <div v-for="cat in damageCategories" :key="cat.title">
         <div class="text-3xl font-thin mb-1">{{ cat.title }}</div>
-        <div class="flex gap-x-1" v-if="cat.types.length">
+        <div class="flex flex-wrap" v-if="cat.types.length">
           <poke-type-chip
             v-for="type in cat.types"
             :key="type.id"
             :type="type"
+            class="mr-1 mb-1"
           />
         </div>
         <div v-else class="italic text-gray-700">
