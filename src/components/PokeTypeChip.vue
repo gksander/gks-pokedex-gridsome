@@ -4,7 +4,7 @@
     :class="[
       'border-2 rounded inline-flex justify-center items-center transition-all duration-150',
       small && 'text-xs',
-      small ? 'w-16' : 'w-20',
+      small ? 'w-20' : 'w-24',
       small ? 'h-6' : 'h-8',
       block && 'w-full',
       grayscale && 'grayscale',

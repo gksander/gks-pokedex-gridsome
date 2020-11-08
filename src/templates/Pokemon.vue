@@ -14,6 +14,15 @@
                 filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
               }"
             ></div>
+            <div
+              class="absolute left-0 bottom-0 text-6xl text-gray-700 font-fancy font-thin"
+              :style="{
+                color,
+                filter: `drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))`,
+              }"
+            >
+              #{{ $page.pokemon.id }}
+            </div>
           </div>
         </div>
         <div>
@@ -153,18 +162,18 @@ export default {
     },
     // Color of the pokemon (with some tweaks for light colors)
     color() {
-      const prefix = "Light";
-
-      const rgb = get(
+      const [r, g, b] = get(
         this.$page,
-        `pokemon.species.colorPalette.${prefix}Vibrant.rgb`,
+        `pokemon.species.colorPalette.LightVibrant.rgb`,
       ) ||
-        get(this.$page, "pokemon.species.colorPalette.Vibrant.rgb") || [
-          0,
-          0,
-          0,
+        get(this.$page, `pokemon.species.colorPalette.Vibrant.rgb`) ||
+        get(this.$page, `pokemon.species.colorPalette.LightMuted.rgb`) || [
+          200,
+          200,
+          200,
         ];
-      return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+      return tinycolor(`rgb(${r}, ${g}, ${b})`).toRgbString();
     },
     // Background color for the pokemon
     bgColor() {
