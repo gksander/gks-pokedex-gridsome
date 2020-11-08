@@ -3,7 +3,10 @@
     <div class="container max-w-2xl py-6 px-2">
       <div class="grid sm:grid-cols-2 gap-12">
         <div>
-          <div class="w-full relative" style="padding-top: 100%">
+          <div
+            class="w-3/4 sm:w-full relative mx-auto"
+            style="padding-top: 100%"
+          >
             <div
               class="absolute inset-0"
               :style="{
@@ -142,6 +145,33 @@
             </template>
           </div>
         </div>
+      </div>
+      <div class="mb-12"></div>
+      <div class="flex justify-between text-sm text-gray-700">
+        <g-link
+          class="border-2 w-32 rounded flex justify-center items-center border-gray-700"
+          :to="prevLink"
+        >
+          <span class="p-2 pr-0">
+            <font-awesome-icon icon="chevron-left" />
+          </span>
+          <span
+            class="flex-grow flex justify-center p-2 overflow-hidden whitespace-no-wrap"
+            >{{ _get($page, "pokemon.prev_pokemon.name", "Pokedex") }}</span
+          >
+        </g-link>
+        <g-link
+          class="border-2 w-32 rounded flex justify-center items-center border-gray-700"
+          :to="nextLink"
+        >
+          <span
+            class="flex-grow flex justify-center p-2 overflow-hidden whitespace-no-wrap"
+            >{{ _get($page, "pokemon.next_pokemon.name", "Pokedex") }}</span
+          >
+          <span class="p-2 pl-0">
+            <font-awesome-icon icon="chevron-right" class="ml-2" />
+          </span>
+        </g-link>
       </div>
     </div>
   </div>
