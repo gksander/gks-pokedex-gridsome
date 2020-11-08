@@ -61,67 +61,88 @@
               :key="factor.type.slug"
               :type="factor.type"
               small
-              grayscale
               :starred="factor.factor > 3.9"
               class="mr-1 mb-1"
             />
           </div>
         </div>
       </div>
-      <template v-if="isPartOfChain">
-        <div class="mb-12"></div>
-        <div class="text-3xl font-bold mb-4">Evolutions</div>
-        <div class="flex gap-2 flex-col sm:flex-row items-center">
-          <template v-for="(bucket, i) in buckets">
-            <div
-              :key="bucket[0].pokemon.slug"
-              :style="{ width: evSize, height: evSize }"
-              class="overflow-auto"
-            >
-              <g-link
-                v-for="species in bucket"
-                :key="species.pokemon.slug"
-                :style="{ width: evSize, height: evSize }"
-                class="block relative transition-all duration-300 flex flex-col evLink"
-                :to="`/${species.pokemon.slug}`"
-              >
-                <div class="flex-grow relative">
-                  <div
-                    class="absolute inset-0 evImg transition-all duration-200"
-                    :style="{
-                      backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
-                      backgroundSize: 'contain',
-                      backgroundPosition: 'center center',
-                      backgroundRepeat: 'no-repeat',
-                    }"
-                  />
-                </div>
-                <div
-                  :class="[
-                    'text-center text-gray-700 overflow-hidden whitespace-no-wrap',
-                    species.pokemon.id == $page.pokemon.id &&
-                      'font-bold text-gray-900',
-                  ]"
-                  :style="{
-                    maxWidth: evSize,
-                    textOverflow: 'ellipsis',
-                  }"
-                >
-                  {{ species.pokemon.name }}
-                </div>
-              </g-link>
+      <div class="mb-12"></div>
+      <div class="grid sm:grid-cols-4 gap-12">
+        <div>
+          <div class="text-xl font-bold mb-4">Stats</div>
+          <div class="w-32 mx-auto">
+            <div class="w-full relative" style="padding-top: 100%">
+              <div class="absolute inset-0 text-gray-700">
+                <poke-stat-chart
+                  :pokemon="$page.pokemon"
+                  :color="color"
+                  :bg-color="bgColor"
+                />
+              </div>
             </div>
-            <div
-              v-if="i != buckets.length - 1"
-              :key="i"
-              class="flex p-2 items-center"
-            >
-              <font-awesome-icon icon="chevron-right" class="hidden sm:block" />
-              <font-awesome-icon icon="chevron-down" class="block sm:hidden" />
-            </div>
-          </template>
+          </div>
         </div>
-      </template>
+        <div v-if="isPartOfChain" class="sm:col-span-3 flex flex-col">
+          <div class="text-xl font-bold mb-4">Evolutions</div>
+          <div class="flex gap-2 flex-col sm:flex-row items-center flex-grow">
+            <template v-for="(bucket, i) in buckets">
+              <div
+                :key="bucket[0].pokemon.slug"
+                :style="{ width: evSize, height: evSize }"
+                class="overflow-y-auto overflow-x-hidden grid gap-2"
+              >
+                <g-link
+                  v-for="species in bucket"
+                  :key="species.pokemon.slug"
+                  :style="{ width: evSize, height: evSize }"
+                  class="block relative transition-all duration-300 flex flex-col evLink"
+                  :to="`/${species.pokemon.slug}`"
+                >
+                  <div class="flex-grow relative">
+                    <div
+                      class="absolute inset-0 evImg transition-all duration-200"
+                      :style="{
+                        backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
+                        backgroundSize: 'contain',
+                        backgroundPosition: 'center center',
+                        backgroundRepeat: 'no-repeat',
+                      }"
+                    />
+                  </div>
+                  <div
+                    :class="[
+                      'text-center text-gray-700 overflow-hidden whitespace-no-wrap',
+                      species.pokemon.id == $page.pokemon.id &&
+                        'font-bold text-gray-900',
+                    ]"
+                    :style="{
+                      maxWidth: evSize,
+                      textOverflow: 'ellipsis',
+                    }"
+                  >
+                    {{ species.pokemon.name }}
+                  </div>
+                </g-link>
+              </div>
+              <div
+                v-if="i != buckets.length - 1"
+                :key="i"
+                class="flex p-2 items-center"
+              >
+                <font-awesome-icon
+                  icon="chevron-right"
+                  class="hidden sm:block"
+                />
+                <font-awesome-icon
+                  icon="chevron-down"
+                  class="block sm:hidden"
+                />
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -133,11 +154,12 @@ import { get } from "lodash";
 import tinycolor from "tinycolor2";
 import PokeBall from "../components/PokeBall";
 import { setBackgroundColor } from "../util/setBackgroundColor";
+import PokeStatChart from "../components/PokeStatChart";
 
 export default {
   name: "Pokemon",
 
-  components: { PokeTypeChip, PokeListCard, PokeBall },
+  components: { PokeTypeChip, PokeListCard, PokeBall, PokeStatChart },
 
   /**
    * Page data
