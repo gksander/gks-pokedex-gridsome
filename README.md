@@ -15,5 +15,5 @@ This is a pet project I (Grant Sander) created to explore [GridsomeJS](https://g
 - [x] Sticky header that doesn't suck on mobile
 - [x] Search page
 - [x] SVG graphics for stats on Pokemon page
-- [ ] On pokemon page, maybe some sort of floating bottom nav for navigating between pokemon
+- [x] On pokemon page, maybe some sort of floating bottom nav for navigating between pokemon
 - [x] Less shitty evolution buckets.
