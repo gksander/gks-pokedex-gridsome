@@ -44,7 +44,9 @@
       </div>
     </header>
     <!-- Content body -->
-    <router-view />
+    <main>
+      <router-view />
+    </main>
   </div>
 </template>
 

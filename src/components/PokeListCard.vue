@@ -21,6 +21,7 @@
                 backgroundRepeat: 'no-repeat',
               }"
               :to="`/${pokemon.slug}`"
+              :aria-label="`View ${pokemon.name}`"
             />
           </div>
         </div>
@@ -31,6 +32,7 @@
         <g-link
           :to="`/${pokemon.slug}`"
           class="font-bold text-2xl text-gray-800 hover:text-primary-800 transition-colors duration-150"
+          :aria-label="`View ${pokemon.name}`"
         >
           {{ pokemon.name }}</g-link
         >
