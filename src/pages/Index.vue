@@ -13,11 +13,11 @@
         >
         and
         <a
-          href="https://github.com/jnovack/pokemon-svg"
+          href="https://veekun.com"
           target="_blank"
           rel="noreferrer"
           class="text-primary-800"
-          >pokemon-svg</a
+          >Veekun.</a
         >. Built with
         <a
           href="https://gridsome.org/"
@@ -41,7 +41,9 @@
           class="text-primary-800"
           >the source code</a
         >
-        on GitHub.
+        on GitHub. This is a pet project, and I claim no commercial or
+        intellectual rights to any of the Pokemon-specific resources (such as
+        data or images) used here.
       </div>
     </div>
     <div class="grid gap-16">

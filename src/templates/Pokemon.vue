@@ -3,24 +3,29 @@
     <div class="container max-w-2xl py-6 px-2">
       <div class="grid sm:grid-cols-2 gap-12">
         <div>
-          <div class="w-3/4 sm:w-full relative mx-auto">
-            <picture>
-              <source
-                :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.webp`"
-                type="image/webp"
-              />
-              <source
-                :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
-                type="image/png"
-              />
-              <img
-                :src="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
-                class="w-full h-full object-contain"
-                :style="{
-                  filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
-                }"
-              />
-            </picture>
+          <div
+            class="w-3/4 sm:w-full relative mx-auto"
+            style="padding-top: 100%"
+          >
+            <div class="absolute inset-0">
+              <picture>
+                <source
+                  :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.webp`"
+                  type="image/webp"
+                />
+                <source
+                  :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
+                  type="image/png"
+                />
+                <img
+                  :src="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
+                  class="w-full h-full object-contain"
+                  :style="{
+                    filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
+                  }"
+                />
+              </picture>
+            </div>
             <div
               class="absolute left-0 bottom-0 text-6xl text-gray-700 font-fancy font-thin"
               :style="{
