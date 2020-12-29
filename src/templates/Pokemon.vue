@@ -10,7 +10,7 @@
             <div
               class="absolute inset-0"
               :style="{
-                backgroundImage: `url('/img/pokemon/${$page.pokemon.id}.svg')`,
+                backgroundImage: `url('/img/pokemon-sugimori/${$page.pokemon.id}.png')`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundSize: 'contain',
@@ -106,7 +106,7 @@
                     <div
                       class="absolute inset-0 evImg transition-all duration-200"
                       :style="{
-                        backgroundImage: `url('/img/pokemon/${species.pokemon.id}.svg')`,
+                        backgroundImage: `url('/img/pokemon-sugimori/${species.pokemon.id}.png')`,
                         backgroundSize: 'contain',
                         backgroundPosition: 'center center',
                         backgroundRepeat: 'no-repeat',

@@ -1,6 +1,6 @@
 <template>
   <v-img
-    :src="`/img/pokemon/${id}.svg`"
+    :src="`/img/pokemon-sugimori/${id}.png`"
     :alt="`Image for ${name}`"
     :aspect-ratio="1"
     contain

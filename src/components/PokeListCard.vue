@@ -15,7 +15,7 @@
             <g-link
               class="absolute inset-0 image transition-all duration-300"
               :style="{
-                backgroundImage: `url('/img/pokemon/${pokemon.id}.svg')`,
+                backgroundImage: `url('/img/pokemon-sugimori/${pokemon.id}.png')`,
                 backgroundSize: 'contain',
                 backgroundPosition: 'center center',
                 backgroundRepeat: 'no-repeat',
@@ -85,15 +85,6 @@ export default {
 </script>
 
 <style scoped>
-/**
-.card {
-  filter: grayscale(0.75);
-}
-.card:hover {
-  filter: grayscale(0);
-}
-
- */
 .pokeImg:hover .image {
   cursor: pointer;
   filter: drop-shadow(1px 1px 2px rgba(50, 50, 50, 0.6));

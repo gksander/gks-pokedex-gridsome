@@ -20,7 +20,7 @@
               <div
                 class="absolute inset-0"
                 :style="{
-                  backgroundImage: `url('/img/pokemon/${pokemon.id}.svg')`,
+                  backgroundImage: `url('/img/pokemon-sugimori/${pokemon.id}.png')`,
                   backgroundPosition: 'center',
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
