@@ -1,3 +1,4 @@
+const fse = require("fs-extra");
 const sharp = require("sharp");
 const path = require("path");
 const klaw = require("klaw");
