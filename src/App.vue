@@ -3,7 +3,7 @@
     :style="{
       backgroundColor: 'var(--background-color)',
     }"
-    class="min-h-screen transition-colors duration-150"
+    :class="['min-h-screen transition-colors duration-150']"
   >
     <header
       :class="[

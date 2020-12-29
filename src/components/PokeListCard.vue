@@ -14,15 +14,24 @@
             </div>
             <g-link
               class="absolute inset-0 image transition-all duration-300"
-              :style="{
-                backgroundImage: `url('/img/pokemon-sugimori/${pokemon.id}.png')`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
-              }"
               :to="`/${pokemon.slug}`"
               :aria-label="`View ${pokemon.name}`"
-            />
+            >
+              <picture>
+                <source
+                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.webp`"
+                  type="image/webp"
+                />
+                <source
+                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.png`"
+                  type="image/png"
+                />
+                <img
+                  :src="`/img/pokemon-sugimori/${pokemon.id}.png`"
+                  class="w-full h-full object-contain"
+                />
+              </picture>
+            </g-link>
           </div>
         </div>
       </div>
