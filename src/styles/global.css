@@ -5,8 +5,9 @@
   text-decoration: none;
 }
 .font-fancy {
-  font-family: "Sansita Swashed", cursive;
+  font-family: "Kalam", cursive;
 }
 html, body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Kalam", sans-serif;
+  font-size: 18px;
 }

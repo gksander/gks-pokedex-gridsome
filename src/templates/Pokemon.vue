@@ -149,7 +149,7 @@
       <div class="mb-12"></div>
       <div class="flex justify-between text-sm text-gray-700">
         <g-link
-          class="border-2 w-32 rounded flex justify-center items-center border-gray-700"
+          class="border-2 w-32 rounded flex justify-center items-center border-gray-700 hover:font-bold"
           :to="prevLink"
         >
           <span class="p-2 pr-0">
@@ -161,7 +161,7 @@
           >
         </g-link>
         <g-link
-          class="border-2 w-32 rounded flex justify-center items-center border-gray-700"
+          class="border-2 w-32 rounded flex justify-center items-center border-gray-700 hover:font-bold"
           :to="nextLink"
         >
           <span

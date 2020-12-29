@@ -7,6 +7,7 @@
         v-model="query"
         class="p-3 w-full text-xl outline-none"
         placeholder="Mew"
+        autofocus
       />
       <g-link
         v-for="pokemon in filteredPokemon"

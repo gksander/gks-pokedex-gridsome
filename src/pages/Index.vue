@@ -64,8 +64,7 @@
 <script>
 import PokeListCard from "../components/PokeListCard";
 import PokeTypeChip from "../components/PokeTypeChip";
-import { get } from "lodash";
-import tinycolor from "tinycolor2";
+import uniqBy from "lodash/uniqBy";
 import PokeBall from "../components/PokeBall";
 
 export default {
@@ -117,6 +116,10 @@ export default {
         if (data.allPokemon.edges.length) {
           this.currentPage = data.allPokemon.pageInfo.currentPage;
           this.loadedPokemon.push(...data.allPokemon.edges);
+          this.loadedPokemon = uniqBy(
+            [...this.loadedPokemon, ...data.allPokemon.edges],
+            p => p?.node?.id,
+          );
           $state.loaded();
         } else {
           // No more data - we're done

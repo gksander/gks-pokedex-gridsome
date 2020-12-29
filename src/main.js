@@ -5,8 +5,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import DefaultLayout from "~/layouts/Default.vue";
 import ContentWrapper from "~/components/ContentWrapper.vue";
 import "./styles/global.css";
-import "typeface-sansita-swashed";
-import "typeface-montserrat";
+import "typeface-kalam";
 
 // Handle fontawesome icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";

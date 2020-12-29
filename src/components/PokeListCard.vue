@@ -78,7 +78,6 @@ export default {
       return rgb
         ? `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`
         : "rgba(0,0,0,0.5)";
-      // const { _r, _g, _b } = tinycolor(bgColor)["lighten"](20);
     },
   },
 };
@@ -87,7 +86,6 @@ export default {
 <style scoped>
 .pokeImg:hover .image {
   cursor: pointer;
-  filter: drop-shadow(1px 1px 2px rgba(50, 50, 50, 0.6));
 }
 .pokeball {
   filter: brightness(0) opacity(0.3);
