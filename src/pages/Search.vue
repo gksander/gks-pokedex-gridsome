@@ -18,20 +18,11 @@
         <div class="flex-grow flex items-center">
           <div class="w-8 mr-3">
             <div class="w-full">
-              <picture>
-                <source
-                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.webp`"
-                  type="image/webp"
-                />
-                <source
-                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.png`"
-                  type="image/png"
-                />
-                <img
-                  :src="`/img/pokemon-sugimori/${pokemon.id}.png`"
-                  class="w-full h-full object-contain"
-                />
-              </picture>
+              <PokeImg
+                :id="pokemon.id"
+                :name="pokemon.name"
+                img-class="w-full h-full object-contain"
+              />
             </div>
           </div>
           <div class="font-bold text-gray-700">
@@ -46,9 +37,10 @@
 
 <script>
 import PokeTypeChip from "../components/PokeTypeChip";
+import PokeImg from "../components/PokeImg";
 
 export default {
-  components: { PokeTypeChip },
+  components: { PokeImg, PokeTypeChip },
 
   /**
    * Component data

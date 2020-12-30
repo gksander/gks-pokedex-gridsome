@@ -1,17 +1,14 @@
 <template>
-  <v-img
-    :src="`/img/pokemon-sugimori/${id}.png`"
-    :alt="`Image for ${name}`"
-    :aspect-ratio="1"
-    contain
-    :width="width"
-  >
-    <template v-slot:placeholder>
-      <v-row class="fill-height ma-0" align="center" justify="center">
-        <v-progress-circular indeterminate color="grey lighten-5" />
-      </v-row>
-    </template>
-  </v-img>
+  <picture>
+    <source :srcset="`/img/pokemon-sugimori/${id}.webp`" type="image/webp" />
+    <source :srcset="`/img/pokemon-sugimori/${id}.png`" type="image/png" />
+    <img
+      :src="`/img/pokemon-sugimori/${id}.png`"
+      class="w-full h-full object-contain"
+      :style="imgStyle"
+      :alt="`Sugimori artwork of ${name}`"
+    />
+  </picture>
 </template>
 
 <script>
@@ -19,9 +16,13 @@ export default {
   props: {
     id: String,
     name: String,
-    width: {
-      type: Number,
-      default: 30,
+    imgClass: {
+      type: String,
+      default: "",
+    },
+    imgStyle: {
+      type: Object,
+      default: {},
     },
   },
 };

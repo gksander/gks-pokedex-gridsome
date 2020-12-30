@@ -8,23 +8,14 @@
             style="padding-top: 100%"
           >
             <div class="absolute inset-0">
-              <picture>
-                <source
-                  :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.webp`"
-                  type="image/webp"
-                />
-                <source
-                  :srcset="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
-                  type="image/png"
-                />
-                <img
-                  :src="`/img/pokemon-sugimori/${$page.pokemon.id}.png`"
-                  class="w-full h-full object-contain"
-                  :style="{
-                    filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
-                  }"
-                />
-              </picture>
+              <PokeImg
+                :id="$page.pokemon.id"
+                :name="$page.pokemon.name"
+                img-class="w-full h-full object-contain"
+                :img-style="{
+                  filter: 'drop-shadow(2px 2px 2px rgba(50, 50, 50, 0.8))',
+                }"
+              />
             </div>
             <div
               class="absolute left-0 bottom-0 text-6xl text-gray-700 font-fancy font-thin"
@@ -115,26 +106,11 @@
                     <div
                       class="absolute inset-0 evImg transition-all duration-200"
                     >
-                      <picture>
-                        <source
-                          :srcset="
-                            `/img/pokemon-sugimori/${species.pokemon.id}.webp`
-                          "
-                          type="image/webp"
-                        />
-                        <source
-                          :srcset="
-                            `/img/pokemon-sugimori/${species.pokemon.id}.png`
-                          "
-                          type="image/png"
-                        />
-                        <img
-                          :src="
-                            `/img/pokemon-sugimori/${species.pokemon.id}.png`
-                          "
-                          class="w-full h-full object-contain"
-                        />
-                      </picture>
+                      <PokeImg
+                        :id="species.pokemon.id"
+                        :name="species.pokemon.name"
+                        img-class="w-full h-full object-contain"
+                      />
                     </div>
                   </div>
                   <div
@@ -209,11 +185,12 @@ import tinycolor from "tinycolor2";
 import PokeBall from "../components/PokeBall";
 import { setBackgroundColor } from "../util/setBackgroundColor";
 import PokeStatChart from "../components/PokeStatChart";
+import PokeImg from "../components/PokeImg";
 
 export default {
   name: "Pokemon",
 
-  components: { PokeTypeChip, PokeListCard, PokeBall, PokeStatChart },
+  components: { PokeImg, PokeTypeChip, PokeListCard, PokeBall, PokeStatChart },
 
   /**
    * Page data

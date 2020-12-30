@@ -17,20 +17,11 @@
               :to="`/${pokemon.slug}`"
               :aria-label="`View ${pokemon.name}`"
             >
-              <picture>
-                <source
-                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.webp`"
-                  type="image/webp"
-                />
-                <source
-                  :srcset="`/img/pokemon-sugimori/${pokemon.id}.png`"
-                  type="image/png"
-                />
-                <img
-                  :src="`/img/pokemon-sugimori/${pokemon.id}.png`"
-                  class="w-full h-full object-contain"
-                />
-              </picture>
+              <PokeImg
+                :id="pokemon.id"
+                :name="pokemon.name"
+                img-class="w-full h-full object-contain"
+              />
             </g-link>
           </div>
         </div>
@@ -64,9 +55,11 @@
 import { get } from "lodash";
 import PokeTypeChip from "./PokeTypeChip";
 import PokeBall from "./PokeBall";
+import PokeImg from "./PokeImg";
 
 export default {
   components: {
+    PokeImg,
     PokeTypeChip,
     PokeBall,
   },
