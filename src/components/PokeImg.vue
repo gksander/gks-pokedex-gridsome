@@ -22,7 +22,7 @@ export default {
     },
     imgStyle: {
       type: Object,
-      default: {},
+      default: () => ({}),
     },
   },
 };

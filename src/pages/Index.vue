@@ -117,7 +117,6 @@ export default {
         // If we've got data, add it to our list
         if (data.allPokemon.edges.length) {
           this.currentPage = data.allPokemon.pageInfo.currentPage;
-          this.loadedPokemon.push(...data.allPokemon.edges);
           this.loadedPokemon = uniqBy(
             [...this.loadedPokemon, ...data.allPokemon.edges],
             p => p?.node?.id,

@@ -42,6 +42,7 @@
 <script>
 import PokeTypeChip from "../components/PokeTypeChip";
 import PokeListCard from "../components/PokeListCard";
+import uniqBy from "lodash/uniqBy";
 export default {
   components: { PokeTypeChip, PokeListCard },
 
@@ -130,6 +131,13 @@ export default {
           this.currentPage = data.type.belongsTo.pageInfo.currentPage;
           this.loadedPokemon.push(
             ...data.type.belongsTo.edges.map(edge => edge.node),
+          );
+          this.loadedPokemon = uniqBy(
+            [
+              ...this.loadedPokemon,
+              ...data.type.belongsTo.edges.map(edge => edge.node),
+            ],
+            p => p?.id,
           );
           $state.loaded();
         } else {
