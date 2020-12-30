@@ -5,6 +5,9 @@ const fetch = require("node-fetch");
 const BASE_PATH = "https://veekun.com/dex/media/pokemon/sugimori";
 const OUT_DIR = path.resolve(__dirname, "../static/img/pokemon-sugimori");
 
+/**
+ * This module fetches Sugimori images from Veekun and stores them in the repo.
+ */
 module.exports = async () => {
   await fse.emptyDir(OUT_DIR);
   const reqs = Array.from({ length: 649 })

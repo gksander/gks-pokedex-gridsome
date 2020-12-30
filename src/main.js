@@ -3,7 +3,6 @@
 import InfiniteLoading from "vue-infinite-loading";
 // User created
 import DefaultLayout from "~/layouts/Default.vue";
-import ContentWrapper from "~/components/ContentWrapper.vue";
 import "./styles/global.css";
 import "typeface-kalam";
 
@@ -48,7 +47,6 @@ library.add(
 export default function(Vue, { appOptions, router, head, isClient }) {
   // Make a few components globally accessible
   Vue.component("Layout", DefaultLayout);
-  Vue.component("ContentWrapper", ContentWrapper);
   Vue.use(InfiniteLoading);
 
   Vue.component("font-awesome-icon", FontAwesomeIcon);

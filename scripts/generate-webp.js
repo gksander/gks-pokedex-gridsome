@@ -4,7 +4,7 @@ const path = require("path");
 const klaw = require("klaw");
 
 /**
- * Function to slice and dice SVGs
+ * Function to convert png images to webp
  */
 module.exports = async () => {
   await new Promise(async resolve => {

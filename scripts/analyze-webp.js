@@ -1,7 +1,11 @@
 const fse = require("fs-extra");
 const path = require("path");
-const klaw = require("klaw");
 
+/**
+ * This module is just for fun-sies.
+ * Looks at each pokemon image from both the webp and png variants.
+ * Aggregates the sizes accordingly, and shows how much more size-efficient webp is.
+ */
 module.exports = async () => {
   // Input/output paths
   const assetPath = path.resolve(__dirname, "../static/img/pokemon-sugimori");

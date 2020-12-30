@@ -1,9 +1,12 @@
 const path = require("path");
 const klaw = require("klaw");
 const Vibrant = require("node-vibrant");
-// const sharp = require("sharp");
 const fse = require("fs-extra");
 
+/**
+ * Crawl through the pokemon images and extract vibrant colors.
+ * Will write this data to a JSON file.
+ */
 module.exports = async () => {
   // Input/output paths
   const assetPath = path.resolve(__dirname, "../static/img/pokemon-sugimori");
@@ -17,8 +20,9 @@ module.exports = async () => {
   await new Promise(resolve => {
     klaw(assetPath)
       .on("data", async item => {
+        if (!/png$/.test(item.path)) return;
+
         try {
-          // const buffer = await sharp(item.path).toBuffer();
           const palette = await Vibrant.from(item.path).getPalette();
           const id = item.path.match(/(\d+)\.png/)[1];
 
