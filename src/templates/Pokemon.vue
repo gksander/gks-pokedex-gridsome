@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-touch:swipe.left="swipeLeft" v-touch:swipe.right="swipeRight">
     <div class="container max-w-2xl py-6 px-2">
       <div class="grid sm:grid-cols-2 gap-12">
         <div>
@@ -328,6 +328,14 @@ export default {
 
     setHeaderColor() {
       setBackgroundColor(this.bgColor);
+    },
+
+    // Swipe handlers
+    swipeLeft() {
+      this.$router.push(this.nextLink);
+    },
+    swipeRight() {
+      this.$router.push(this.prevLink);
     },
   },
 

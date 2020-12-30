@@ -17,7 +17,8 @@
     "typeface-kalam": "^1.1.13",
     "typeface-montserrat": "^1.1.13",
     "typeface-sansita-swashed": "^1.1.13",
-    "vue-infinite-loading": "^2.4.4"
+    "vue-infinite-loading": "^2.4.4",
+    "vue2-touch-events": "^3.1.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",

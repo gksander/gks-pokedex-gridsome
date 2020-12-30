@@ -1,6 +1,7 @@
 // This is the main.js file. Import global CSS and scripts here.
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 import InfiniteLoading from "vue-infinite-loading";
+import Vue2TouchEvents from "vue2-touch-events";
 // User created
 import DefaultLayout from "~/layouts/Default.vue";
 import "./styles/global.css";
@@ -48,6 +49,7 @@ export default function(Vue, { appOptions, router, head, isClient }) {
   // Make a few components globally accessible
   Vue.component("Layout", DefaultLayout);
   Vue.use(InfiniteLoading);
+  Vue.use(Vue2TouchEvents);
 
   Vue.component("font-awesome-icon", FontAwesomeIcon);
 }
